@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#838181"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/arrow_left" />
+        <TextView
+            android:id="@+id/song_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="歌名"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <me.wcy.lrcview.LrcView
+        android:id="@+id/lrc_view"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_above="@+id/bottom_rl"
+        android:layout_below="@id/rl"
+        app:lrcAnimationDuration="1000"
+        app:lrcCurrentTextColor="#FFFFFF"
+        app:lrcDividerHeight="24dp"
+        app:lrcLabel="找不到歌词(@_@)"
+        app:lrcNormalTextColor="#BDBDBD"
+        app:lrcPadding="10dp"
+        app:lrcTextSize="12sp"
+        app:lrcTimeTextColor="#BDBDBD"
+        app:lrcTimelineColor="#80BDBDBD"
+        app:lrcTimelineTextColor="#9FA8DA" />
+
+    <SurfaceView
+        android:id="@+id/surfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/commonColor">
+
+        <TextView
+            android:id="@+id/start_recordVideo"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/commonColor"
+            android:gravity="center"
+            android:text="开始"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</LinearLayout>

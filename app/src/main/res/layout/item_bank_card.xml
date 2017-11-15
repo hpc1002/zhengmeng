@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_bank"
+    android:layout_width="@dimen/x704"
+    android:layout_height="@dimen/x225"
+    android:layout_marginLeft="@dimen/x23"
+    android:layout_marginRight="@dimen/x23"
+    android:layout_marginTop="@dimen/y22"
+    android:background="@mipmap/bank_back_1">
+
+    <TextView
+        android:id="@+id/bank_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x130"
+        android:layout_marginTop="@dimen/y30"
+        android:text="浦发银行"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/bank_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bank_name"
+        android:layout_marginLeft="@dimen/x130"
+        android:layout_marginTop="@dimen/y17"
+        android:text="储蓄卡"
+        android:textColor="@color/qianhui"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/bank_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bank_type"
+        android:layout_marginLeft="@dimen/x130"
+        android:layout_marginTop="@dimen/y25"
+        android:text="3213214214422421421421412"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+</RelativeLayout>

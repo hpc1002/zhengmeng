@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhuye.zhengmeng.view.MyImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="110dp"
+    android:layout_height="110dp"
+    android:id="@+id/singleImage"
+    android:paddingTop="10dp"
+    android:src="@mipmap/change_head_portrait">
+</com.zhuye.zhengmeng.view.MyImageView>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/x22">
+
+    <com.zhuye.zhengmeng.widget.RoundedCornerImageView
+        android:id="@+id/img_observer"
+        android:layout_width="@dimen/x95"
+        android:layout_height="@dimen/y95"
+        android:layout_margin="@dimen/y23"
+        android:src="@mipmap/touxiang_re" />
+
+    <TextView
+        android:id="@+id/observer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/img_observer"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/observer_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/observer_name"
+        android:layout_toRightOf="@+id/img_observer"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/iv_zan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/tv_zan"
+        android:layout_below="@+id/observer_name"
+        android:layout_marginRight="@dimen/x5"/>
+
+    <TextView
+        android:id="@+id/tv_zan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/observer_name"
+        android:layout_marginRight="@dimen/x10"
+        android:text="100"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/pinlun_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/observer_content"
+        android:layout_toRightOf="@+id/img_observer"
+        android:text="2017-11-02 16:43"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/reply_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/observer_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/pinlun_time"
+        android:text="14条回复"
+        android:textColor="@color/white" />
+</RelativeLayout>

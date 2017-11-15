@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.zhuye.zhengmeng.bangdan.UploadActivity">
+
+    <com.zhuye.zhengmeng.view.MyAppTitle
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="#f75153"
+        android:paddingTop="15dp">
+
+    </com.zhuye.zhengmeng.view.MyAppTitle>
+
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/titleBar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="39dp"
+        android:background="@drawable/register_login_button_shape"
+        android:gravity="top"
+        android:hint="请填写您要发布的消息" />
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/upload_button_shape"
+        android:text="发布动态"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+</RelativeLayout>

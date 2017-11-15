@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f75153"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.zhuye.zhengmeng.view.MyAppTitle
+        android:id="@+id/titleBar"
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.zhuye.zhengmeng.view.MyAppTitle>
+
+
+    <RelativeLayout
+        android:id="@+id/register_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/forget_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/register_login_et_top_shape"
+            android:hint="请输入手机号"
+            android:maxLength="11"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:phoneNumber="true"
+            android:textCursorDrawable="@drawable/color_cursor" />
+
+        <View
+            android:id="@+id/view_line_register"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/forget_phone"
+            android:background="#ececec" />
+
+        <LinearLayout
+            android:id="@+id/register_verificationCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_line_register"
+            android:background="@drawable/register_login_et_bottom_shape">
+
+            <EditText
+                android:id="@+id/forget_yanzhengma"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:background="@null"
+                android:hint="请输入验证码"
+                android:maxLength="6"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:textCursorDrawable="@drawable/color_cursor" />
+
+            <Button
+                android:id="@+id/button_yanzhengma_forget"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:background="@drawable/register_login_button_yanzhengma_shape_nophone"
+                android:enabled="false"
+                android:text="验证码"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/register_rl"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/register_login_button_shape1"
+        android:text="下一步"
+        android:textColor="#f75153"
+        android:textSize="20sp" />
+
+
+</LinearLayout>

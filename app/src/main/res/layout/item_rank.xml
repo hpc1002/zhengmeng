@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y175">
+
+    <ImageView
+        android:id="@+id/iv_user"
+        android:layout_width="@dimen/x200"
+        android:layout_height="@dimen/y150"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/x35" />
+    <TextView
+        android:id="@+id/tv_rank"
+        android:layout_width="@dimen/x72"
+        android:layout_height="@dimen/y72"
+        android:textSize="14sp"
+        android:paddingLeft="@dimen/x10"
+        android:textColor="@color/white"
+        android:background="@mipmap/home_sanjiao" />
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginTop="@dimen/y20"
+        android:layout_toRightOf="@+id/iv_user"
+        android:text="用户名"
+        android:textColor="#666666"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/tv_song_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x30"
+        android:layout_marginTop="@dimen/y20"
+        android:layout_toRightOf="@+id/iv_user"
+        android:text="歌曲名"
+        android:textColor="#666666"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/part_line" />
+</RelativeLayout>

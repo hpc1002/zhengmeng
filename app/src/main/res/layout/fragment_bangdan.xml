@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhuye.zhengmeng.widget.MyScrollview xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<com.zhuye.zhengmeng.widget.MyScrollview-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <cn.bingoogolapple.bgabanner.BGABanner
+            android:id="@+id/home_recommend_banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:banner_indicatorGravity="center_horizontal"
+            app:banner_pageChangeDuration="1000"
+            app:banner_pointAutoPlayAble="true"
+            app:banner_pointContainerBackground="#00000000"
+            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+            app:banner_pointTopBottomMargin="5dp"
+            app:banner_tipTextColor="@color/white"
+            app:banner_tipTextSize="15dp"
+            app:banner_transitionEffect="defaultEffect" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/platform_songs"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/frame_sing"
+                android:drawableLeft="@mipmap/home_music"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="28dp"
+                android:text="平台歌曲"
+                android:textColor="@color/white"
+                android:textSize="18sp">
+
+            </TextView>
+
+            <View
+                android:layout_width="15dp"
+                android:layout_height="60dp"
+                android:background="@color/back_color">
+
+            </View>
+
+            <TextView
+                android:id="@+id/platform_competition"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/frame_game"
+                android:drawableLeft="@mipmap/home_cup"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="28dp"
+                android:text="平台比赛"
+                android:textColor="@color/white"
+                android:textSize="18sp">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/part_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_quanguobang"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="全国榜"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/tv_quyubang"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="郑州榜"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_arrow_down"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/arrow_down" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/part_line" />
+
+        <FrameLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:visibility="gone" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.jude.easyrecyclerview.EasyRecyclerView
+        android:id="@+id/recyclerViewA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <com.jude.easyrecyclerview.EasyRecyclerView
+               android:id="@+id/recyclerViewB"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content" />
+       </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.jude.easyrecyclerview.EasyRecyclerView
+                android:id="@+id/recyclerViewC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    <!--</com.zhuye.zhengmeng.widget.MyScrollview>-->
+</com.zhuye.zhengmeng.widget.MyScrollview>

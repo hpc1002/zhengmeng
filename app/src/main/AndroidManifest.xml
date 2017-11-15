@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zhuye.zhengmeng">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.Camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/ThemeBase">
+        <activity
+            android:name=".activity.lanuch.SplashActivity"
+            android:theme="@style/ThemeSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 引导页 -->
+        <activity
+            android:name=".activity.lanuch.GuideActivity"
+            android:theme="@style/ThemeGuide" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".user.MyFansActivity" />
+        <activity android:name=".user.MyFollowActivity" />
+        <activity android:name=".user.MyGiftActivity" />
+        <activity android:name=".user.MyGoldActivity" />
+        <activity android:name=".user.AnnouncementActivity" />
+        <activity android:name=".user.MyMessageActivity" />
+        <activity android:name=".user.SettingActivity" />
+        <activity android:name=".user.UserInfoActivity" />
+        <activity android:name=".user.LocalRecordActivity" />
+        <activity android:name=".user.MyCollectActivity" />
+        <activity
+            android:name=".home.HomeActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".activity.register.RegisterActivity" />
+        <activity android:name=".activity.register.ForgetActivity" />
+        <activity android:name=".activity.register.ForgetActivity2" />
+        <activity android:name=".bangdan.DianGeListActivity"/>
+
+        <!-- 微信start -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 微信end -->
+        <!-- 新浪微博start -->
+        <activity
+            android:name=".WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 新浪微博end -->
+        <!-- qq完整版start -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="1106431205" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- qq完整版end -->
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="59f69d41a40fa36eb700002b" />
+
+        <activity android:name=".user.MyShareActivity" />
+        <activity android:name=".user.ZuoPinJiActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.zhuye.zhengmeng"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity android:name=".user.NoticeActivity" />
+        <activity android:name=".user.FriendInvitationActivity" />
+        <activity android:name=".bangdan.SongsListActivity" />
+        <activity android:name=".user.SelectAvatorActivity" />
+        <activity android:name=".user.ShowAvatorImageActivity" />
+        <activity android:name=".bangdan.CitySelectActivity" />
+        <activity android:name=".bangdan.ChooseAddressActivity" />
+        <activity
+            android:name=".dynamic.DynamicDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".dynamic.DynamicDetail2Activity" />
+        <activity android:name=".user.HelpFeedBackActivity" />
+        <activity android:name=".user.AboutZhengmengActivity" />
+        <activity android:name=".user.ChangeUserNameActivity" />
+        <activity android:name=".user.PersonSignActivity" />
+        <activity android:name=".user.WithdrawalsActivity" />
+        <activity android:name=".user.BindCardActivity" />
+        <activity android:name=".bangdan.CompetitionActivity" />
+        <activity android:name=".dynamic.ErjiCommentActivity" />
+        <activity android:name=".bangdan.recording.AudioActivity" />
+        <activity android:name=".bangdan.recording.QAudioActivity" />
+        <activity android:name=".bangdan.UploadActivity" />
+        <activity android:name=".user.MyBankCardActivity" />
+        <activity android:name=".bangdan.recording.VideoActivity" />
+        <activity android:name=".bangdan.BangdanRankActivity" />
+        <activity android:name=".bangdan.recording.QVideoActivity" />
+        <activity android:name=".user.RankRecordActivity" />
+        <activity android:name=".KTV.KtvRoomActivity" />
+
+        <!-- imlib config begin  android:value="k51hidwqknr6b" -->
+        <meta-data
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="k51hidwqknr6b"
+            tools:replace="android:value" />
+
+        <service
+            android:name="io.rong.imlib.ipc.RongService"
+            android:exported="true"
+            android:process=":ipc" />
+        <service android:name="io.rong.imlib.ReConnectService" />
+
+        <receiver android:name="io.rong.imlib.ConnectChangeReceiver" />
+        <receiver
+            android:name="io.rong.imlib.HeartbeatReceiver"
+            android:process=":ipc" />
+        <!-- imlib config end -->
+
+
+        <!-- 必选： SDK 核心功能 -->
+        <service
+            android:name="io.rong.push.core.PushRegistrationService"
+            android:exported="false"></service>
+        <service
+            android:name="io.rong.push.PushService"
+            android:exported="true"
+            android:process="io.rong.push"></service>
+        <service
+            android:name="io.rong.push.core.MessageHandleService"
+            android:exported="true"></service>
+
+        <receiver
+            android:name="io.rong.push.PushReceiver"
+            android:process="io.rong.push">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.action.HEART_BEAT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 必选： SDK 核心功能 -->
+
+
+        <!-- end -->
+        <activity android:name=".KTV.PaiMaiActivity"></activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#382c30"
+    tools:context="com.zhuye.zhengmeng.dynamic.DynamicDetailActivity">
+
+    <com.zhuye.zhengmeng.widget.MyScrollview
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <SurfaceView
+                android:id="@+id/player_surface"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y422"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y220">
+
+                <com.zhuye.zhengmeng.widget.RoundedCornerImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="@dimen/x130"
+                    android:layout_height="@dimen/x130"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="@dimen/y10" />
+
+
+                <TextView
+                    android:id="@+id/nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x40"
+                    android:layout_marginTop="@dimen/y35"
+                    android:layout_toRightOf="@+id/avatar"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_fans_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nickname"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:layout_marginTop="@dimen/y25"
+                    android:layout_toRightOf="@+id/avatar"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/follow_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/nickname"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/x20"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/sign_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/avatar"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#444444" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="@dimen/x33"
+                    android:layout_marginLeft="@dimen/x23"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x22"
+                    android:text="粉丝贡献"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_gift_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x20"
+                    android:textColor="@color/white"
+                    android:drawablePadding="@dimen/x10" />
+            </LinearLayout>
+
+            <com.jude.easyrecyclerview.EasyRecyclerView
+                android:id="@+id/gridRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x23" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y20"
+                android:layout_marginLeft="@dimen/x23"
+                android:text="评论"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/x20"
+                android:background="#444444" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/refreshLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.jude.easyrecyclerview.EasyRecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </com.zhuye.zhengmeng.widget.MyScrollview>
+
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/rb_gift"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_gift"
+            android:gravity="center_horizontal"
+            android:text="礼物"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/rb_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_commebt"
+            android:gravity="center_horizontal"
+            android:text="评论"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/rb_zhuanfa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_transmit"
+            android:gravity="center_horizontal"
+            android:text="转发"
+            android:textColor="@color/white" />
+
+
+        <TextView
+            android:id="@+id/rb_perform"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/tabbar_sing"
+            android:gravity="center_horizontal"
+            android:text="演唱"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

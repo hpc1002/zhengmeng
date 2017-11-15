@@ -1,0 +1,103 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'android-apt'
+android {
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        applicationId "com.zhuye.zhengmeng"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        //Umeng的包里面的values-zh干扰导致问题,只要添加下面这一句就可以了
+        disable 'MissingTranslation'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("debug.jks")
+            storePassword "123456"
+            keyAlias "zhengmeng"
+            keyPassword "123456"
+        }
+    }
+
+    //将so文件导入到lib目下配置代码
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['src/main/assets']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    //工具
+    //沉浸式状态栏
+    //BaseRecyclerViewAdapterHelper
+    //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    //SmartRefreshLayout
+    // 歌曲
+    compile 'com.just.agentweb:agentweb:2.0.1'
+    compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
+//    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:design:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.blankj:utilcode:1.9.2'
+    compile 'com.lzy.net:okgo:3.0.4'
+    compile 'com.gyf.barlibrary:barlibrary:2.3.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'org.easybatch:easybatch-gson:5.1.0'
+    compile 'cn.bingoogolapple:bga-banner:2.0.9@aar'
+    compile 'com.nineoldandroids:library:2.4.0'
+    //BaseRecyclerViewAdapterHelper
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //圆形图标
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.jude:easyrecyclerview:4.4.2'
+    compile 'com.flyco.dialog:FlycoDialog_Lib:1.3.2@aar'
+    compile 'com.yanzhenjie:permission:1.1.2'
+    //图片选择
+    compile 'com.github.LuckSiege.PictureSelector:picture_library:v2.0.7'
+    compile 'cn.jzvd:jiaozivideoplayer:6.1.1'
+    //EventBus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    //没有使用特殊Header，可以不加这行
+    compile 'me.wcy:lrcview:2.0.0'
+    compile 'com.github.CarGuo:RecordWave:v1.1.4'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.longsh:OptionFrame:1.0.0'
+    implementation files('libs/umeng_social_api.jar')
+    compile project(':IMKit')
+    implementation files('libs/libksyplayer.jar')
+    implementation files('libs/libksystat.jar')
+    // 导入腾讯云直播SDK aar
+    compile(name: 'LiteAVSDK_Professional_3.5.2170', ext: 'aar')
+    // 导入腾讯云直播SDK jar
+    compile fileTree(dir: 'src/main/jniLibs', includes: ['*.jar'])
+}
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_background"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y354"
+    android:layout_marginBottom="@dimen/y20"
+    android:layout_marginLeft="@dimen/x35"
+    android:layout_marginRight="@dimen/x35"
+    android:layout_marginTop="@dimen/y35"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y190">
+
+        <com.zhuye.zhengmeng.widget.RoundedCornerImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/x118"
+            android:layout_height="@dimen/x118"
+            android:layout_marginLeft="@dimen/x34"
+            android:layout_marginTop="@dimen/y35"
+            android:src="@mipmap/touxiang_re" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x37"
+            android:layout_marginTop="@dimen/y35"
+            android:text="小花猫"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/room_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/user_name"
+            android:layout_marginRight="@dimen/x37"
+            android:layout_marginTop="@dimen/y30"
+            android:text="房间名"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y164"
+        android:layout_marginLeft="@dimen/x45">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y54"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

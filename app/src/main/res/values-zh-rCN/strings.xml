@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">征梦</string>
+    <string name="app_dynamic">动态</string>
+    <string name="app_list">榜单</string>
+    <string name="app_sing">KTV</string>
+    <string name="app_shop">商城</string>
+    <string name="app_me">我的</string>
+    <string name="app_login">登录</string>
+    <string name="app_register">注册</string>
+    <string name="loading">正在加载中...</string>
+</resources>
