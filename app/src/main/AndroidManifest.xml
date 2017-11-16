@@ -203,7 +203,6 @@
 
 
         <!-- end -->
-        <activity android:name=".KTV.PaiMaiActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources  xmlns:tools="http://schemas.android.com/tools"    tools:ignore="MissingTranslation">
-
     <string-array name="date">
                 <item>北京市</item>
                 <item>天津市</item>

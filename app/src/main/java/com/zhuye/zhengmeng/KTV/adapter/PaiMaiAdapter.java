@@ -26,11 +26,6 @@ public class PaiMaiAdapter extends BaseQuickAdapter<PaiMaiBean.Data, BaseViewHol
     @Override
     protected void convert(BaseViewHolder helper, PaiMaiBean.Data item) {
         helper.setText(R.id.name_song, item.song_name);
-        helper.setText(R.id.song_size, item.user_nicename);
-        Glide.with(mContext)
-                .load(Constant.BASE_URL2 + item.avatar)
-                .centerCrop()
-                .placeholder(R.mipmap.default_img)
-                .into((ImageView) helper.getView(R.id.img_song));
+
     }
 }

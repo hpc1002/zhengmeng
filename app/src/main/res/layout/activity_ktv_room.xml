@@ -29,7 +29,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:src="@mipmap/fake_members" />
-
+        <ImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/img_show"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@+id/fake_number"/>
         <fragment
             android:id="@+id/video_view"
             android:name="com.zhuye.zhengmeng.chatRoom.fragment.VideoFragment"
@@ -47,7 +52,6 @@
             android:listSelector="@android:color/transparent"
             android:scrollbars="none"
             android:transcriptMode="alwaysScroll" />
-
         <fragment
             android:id="@+id/bottom_bar"
             android:name="com.zhuye.zhengmeng.chatRoom.fragment.BottomPanelFragment"
@@ -56,7 +60,14 @@
             android:layout_alignParentBottom="true"
             tools:layout="@layout/fragment_bottombar" />
 
-
+        <fragment
+            android:id="@+id/paimai_list"
+            android:name="com.zhuye.zhengmeng.chatRoom.fragment.PaiMaiFragment"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/fake_number"
+            tools:layout="@layout/activity_pai_mai" />
         <com.zhuye.zhengmeng.widget.animation.HeartLayout
             android:id="@+id/heart_layout"
             android:layout_width="86dp"

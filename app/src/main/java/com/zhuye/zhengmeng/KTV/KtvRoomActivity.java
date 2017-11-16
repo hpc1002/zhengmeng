@@ -1,27 +1,38 @@
 package com.zhuye.zhengmeng.KTV;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.ksyun.media.player.KSYMediaPlayer;
+import com.zhuye.zhengmeng.DataProvider;
+import com.zhuye.zhengmeng.KTV.adapter.FushiAdapter;
 import com.zhuye.zhengmeng.LiveKit;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.bangdan.DianGeListActivity;
-import com.zhuye.zhengmeng.bangdan.SongsListActivity;
 import com.zhuye.zhengmeng.chatRoom.controller.ChatListAdapter;
 import com.zhuye.zhengmeng.chatRoom.fragment.BottomPanelFragment;
 import com.zhuye.zhengmeng.chatRoom.message.GiftMessage;
-import com.zhuye.zhengmeng.utils.ToastManager;
 import com.zhuye.zhengmeng.view.MyAppTitle;
 import com.zhuye.zhengmeng.widget.ChatListView;
 import com.zhuye.zhengmeng.widget.InputPanel;
@@ -44,8 +55,8 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
     private BottomPanelFragment bottomPanel;
     private TextView btnGift;
     private TextView huanzhuang;
-    private TextView zhuanfa;
     private TextView rb_paimai;
+    private ImageView img_show;
     //    private ImageView btnHeart;
     private HeartLayout heartLayout;
     private SurfaceView surfaceView;
@@ -132,11 +143,11 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
         bottomPanel = (BottomPanelFragment) getSupportFragmentManager().findFragmentById(R.id.bottom_bar);
         btnGift = bottomPanel.getView().findViewById(R.id.btn_gift);
         huanzhuang = bottomPanel.getView().findViewById(R.id.rb_huanzhuang);
-        zhuanfa = bottomPanel.getView().findViewById(R.id.rb_zhuanfa);
         rb_paimai = bottomPanel.getView().findViewById(R.id.rb_paimai);
 //        btnHeart = bottomPanel.getView().findViewById(R.id.btn_heart);
         heartLayout = findViewById(R.id.heart_layout);
         surfaceView = findViewById(R.id.player_surface);
+        img_show = findViewById(R.id.img_show);
 
         chatListAdapter = new ChatListAdapter();
         chatListView.setAdapter(chatListAdapter);
@@ -153,28 +164,55 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
         huanzhuang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
-                ToastManager.show("换装");
+                showDialog();
+            }
+        });
 
-            }
-        });
-        zhuanfa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //
-                ToastManager.show("转发");
-            }
-        });
         rb_paimai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //
-//                Intent intent = new Intent(KtvRoomActivity.this, PaiMaiActivity.class);
                 Intent intent = new Intent(KtvRoomActivity.this, DianGeListActivity.class);
-                intent.putExtra("roomId",roomId);
+                intent.putExtra("roomId", roomId);
                 startActivity(intent);
             }
         });
+    }
+
+    private void showDialog() {
+        final Dialog dialog = new Dialog(this, R.style.style_dialog);
+        View inflate = LayoutInflater.from(this).inflate(R.layout.dialog_layout, null);
+        //初始化控件
+        EasyRecyclerView dialogRecyclerView = inflate.findViewById(R.id.dialog_recyclerView);
+        dialogRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        final FushiAdapter fushiAdapter = new FushiAdapter(R.layout.item_fushi, DataProvider.getFushiList());
+        dialogRecyclerView.setAdapter(fushiAdapter);
+        fushiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Glide.with(KtvRoomActivity.this)
+                        .load(fushiAdapter.getItem(position).image)
+                        .centerCrop()
+                        .into(img_show);
+                dialog.dismiss();
+            }
+        });
+        //将布局设置给Dialog
+        dialog.setContentView(inflate);
+        //获取当前Activity所在的窗体
+        Window dialogWindow = dialog.getWindow();
+        //设置Dialog从窗体底部弹出
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
+        //获得窗体的属性
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+
+        lp.width = LinearLayout.LayoutParams.MATCH_PARENT;//宽高可设置具体大小
+        lp.height = LinearLayout.LayoutParams.WRAP_CONTENT;//宽高可设置具体大小
+
+//       将属性设置给窗体
+        dialogWindow.setAttributes(lp);
+        dialog.show();//显示对话框
     }
 
     private void joinChatRoom(final String roomId) {

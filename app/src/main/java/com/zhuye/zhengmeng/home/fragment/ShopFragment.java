@@ -71,7 +71,8 @@ public class ShopFragment extends BaseFragment {
 
         webView.setWebChromeClient(new MyWebChromeClient());//设置可以打开图片管理器
         if (!cookie.equals("")) {
-//            Cookie cookie = new Cookie("PHPSESSID",token,"");
+//            Cookie cookie = new Cookie("PHPSESSID",token);
+
             synCookies(getActivity(), url, cookie);
 
 //            synchronousWebCookies(getActivity(), url, cookie);

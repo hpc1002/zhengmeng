@@ -13,6 +13,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.zhuye.zhengmeng.KTV.MessageEvent;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.bangdan.adapter.SonglistBean;
 import com.zhuye.zhengmeng.bangdan.adapter.SongsList2Adapter;
@@ -21,6 +22,7 @@ import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
 import com.zhuye.zhengmeng.view.MyAppTitle;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -85,57 +87,12 @@ public class DianGeListActivity extends BaseActivity {
                                         songsListAdapter.setCallBack(new SongsList2Adapter.allCheck() {
                                             @Override
                                             public void OnItemClickListener(String id) {
+                                                EventBus.getDefault().post(new MessageEvent(roomId));
                                                 finish();
+
                                             }
                                         });
-//                                        songsListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-//                                            @Override
-//                                            public void onItemChildClick(final BaseQuickAdapter adapter, View view, final int position) {
-//                                                switch (view.getId()) {
-//                                                    case R.id.btn_yanchang:
-//                                                        String song_id = songsListAdapter.getItem(position).getSong_id();
-//                                                        DreamApi.chooseSong(0x002, token, roomId, song_id, new MyCallBack() {
-//                                                            @Override
-//                                                            public void onSuccess(int what, Response<String> result) {
-//                                                                JSONObject jsonObject = null;
-//                                                                try {
-//                                                                    jsonObject = new JSONObject(result.body());
-//                                                                    int code = jsonObject.getInt("code");
-//                                                                    if (code==200){
 //
-//                                                                        TextView yanchang = findViewById(R.id.btn_yanchang);
-//                                                                        yanchang.setText("排麦");
-//                                                                        yanchang.setOnClickListener(new View.OnClickListener() {
-//                                                                            @Override
-//                                                                            public void onClick(View view) {
-//                                                                                ToastManager.show("排麦中...");
-//                                                                            }
-//                                                                        });
-//                                                                    }
-//                                                                } catch (JSONException e) {
-//                                                                    e.printStackTrace();
-//                                                                }
-//
-//                                                            }
-//
-//                                                            @Override
-//                                                            public void onFail(int what, Response<String> result) {
-//
-//                                                            }
-//
-//                                                            @Override
-//                                                            public void onFinish(int what) {
-//
-//                                                            }
-//                                                        });
-//                                                        String song_name = songsListAdapter.getItem(position).getSong_name();
-//                                                        String song_path = songsListAdapter.getItem(position).getSong_path();
-//                                                        String lyric_path = songsListAdapter.getItem(position).getLyric_path();
-//
-//                                                        break;
-//                                                }
-//                                            }
-//                                        });
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();

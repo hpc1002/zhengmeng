@@ -67,7 +67,6 @@ public class SongsList2Adapter extends BaseQuickAdapter<SonglistBean.DataBean, B
                                 helper.getView(R.id.btn_yanchang).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        ToastManager.show("ewqewq");
                                         mCallBack.OnItemClickListener(item.getSong_id());
                                     }
                                 });

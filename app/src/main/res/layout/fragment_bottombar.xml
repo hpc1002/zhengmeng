@@ -39,16 +39,6 @@
             android:textColor="#999999" />
 
         <TextView
-            android:id="@+id/rb_zhuanfa"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/tabbar_transmit"
-            android:gravity="center_horizontal"
-            android:text="转发"
-            android:textColor="#999999" />
-
-        <TextView
             android:id="@+id/rb_paimai"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

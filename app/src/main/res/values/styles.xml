@@ -59,4 +59,12 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_marginRight">15dp</item>
     </style>
+
+    <style name="style_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:scrollHorizontally">true</item>
+    </style>
 </resources>
