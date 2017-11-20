@@ -102,7 +102,9 @@ public class Constant {
     public static final String PAIMAI_LIST_URL = BASE_URL + "changba/api/ktv/mini_marker_list";
     //ktv点唱
     public static final String CHOOSE_SONG_URL = BASE_URL + "changba/api/ktv/mini_marker_add";
+    //添加银行卡
+    public static final String ADD_BANK_CARD_URL = BASE_URL + "changba/api/users/bank_card_add";
 
-
+    //融云app_key
     public static final String APP_KEY = "k51hidwqknr6b";
 }

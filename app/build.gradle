@@ -10,40 +10,51 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
         ndk {
             abiFilters "armeabi", "armeabi-v7a"
         }
+        signingConfig signingConfigs.debug
     }
-
     lintOptions {
         disable 'InvalidPackage'
         //Umeng的包里面的values-zh干扰导致问题,只要添加下面这一句就可以了
         disable 'MissingTranslation'
     }
-
     buildTypes {
         release {
             minifyEnabled false
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.debug
+        }
     }
-
     signingConfigs {
         debug {
-            storeFile file("debug.jks")
+            storeFile file('C:/git/zhengmeng/app/debug.jks')
             storePassword "123456"
             keyAlias "zhengmeng"
             keyPassword "123456"
         }
+        release {
+            InputStream inputStream = new FileInputStream("local.properties");
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            storeFile file(properties.getProperty("storeFile"))
+            storePassword properties.getProperty("storePassword")
+            keyAlias properties.getProperty("keyAlias")
+            keyPassword properties.getProperty("keyPassword")
+        }
     }
-
     //将so文件导入到lib目下配置代码
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
             assets.srcDirs = ['src/main/assets']
         }
+    }
+    productFlavors {
     }
 }
 
@@ -60,7 +71,7 @@ dependencies {
     // 歌曲
     compile 'com.just.agentweb:agentweb:2.0.1'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.0@aar'
-//    compile 'com.android.support:appcompat-v7:26.+'
+    //    compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.blankj:utilcode:1.9.2'
@@ -98,6 +109,7 @@ dependencies {
     // 导入腾讯云直播SDK aar
     compile(name: 'LiteAVSDK_Professional_3.5.2170', ext: 'aar')
     // 导入腾讯云直播SDK jar
-    compile fileTree(dir: 'src/main/jniLibs', includes: ['*.jar'])
+    compile fileTree(includes: ['*.jar'], dir: 'src/main/jniLibs')
+    implementation files('libs/BaiduLBS_Android.jar')
 }
 

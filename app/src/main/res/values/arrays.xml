@@ -182,7 +182,7 @@
                 <item>咸宁市</item>
                 <item>随州市</item>
                 <item>恩施市</item>
-                <item>省直辖行政单位</item>
+                <!--<item>省直辖行政单位</item>-->
                 <item>神农架市</item>
                 <item>长沙市</item>
                 <item>株洲市</item>
@@ -235,7 +235,7 @@
                 <item>崇左市</item>
                 <item>海口市</item>
                 <item>三亚市</item>
-                <item>省属虚拟市</item>
+                <!--<item>省属虚拟市</item>-->
                 <item>重庆市</item>
                 <item>江津市</item>
                 <item>合川市</item>

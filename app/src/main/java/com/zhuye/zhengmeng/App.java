@@ -2,8 +2,11 @@ package com.zhuye.zhengmeng;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Service;
 import android.content.Context;
+import android.os.Vibrator;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.blankj.utilcode.util.Utils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -25,6 +28,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.zhuye.zhengmeng.service.LocationService;
 import com.zhuye.zhengmeng.utils.DynamicTimeFormat;
 
 import java.util.ArrayList;
@@ -45,7 +49,8 @@ public class App extends Application {
     private List<Activity> activities = new ArrayList<Activity>();
     //记录需要一次性关闭的页面
     private List<Activity> activitys = new ArrayList<Activity>();
-
+    public LocationService locationService;
+    public Vibrator mVibrator;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -55,6 +60,12 @@ public class App extends Application {
         initOkGo();
         UMShareAPI.get(this);
         LiveKit.init(instance, Constant.APP_KEY);
+        /***
+         * 初始化定位sdk，建议在Application中创建
+         */
+        locationService = new LocationService(instance);
+        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        SDKInitializer.initialize(getApplicationContext());
     }
 
     //static 代码段可以防止内存泄露

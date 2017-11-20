@@ -104,7 +104,7 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
         tvPosition.setTextColor(getResources().getColor(R.color.black));
         platformSongs.setOnClickListener(this);
         platformCompetition.setOnClickListener(this);
-        tvQuyubang.setOnClickListener(this);
+        tvPosition.setOnClickListener(this);
         tvQuanguobang.setOnClickListener(this);
         recyclerViewA.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewB.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -163,14 +163,18 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
             case R.id.platform_competition:
                 startActivity(new Intent(getActivity(), CompetitionActivity.class));
                 break;
-            case R.id.tv_quyubang:
-//                status_area = 1;
-//                status_world = 0;
+            case R.id.tv_position:
+                ToastManager.show("郑州");
+                status_area = 1;
+                status_world = 0;
 //                tvPosition.setTextColor(getResources().getColor(R.color.red));
 //                tvQuanguobang.setTextColor(getResources().getColor(R.color.black));
-//                if (status_area == 1 && status_world == 0) {
+                if (status_area == 1 && status_world == 0) {
+
                 startActivity(new Intent(getActivity(), ChooseAddressActivity.class));
-//                }
+
+
+                }
 
 
                 ToastManager.show("加载区域数据");

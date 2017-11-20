@@ -186,8 +186,8 @@ public class ShopFragment extends BaseFragment {
                             JSONObject data = jsonObject.getJSONObject("data");
                             String url = data.getString("url");
 //                            webView.loadUrl(Constant.BASE_URL + url + "?token=" + token);
-//                            initUi(Constant.BASE_URL + url + "?token=" + token);
-                            initUi(Constant.BASE_URL + url);
+                            initUi(Constant.BASE_URL + url + "?token=" + token);
+//                            initUi(Constant.BASE_URL + url);
                             webView.setWebViewClient(new MyWebViewClient());
                         }
                     } catch (JSONException e) {

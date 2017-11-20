@@ -29,11 +29,28 @@
         android:gravity="top"
         android:hint="请填写您要发布的消息" />
 
+    <TextView
+        android:id="@+id/startLocation"
+        android:layout_below="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="定位" />
+    <TextView
+        android:id="@+id/location_address"
+        android:layout_below="@+id/editText"
+        android:layout_toRightOf="@+id/startLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp" />
     <Button
         android:id="@+id/upload"
+        android:visibility="visible"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/startLocation"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
         android:background="@drawable/upload_button_shape"
