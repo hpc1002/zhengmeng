@@ -111,5 +111,7 @@ dependencies {
     // 导入腾讯云直播SDK jar
     compile fileTree(includes: ['*.jar'], dir: 'src/main/jniLibs')
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation files('libs/umeng_social_shareboard.jar')
+    implementation files('libs/umeng_social_shareview.jar')
 }
 

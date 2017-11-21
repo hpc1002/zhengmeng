@@ -62,7 +62,16 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/x20"
                     android:textColor="@color/white" />
-
+                <TextView
+                    android:id="@+id/tv_collect"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_toLeftOf="@+id/follow_state"
+                    android:layout_below="@+id/nickname"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/x20"
+                    android:textColor="@color/white" />
                 <TextView
                     android:id="@+id/sign_name"
                     android:layout_width="match_parent"

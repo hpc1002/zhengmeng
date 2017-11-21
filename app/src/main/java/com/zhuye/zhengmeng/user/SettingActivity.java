@@ -7,8 +7,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zhuye.zhengmeng.R;
+import com.zhuye.zhengmeng.activity.register.RegisterActivity;
 import com.zhuye.zhengmeng.base.BaseActivity;
 import com.zhuye.zhengmeng.view.MyAppTitle;
 
@@ -94,7 +96,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.logout:
                 //退出登录
-                break;
+                SPUtils.getInstance("userInfo").put("user_nicename", "");//用户名
+                SPUtils.getInstance("userInfo").put("avatar", "");//头像
+                SPUtils.getInstance("userInfo").put("userId", "");//融云Id
+                SPUtils.getInstance("userInfo").put("rongcloudToken", "");//融云token
+                startActivity(new Intent(SettingActivity.this, RegisterActivity.class));
             default:
                 break;
         }

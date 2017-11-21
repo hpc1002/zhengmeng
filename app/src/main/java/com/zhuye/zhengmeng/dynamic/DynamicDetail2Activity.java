@@ -3,6 +3,7 @@ package com.zhuye.zhengmeng.dynamic;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
@@ -43,7 +45,15 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.utils.Log;
 import com.zhuye.zhengmeng.Constant;
+import com.zhuye.zhengmeng.Defaultcontent;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.bangdan.SongsListActivity;
 import com.zhuye.zhengmeng.bangdan.recording.QAudioActivity;
@@ -52,7 +62,6 @@ import com.zhuye.zhengmeng.base.BaseActivity;
 import com.zhuye.zhengmeng.dynamic.adapter.CommentListAdapter;
 import com.zhuye.zhengmeng.dynamic.bean.CommentListBean;
 import com.zhuye.zhengmeng.dynamic.bean.FansContributionBean;
-import com.zhuye.zhengmeng.home.fragment.ShopFragment;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
 import com.zhuye.zhengmeng.user.adapter.FansContributionAdapter;
@@ -64,6 +73,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +124,9 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
     int page = 1;
     private KSYMediaPlayer ksyMediaPlayer;
     private SurfaceHolder surfaceHolder;
+
+    private UMShareListener mShareListener;
+    private ShareAction mShareAction;
 
     private IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
@@ -177,6 +190,86 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
         rbComment.setOnClickListener(this);
         rbZhuanfa.setOnClickListener(this);
         rbPerform.setOnClickListener(this);
+
+        mShareListener = new CustomShareListener(this);
+        UMWeb web = new UMWeb(Defaultcontent.url);
+        web.setTitle("这是标题");//标题
+        web.setThumb(new UMImage(DynamicDetail2Activity.this, Defaultcontent.imageurl));  //缩略图
+        web.setDescription("征梦科技");//描述
+        /*无自定按钮的分享面板*/
+        mShareAction = new ShareAction(DynamicDetail2Activity.this).setDisplayList(
+                SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE,
+                SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE)
+//                .withText(Defaultcontent.text + "来自友盟自定义分享面板")
+                .withMedia(web)
+                .setCallback(mShareListener);
+
+    }
+
+    private static class CustomShareListener implements UMShareListener {
+
+        private WeakReference<DynamicDetail2Activity> mActivity;
+
+        private CustomShareListener(DynamicDetail2Activity activity) {
+            mActivity = new WeakReference(activity);
+        }
+
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+
+            if (platform.name().equals("WEIXIN_FAVORITE")) {
+                Toast.makeText(mActivity.get(), platform + " 收藏成功啦", Toast.LENGTH_SHORT).show();
+            } else {
+                if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
+                        && platform != SHARE_MEDIA.EMAIL
+                        && platform != SHARE_MEDIA.FLICKR
+                        && platform != SHARE_MEDIA.FOURSQUARE
+                        && platform != SHARE_MEDIA.TUMBLR
+                        && platform != SHARE_MEDIA.POCKET
+                        && platform != SHARE_MEDIA.PINTEREST
+
+                        && platform != SHARE_MEDIA.INSTAGRAM
+                        && platform != SHARE_MEDIA.GOOGLEPLUS
+                        && platform != SHARE_MEDIA.YNOTE
+                        && platform != SHARE_MEDIA.EVERNOTE) {
+                    Toast.makeText(mActivity.get(), platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
+                    && platform != SHARE_MEDIA.EMAIL
+                    && platform != SHARE_MEDIA.FLICKR
+                    && platform != SHARE_MEDIA.FOURSQUARE
+                    && platform != SHARE_MEDIA.TUMBLR
+                    && platform != SHARE_MEDIA.POCKET
+                    && platform != SHARE_MEDIA.PINTEREST
+
+                    && platform != SHARE_MEDIA.INSTAGRAM
+                    && platform != SHARE_MEDIA.GOOGLEPLUS
+                    && platform != SHARE_MEDIA.YNOTE
+                    && platform != SHARE_MEDIA.EVERNOTE) {
+                Toast.makeText(mActivity.get(), platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+                if (t != null) {
+                    Log.d("throw", "throw:" + t.getMessage());
+                }
+            }
+
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+
+            Toast.makeText(mActivity.get(), platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void playShow(String url) {
@@ -385,7 +478,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                             webSettings.setAllowFileAccess(true);
                             webSettings.setAllowFileAccessFromFileURLs(true);
                             webSettings.setAllowUniversalAccessFromFileURLs(true);
-                           String cookie = SPUtils.getInstance("userInfo").getString("cookie");
+                            String cookie = SPUtils.getInstance("userInfo").getString("cookie");
                             synchronousWebCookies(DynamicDetail2Activity.this, url, cookie);
                             webView.loadUrl(url);
                             popupInputMethodWindow();
@@ -413,6 +506,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
 
         }
     };
+
     public static void synchronousWebCookies(Context context, String url, String cookies) {
         if (!TextUtils.isEmpty(url))
             if (!TextUtils.isEmpty(cookies)) {
@@ -434,6 +528,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
 
             }
     }
+
     private void initUi(final List<CommentListBean.Data> datas) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         commentListAdapter = new CommentListAdapter(R.layout.item_comment, datas, this);
@@ -649,7 +744,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                 break;
             case R.id.rb_zhuanfa:
                 //转发
-                ToastManager.show("转发");
+                mShareAction.open();
                 break;
             default:
                 break;
@@ -693,5 +788,21 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /** attention to this below ,must add this**/
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 屏幕横竖屏切换时避免出现window leak的问题
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mShareAction.close();
     }
 }

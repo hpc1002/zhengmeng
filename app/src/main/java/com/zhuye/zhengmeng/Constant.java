@@ -104,6 +104,8 @@ public class Constant {
     public static final String CHOOSE_SONG_URL = BASE_URL + "changba/api/ktv/mini_marker_add";
     //添加银行卡
     public static final String ADD_BANK_CARD_URL = BASE_URL + "changba/api/users/bank_card_add";
+    //删除银行卡
+    public static final String DELETE_BANK_CARD_URL = BASE_URL + "changba/api/users/bank_card_del";
 
     //融云app_key
     public static final String APP_KEY = "k51hidwqknr6b";

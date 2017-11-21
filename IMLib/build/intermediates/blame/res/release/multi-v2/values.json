@@ -1,0 +1,82 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\git\\zhengmeng\\IMLib\\build\\intermediates\\incremental\\mergeReleaseResources\\merged.dir\\values\\values.xml",
+            "map": [
+                {
+                    "source": "C:\\git\\zhengmeng\\IMLib\\res\\values\\rc_configuration.xml",
+                    "from": {
+                        "startLines": "14,10,3,6,8,16,12",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "490,305,85,166,235,606,376",
+                        "endColumns": "50,46,61,49,47,53,80",
+                        "endOffsets": "536,347,142,211,278,655,452"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,10",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,106,153,215,265,313,479",
+                        "endColumns": "50,46,61,49,47,53,80",
+                        "endOffsets": "101,148,210,260,308,362,555"
+                    }
+                },
+                {
+                    "source": "C:\\git\\zhengmeng\\IMLib\\res\\values\\rc_lib_string.xml",
+                    "from": {
+                        "startLines": "4,5,8,9,7,3",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "113,163,291,358,226,56",
+                        "endColumns": "49,61,66,77,64,56",
+                        "endOffsets": "158,220,353,431,286,108"
+                    },
+                    "to": {
+                        "startLines": "8,9,11,12,13,14",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "367,417,560,627,705,770",
+                        "endColumns": "49,61,66,77,64,56",
+                        "endOffsets": "412,474,622,700,765,822"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\git\\zhengmeng\\IMLib\\build\\intermediates\\res\\merged\\release\\values\\values.xml",
+            "map": [
+                {
+                    "source": "C:\\git\\zhengmeng\\IMLib\\res\\values\\rc_configuration.xml",
+                    "from": {
+                        "startLines": "14,10,3,6,8,16,12",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "490,305,85,166,235,606,376",
+                        "endColumns": "50,46,61,49,47,53,80",
+                        "endOffsets": "536,347,142,211,278,655,452"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,10",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,106,153,215,265,313,479",
+                        "endColumns": "50,46,61,49,47,53,80",
+                        "endOffsets": "101,148,210,260,308,362,555"
+                    }
+                },
+                {
+                    "source": "C:\\git\\zhengmeng\\IMLib\\res\\values\\rc_lib_string.xml",
+                    "from": {
+                        "startLines": "4,5,8,9,7,3",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "113,163,291,358,226,56",
+                        "endColumns": "49,61,66,77,64,56",
+                        "endOffsets": "158,220,353,431,286,108"
+                    },
+                    "to": {
+                        "startLines": "8,9,11,12,13,14",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "367,417,560,627,705,770",
+                        "endColumns": "49,61,66,77,64,56",
+                        "endOffsets": "412,474,622,700,765,822"
+                    }
+                }
+            ]
+        }
+    ]
+}

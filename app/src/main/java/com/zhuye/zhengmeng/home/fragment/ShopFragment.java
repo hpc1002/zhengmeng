@@ -70,14 +70,14 @@ public class ShopFragment extends BaseFragment {
         webSettings.setAllowUniversalAccessFromFileURLs(true);
 
         webView.setWebChromeClient(new MyWebChromeClient());//设置可以打开图片管理器
-        if (!cookie.equals("")) {
+//        if (!cookie.equals("")) {
 //            Cookie cookie = new Cookie("PHPSESSID",token);
 
-            synCookies(getActivity(), url, cookie);
+            synCookies(getActivity(), url, token);
 
 //            synchronousWebCookies(getActivity(), url, cookie);
             webView.loadUrl(url);
-        }
+//        }
 
     }
 
@@ -246,7 +246,7 @@ public class ShopFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        cookie = SPUtils.getInstance("userInfo").getString("cookie");
-        DreamApi.getShopWebUrl(0x001, token, myCallBack);
+//        cookie = SPUtils.getInstance("userInfo").getString("cookie");
+//        DreamApi.getShopWebUrl(0x001, token, myCallBack);
     }
 }

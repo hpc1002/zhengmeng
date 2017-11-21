@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.lzy.okgo.model.Response;
@@ -19,6 +20,7 @@ import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
 import com.zhuye.zhengmeng.user.adapter.BankCardListAdapter;
 import com.zhuye.zhengmeng.user.bean.BankCardListBean;
+import com.zhuye.zhengmeng.utils.ToastManager;
 import com.zhuye.zhengmeng.view.MyAppTitle;
 
 import org.json.JSONException;
@@ -102,6 +104,38 @@ public class MyBankCardActivity extends BaseActivity implements OnRefreshListene
                         recyclerView.setLayoutManager(new LinearLayoutManager(MyBankCardActivity.this));
 
                         bankCardListAdapter = new BankCardListAdapter(R.layout.item_bank_card, data);
+                        bankCardListAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+                            @Override
+                            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                                int bank_card_id = bankCardListAdapter.getItem(position).bank_card_id;
+                                DreamApi.deleteBankCard(0x002, token, bank_card_id, new MyCallBack() {
+                                    @Override
+                                    public void onSuccess(int what, Response<String> result) {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(result.body());
+                                            int code = jsonObject.getInt("code");
+                                            if (code == 200) {
+                                                ToastManager.show(jsonObject.getString("msg"));
+                                                refreshlayout.autoRefresh();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFail(int what, Response<String> result) {
+
+                                    }
+
+                                    @Override
+                                    public void onFinish(int what) {
+
+                                    }
+                                });
+                                return false;
+                            }
+                        });
                         recyclerView.setAdapter(bankCardListAdapter);
                         if (data == null) {
                             bankCardListAdapter.setEmptyView(R.layout.empty, recyclerView);
@@ -160,6 +194,12 @@ public class MyBankCardActivity extends BaseActivity implements OnRefreshListene
                 refreshlayout.finishRefresh();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshLayout.autoRefresh();
     }
 
     @Override

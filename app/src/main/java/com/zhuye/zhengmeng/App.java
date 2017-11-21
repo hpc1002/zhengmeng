@@ -149,6 +149,7 @@ public class App extends Application {
         PlatformConfig.setSinaWeibo("4062334712", "367000f6a77325c3ebfe25afd1b7ece2", "http://sns.whalecloud.com/sina2/callback");
         //QQ
         PlatformConfig.setQQZone("1106431205", "9RV38cc6xTSHXJbp");
+//        PlatformConfig.setQQZone("1106464520", "LQu455zRP3RwbATK");
     }
 
     /**
