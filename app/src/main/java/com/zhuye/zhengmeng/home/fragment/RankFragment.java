@@ -64,7 +64,7 @@ public class RankFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        DreamApi.getBangDanList(0x001, token, myCallBack);
+        DreamApi.getBangDanList(0x001, token,"", myCallBack);
     }
 
     private MyCallBack myCallBack = new MyCallBack() {

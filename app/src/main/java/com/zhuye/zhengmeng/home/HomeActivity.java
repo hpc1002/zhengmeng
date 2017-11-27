@@ -6,13 +6,21 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.blankj.utilcode.util.SPUtils;
 import com.tencent.rtmp.TXLiveBase;
 import com.zhuye.zhengmeng.App;
+import com.zhuye.zhengmeng.KTV.MessageEvent;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseActivity;
 import com.zhuye.zhengmeng.home.fragment.FragmentController;
+import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.utils.ToastManager;
 import com.zhuye.zhengmeng.utils.UIThread;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
@@ -108,5 +116,9 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void onDestroy() {
         super.onDestroy();
         FragmentController.onDestroy();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

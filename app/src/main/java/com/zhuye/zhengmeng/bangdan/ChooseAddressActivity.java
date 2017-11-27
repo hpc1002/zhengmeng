@@ -1,6 +1,7 @@
 package com.zhuye.zhengmeng.bangdan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.lzy.okgo.OkGo;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.bangdan.adapter.ListSortAdapter;
@@ -19,6 +21,8 @@ import com.zhuye.zhengmeng.base.BaseActivity;
 import com.zhuye.zhengmeng.utils.CharacterParser;
 import com.zhuye.zhengmeng.utils.PinyinComparator;
 import com.zhuye.zhengmeng.view.MyAppTitle;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,6 +72,7 @@ public class ChooseAddressActivity extends BaseActivity {
     protected void setListener() {
         setTitle();
         initViews();
+
     }
 
     private void setTitle() {
@@ -143,9 +148,12 @@ public class ChooseAddressActivity extends BaseActivity {
                                     int position, long id) {
                 if (position > 0) {
                     Toast.makeText(getApplication(), ((SortModel) adapter.getItem(position - 1)).getName(), Toast.LENGTH_SHORT).show();
-                    SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
-                    sp.edit().putString("Location", ((SortModel) adapter.getItem(position - 1)).getName()).commit();
-                    finish();
+//                    SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
+//                    sp.edit().putString("Location", ((SortModel) adapter.getItem(position - 1)).getName()).apply();
+                    Intent intent = getIntent();
+                    intent.putExtra("address",((SortModel) adapter.getItem(position - 1)).getName());
+                    ChooseAddressActivity.this.setResult(0,intent);
+                    ChooseAddressActivity.this.finish();
                 }
             }
         });

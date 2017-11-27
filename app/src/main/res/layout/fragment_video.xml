@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.tencent.rtmp.ui.TXCloudVideoView
-        android:id="@+id/video_view"
+        android:id="@+id/pull_media"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 </LinearLayout>

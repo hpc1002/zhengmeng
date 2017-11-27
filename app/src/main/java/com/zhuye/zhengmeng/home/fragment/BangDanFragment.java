@@ -1,10 +1,12 @@
 package com.zhuye.zhengmeng.home.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +28,6 @@ import com.zhuye.zhengmeng.bangdan.CompetitionActivity;
 import com.zhuye.zhengmeng.bangdan.SongsListActivity;
 import com.zhuye.zhengmeng.base.BaseNoFragment;
 import com.zhuye.zhengmeng.dynamic.DynamicDetail2Activity;
-import com.zhuye.zhengmeng.dynamic.DynamicDetailActivity;
 import com.zhuye.zhengmeng.home.adapter.BGABannerAdapter;
 import com.zhuye.zhengmeng.home.bean.BangDanListBean;
 import com.zhuye.zhengmeng.home.bean.BannerDto;
@@ -89,6 +90,8 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
     private RecyclerArrayAdapter<BangDanListBean.Data> adapterA;
     private RecyclerArrayAdapter<BangDanListBean.Data> adapterB;
     private RecyclerArrayAdapter<BangDanListBean.Data> adapterC;
+    private SharedPreferences sp;
+    private static final String TAG = "BangDanFragment";
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
@@ -123,7 +126,7 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
     @Override
     protected void initData() {
         getBannerData();
-        DreamApi.getBangDanList(0x001, token, myCallBack);
+        DreamApi.getBangDanList(0x001, token, "", myCallBack);
     }
 
     private void getBannerData() {
@@ -164,23 +167,15 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
                 startActivity(new Intent(getActivity(), CompetitionActivity.class));
                 break;
             case R.id.tv_position:
-                ToastManager.show("郑州");
                 status_area = 1;
                 status_world = 0;
-//                tvPosition.setTextColor(getResources().getColor(R.color.red));
-//                tvQuanguobang.setTextColor(getResources().getColor(R.color.black));
+                tvPosition.setTextColor(getResources().getColor(R.color.red));
+                tvQuanguobang.setTextColor(getResources().getColor(R.color.black));
                 if (status_area == 1 && status_world == 0) {
-
-                startActivity(new Intent(getActivity(), ChooseAddressActivity.class));
-
-
+                    Intent intent1 = new Intent(getActivity(), ChooseAddressActivity.class);
+//                    intent1.putExtra("now", tvPosition.getText().toString().trim());
+                    startActivityForResult(intent1, 0);
                 }
-
-
-                ToastManager.show("加载区域数据");
-                // TODO: 2017/11/2 加载区域数据
-
-
                 break;
             case R.id.tv_quanguobang:
                 // TODO: 2017/11/2 加载全国数据
@@ -188,8 +183,21 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
                 status_world = 1;
                 tvQuanguobang.setTextColor(getResources().getColor(R.color.red));
                 tvPosition.setTextColor(getResources().getColor(R.color.black));
-                DreamApi.getBangDanList(0x001, token, myCallBack);
+                DreamApi.getBangDanList(0x001, token, "", myCallBack);
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 0) {
+            //获取Bundle中的数据
+            Bundle bundle = data.getExtras();
+            String address = bundle.getString("address");
+            //修改编辑框的内容
+           tvPosition.setText(address);
+            DreamApi.getBangDanList(0x001, token, address, myCallBack);
         }
     }
 
@@ -216,7 +224,14 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
 
         @Override
         public void onFail(int what, Response<String> result) {
-
+            switch (what){
+                case 0x001:
+                    String body = result.body();
+                    if (body==null){
+                      ToastManager.show("暂无数据");
+                    }
+                    break;
+            }
         }
 
         @Override
@@ -280,5 +295,16 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

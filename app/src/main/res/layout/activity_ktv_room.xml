@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
     android:layout_width="match_parent"
@@ -18,30 +19,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <SurfaceView
-            android:id="@+id/player_surface"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/release"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="放麦" />
+
 
         <ImageView
             android:id="@+id/fake_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:src="@mipmap/fake_members" />
+            android:src="@mipmap/fake_members"
+            android:visibility="gone" />
+
+        <me.wcy.lrcview.LrcView
+            android:id="@+id/lrc_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_above="@+id/bottom_rl"
+            android:layout_alignParentTop="true"
+            app:lrcAnimationDuration="1000"
+            app:lrcCurrentTextColor="#FFFFFF"
+            app:lrcDividerHeight="24dp"
+            app:lrcLabel="加载中..."
+            app:lrcNormalTextColor="#BDBDBD"
+            app:lrcPadding="40dp"
+            app:lrcTextSize="16sp"
+            app:lrcTimeTextColor="#BDBDBD"
+            app:lrcTimelineColor="#80BDBDBD"
+            app:lrcTimelineTextColor="#9FA8DA" />
+
+        <SeekBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <com.tencent.rtmp.ui.TXCloudVideoView
+            android:id="@+id/pull_media"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/lrc_view"
+            android:visibility="gone" />
+
+        <com.tencent.rtmp.ui.TXCloudVideoView
+            android:id="@+id/push_media"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/pull_media"
+            android:visibility="gone" />
+
         <ImageView
-            android:layout_centerInParent="true"
             android:id="@+id/img_show"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_below="@+id/fake_number"/>
-        <fragment
-            android:id="@+id/video_view"
-            android:name="com.zhuye.zhengmeng.chatRoom.fragment.VideoFragment"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_below="@+id/fake_number"
-            tools:layout="@layout/fragment_video" />
+            android:layout_below="@+id/pull_media"
+            android:layout_centerInParent="true" />
 
         <com.zhuye.zhengmeng.widget.ChatListView
             android:id="@+id/chat_listview"
@@ -52,6 +87,7 @@
             android:listSelector="@android:color/transparent"
             android:scrollbars="none"
             android:transcriptMode="alwaysScroll" />
+
         <fragment
             android:id="@+id/bottom_bar"
             android:name="com.zhuye.zhengmeng.chatRoom.fragment.BottomPanelFragment"
@@ -60,14 +96,24 @@
             android:layout_alignParentBottom="true"
             tools:layout="@layout/fragment_bottombar" />
 
-        <fragment
-            android:id="@+id/paimai_list"
-            android:name="com.zhuye.zhengmeng.chatRoom.fragment.PaiMaiFragment"
-            android:layout_width="100dp"
+        <TextView
+            android:id="@+id/tv_next_song"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/fake_number"
-            tools:layout="@layout/activity_pai_mai" />
+            android:layout_below="@+id/lrc_view"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/colorPrimary" />
+
+        <!--<fragment-->
+        <!--android:id="@+id/paimai_list"-->
+        <!--android:name="com.zhuye.zhengmeng.chatRoom.fragment.NextSongFragment"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_below="@+id/fake_number"-->
+        <!--tools:layout="@layout/activity_pai_mai" />-->
+
         <com.zhuye.zhengmeng.widget.animation.HeartLayout
             android:id="@+id/heart_layout"
             android:layout_width="86dp"

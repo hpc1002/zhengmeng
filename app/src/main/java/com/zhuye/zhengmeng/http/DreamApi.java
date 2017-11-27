@@ -66,14 +66,14 @@ public class DreamApi {
 
     //登录接口
     public static void login(Activity context, final int what, String type, String mobile,
-                             String password, String usid, String avatar, String sex,
+                             String password, String openid, String avatar, String sex,
                              String user_nicename, final MyCallBack myCallBack) {
         OkGo.<String>post(Constant.LOGIN_URL)
                 .tag(App.getInstance())
                 .params("type", type)
                 .params("mobile", mobile)
                 .params("password", password)
-                .params("usid", usid)
+                .params("openid", openid)
                 .params("avatar", avatar)
                 .params("sex", sex)
                 .params("user_nicename", user_nicename)
@@ -800,11 +800,12 @@ public class DreamApi {
     }
 
     //榜单列表
-    public static void getBangDanList(final int what, String token,
+    public static void getBangDanList(final int what, String token,String city,
                                       final MyCallBack myCallBack) {
         OkGo.<String>post(Constant.BANGDAN_LIST_URL)
                 .tag(App.getInstance())
                 .params("token", token)
+                .params("city", city)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -1134,13 +1135,94 @@ public class DreamApi {
                     }
                 });
     }
+
     //删除银行卡
     public static void deleteBankCard(final int what, String token,
-                                   int bank_card_id, final MyCallBack myCallBack) {
+                                      int bank_card_id, final MyCallBack myCallBack) {
         OkGo.<String>post(Constant.DELETE_BANK_CARD_URL)
                 .tag(App.getInstance())
                 .params("token", token)
                 .params("bank_card_id", bank_card_id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        myCallBack.onFinish(what);
+                    }
+                });
+    }
+
+    //获取下首歌曲播放文件
+    public static void getNextSongPlay(final int what, String token,
+                                       String apartment_id, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.NEXT_SONG_PLAY_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .params("apartment_id", apartment_id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        myCallBack.onFinish(what);
+                    }
+                });
+    }
+    //房间是否有人在唱
+    public static void isSinging(final int what, String token,
+                                       String apartment_id, String is_play, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.IF_SING_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .params("is_play", is_play)
+                .params("apartment_id", apartment_id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        myCallBack.onFinish(what);
+                    }
+                });
+    }
+    //歌曲是否有人在唱
+    public static void isSongSinging(final int what,
+                                 String apartment_id, String is_sing, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.IF_SING_SONG_URL)
+                .tag(App.getInstance())
+                .params("is_sing", is_sing)
+                .params("apartment_id", apartment_id)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
