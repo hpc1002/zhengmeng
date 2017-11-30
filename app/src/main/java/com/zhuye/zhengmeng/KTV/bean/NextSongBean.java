@@ -16,6 +16,7 @@ public class NextSongBean {
         public String lyric_path;
         public String user_id;
         public String is_play;
+        public String avatar;
 
     }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.zhuye.zhengmeng.view.MyAppTitle
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="#f75153"
+        android:paddingTop="28dp" />
+
+    <cn.bingoogolapple.bgabanner.BGABanner
+        android:id="@+id/shop_banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:banner_indicatorGravity="center_horizontal"
+        app:banner_pageChangeDuration="1000"
+        app:banner_pointAutoPlayAble="true"
+        app:banner_pointContainerBackground="#00000000"
+        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+        app:banner_pointTopBottomMargin="5dp"
+        app:banner_tipTextColor="@color/white"
+        app:banner_tipTextSize="15dp"
+        app:banner_transitionEffect="defaultEffect" />
+    <FrameLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

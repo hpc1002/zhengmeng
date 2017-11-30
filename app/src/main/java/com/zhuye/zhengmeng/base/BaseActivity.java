@@ -2,6 +2,7 @@ package com.zhuye.zhengmeng.base;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zhuye.zhengmeng.App;
 import com.zhuye.zhengmeng.R;
+import com.zhuye.zhengmeng.utils.NetWorkStateReceiver;
 
 import butterknife.ButterKnife;
 
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     private ConnectivityManager manager;
-
+    NetWorkStateReceiver netWorkStateReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +143,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
+        if (netWorkStateReceiver == null) {
+            netWorkStateReceiver = new NetWorkStateReceiver();
+        }
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(netWorkStateReceiver, filter);
+        System.out.println("注册");
         super.onResume();
 //		StatService.onPause(mContext);
     }
@@ -148,6 +157,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         // TODO Auto-generated method stub
+        unregisterReceiver(netWorkStateReceiver);
+        System.out.println("注销");
         super.onPause();
     }
 

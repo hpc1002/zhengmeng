@@ -191,7 +191,7 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == 0) {
+        if (requestCode == 0 && resultCode == 0&&data!=null) {
             //获取Bundle中的数据
             Bundle bundle = data.getExtras();
             String address = bundle.getString("address");
@@ -300,7 +300,7 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-
+        DreamApi.getBangDanList(0x001, token, "", myCallBack);
     }
 
     @Override

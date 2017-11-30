@@ -5,7 +5,8 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#221a1d"
+    android:keepScreenOn="true"
+    android:background="#fff"
     android:orientation="vertical">
 
     <com.zhuye.zhengmeng.view.MyAppTitle
@@ -19,11 +20,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
+        <ImageView
             android:id="@+id/release"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="放麦" />
+            android:src="@mipmap/close_0" />
 
 
         <ImageView
@@ -41,12 +44,13 @@
             android:layout_above="@+id/bottom_rl"
             android:layout_alignParentTop="true"
             app:lrcAnimationDuration="1000"
-            app:lrcCurrentTextColor="#FFFFFF"
+            app:lrcCurrentTextColor="#F86A6B"
             app:lrcDividerHeight="24dp"
             app:lrcLabel="加载中..."
             app:lrcNormalTextColor="#BDBDBD"
             app:lrcPadding="40dp"
             app:lrcTextSize="16sp"
+            android:visibility="invisible"
             app:lrcTimeTextColor="#BDBDBD"
             app:lrcTimelineColor="#80BDBDBD"
             app:lrcTimelineTextColor="#9FA8DA" />
@@ -60,24 +64,27 @@
         <com.tencent.rtmp.ui.TXCloudVideoView
             android:id="@+id/pull_media"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:layout_below="@+id/lrc_view"
             android:visibility="gone" />
 
         <com.tencent.rtmp.ui.TXCloudVideoView
             android:id="@+id/push_media"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
             android:layout_below="@+id/pull_media"
             android:visibility="gone" />
 
         <ImageView
             android:id="@+id/img_show"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_below="@+id/pull_media"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_below="@+id/lrc_view"
             android:layout_centerInParent="true" />
-
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <com.zhuye.zhengmeng.widget.ChatListView
             android:id="@+id/chat_listview"
             android:layout_width="230dp"

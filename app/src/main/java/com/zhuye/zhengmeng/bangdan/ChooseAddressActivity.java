@@ -147,7 +147,7 @@ public class ChooseAddressActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (position > 0) {
-                    Toast.makeText(getApplication(), ((SortModel) adapter.getItem(position - 1)).getName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplication(), ((SortModel) adapter.getItem(position - 1)).getName(), Toast.LENGTH_SHORT).show();
 //                    SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
 //                    sp.edit().putString("Location", ((SortModel) adapter.getItem(position - 1)).getName()).apply();
                     Intent intent = getIntent();
