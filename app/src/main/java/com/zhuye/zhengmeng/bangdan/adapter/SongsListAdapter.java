@@ -53,7 +53,7 @@ public class SongsListAdapter extends BaseQuickAdapter<SonglistBean.DataBean, Ba
         Glide.with(mContext)
                 .load(Constant.BASE_URL2 + item.getSong_img())
                 .centerCrop()
-                .placeholder(R.mipmap.default_img)
+                .placeholder(R.mipmap.audio_0)
                 .into((ImageView) helper.getView(R.id.img_song));
     }
 }

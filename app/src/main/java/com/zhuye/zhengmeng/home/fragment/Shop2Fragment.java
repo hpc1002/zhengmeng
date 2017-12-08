@@ -12,7 +12,15 @@ import com.lzy.okgo.model.Response;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseFragment;
 import com.zhuye.zhengmeng.http.MyCallBack;
+import com.zhuye.zhengmeng.shop.fragment.ClothShopFragment;
+import com.zhuye.zhengmeng.shop.fragment.GiftShopFragment;
+import com.zhuye.zhengmeng.user.fragment.ReceiveFragment;
+import com.zhuye.zhengmeng.user.fragment.SendFragment;
 import com.zhuye.zhengmeng.view.MyAppTitle;
+import com.zhuye.zhengmeng.widget.SmartTab.SmartTabLayout;
+import com.zhuye.zhengmeng.widget.SmartTab.UtilsV4.v4.FragmentPagerItem;
+import com.zhuye.zhengmeng.widget.SmartTab.UtilsV4.v4.FragmentPagerItemAdapter;
+import com.zhuye.zhengmeng.widget.SmartTab.UtilsV4.v4.FragmentPagerItems;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,17 +47,27 @@ public class Shop2Fragment extends BaseFragment {
     Unbinder unbinder;
     private String token;
 
-
+    private View view;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_shop2, container, false);
+
+        view = inflater.inflate(R.layout.fragment_shop2, container, false);
+        return view;
     }
 
     @Override
     protected void initListener() {
         setShopTitle();
         token = SPUtils.getInstance("userInfo").getString("token");
-
+        tab.addView(LayoutInflater.from(getActivity()).inflate(R.layout.tab_top_layout, tab, false));
+        SmartTabLayout viewPagerTab = (SmartTabLayout) view.findViewById(R.id.viewpagertab);
+        FragmentPagerItems pages = new FragmentPagerItems(getActivity());
+        pages.add(FragmentPagerItem.of("礼物", GiftShopFragment.class));
+//        pages.add(FragmentPagerItem.of("服装", ClothShopFragment.class));
+        pages.add(FragmentPagerItem.of("服装", GiftShopFragment.class));
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
+        viewpager.setAdapter(adapter);
+        viewPagerTab.setViewPager(viewpager);
     }
 
     @Override

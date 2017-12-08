@@ -100,6 +100,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 SPUtils.getInstance("userInfo").put("avatar", "");//头像
                 SPUtils.getInstance("userInfo").put("userId", "");//融云Id
                 SPUtils.getInstance("userInfo").put("rongcloudToken", "");//融云token
+                SPUtils.getInstance("userInfo").put("token", "");//token
                 startActivity(new Intent(SettingActivity.this, RegisterActivity.class));
             default:
                 break;

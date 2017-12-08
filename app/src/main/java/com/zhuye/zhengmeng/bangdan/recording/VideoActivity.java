@@ -139,6 +139,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     repared = true;
+                    mediaPlayer.start();
                 }
             });
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -523,7 +524,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
             int checkCallPhonePermission = ContextCompat.checkSelfPermission(VideoActivity.this, Manifest.permission.CAMERA);
             int checkCallPhonePermission2 = ContextCompat.checkSelfPermission(VideoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             int checkCallPhonePermission3 = ContextCompat.checkSelfPermission(VideoActivity.this, Manifest.permission.RECORD_AUDIO);
-            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED && checkCallPhonePermission2 != PackageManager.PERMISSION_GRANTED && checkCallPhonePermission3 != PackageManager.PERMISSION_GRANTED) {
+            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED || checkCallPhonePermission2 != PackageManager.PERMISSION_GRANTED || checkCallPhonePermission3 != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(VideoActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, REQUEST_CODE_ASK_CALL_PHONE);
                 return;
             } else {

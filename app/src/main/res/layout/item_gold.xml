@@ -8,9 +8,8 @@
     <ImageView
         android:id="@+id/iv_gold_item"
         android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/gold_background" />
+        android:layout_width="100dp"
+        android:layout_height="50dp" />
 
     <TextView
         android:id="@+id/gold_number"
@@ -18,4 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="5元" />
+    <TextView
+        android:id="@+id/vip_time"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp" />
 </LinearLayout>

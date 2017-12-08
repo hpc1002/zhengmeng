@@ -113,5 +113,7 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/umeng_social_shareboard.jar')
     implementation files('libs/umeng_social_shareview.jar')
+    implementation files('libs/libammsdk.jar')
+    implementation files('libs/alipaySdk-20170922.jar')
 }
 

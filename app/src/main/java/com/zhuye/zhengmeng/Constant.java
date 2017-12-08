@@ -120,6 +120,25 @@ public class Constant {
     public static final String GET_PULL_URL = BASE_URL + "ktv/get_la";
     //获取推流地址
     public static final String GET_PUSH_URL = BASE_URL + "ktv/get_tui";
+
+    //获取商品列表
+    public static final String GET_GOOD_LIST_URL = BASE_URL + "gift/android_gift_list";
+    //购买商品
+    public static final String BUY_GOOD_URL = BASE_URL + "gift/android_buy_gift";
+    //详情礼物列表
+    public static final String GOOD_DETAIL_LIST_URL = BASE_URL + "gift/android_p_gift_list";
+    //背包礼物赠送
+    public static final String PACKAGE_GIFT_SEND__URL = BASE_URL + "gift/android_p_gift_send";
+    //商城礼物赠送
+    public static final String SHOP_GIFT_SEND__URL = BASE_URL + "gift/android_shop_send";
+    //会员价格 列表
+    public static final String VIP_PRICE_LIST__URL = BASE_URL + "users/vip_list";
+    //微信支付
+    public static final String WEXIN_PAY_URL = BASE_URL + "payment/weixin_payment";
+    //阿里支付
+    public static final String AL_PAY_URL = BASE_URL + "payment/alipay_payment";
+    //提现
+    public static final String TIXIAN_URL = BASE_URL + "users/withdraw_deposit";
 //    //注册
 //    public static final String REGISTER_URL = BASE_URL + "changba/api/users/register";
 //    //登录
@@ -229,4 +248,6 @@ public class Constant {
 //    public static final String GET_PUSH_URL = BASE_URL + "changba/api/ktv/get_tui";
     //融云app_key
     public static final String APP_KEY = "k51hidwqknr6b";
+    //微信app_id
+    public static final String WX_APP_ID = "wx719fa095e03da584";
 }

@@ -35,7 +35,7 @@ public class GoldListViewHolder extends BaseViewHolder<GoldListBean.Data.GoldLis
 
         Glide.with(getContext())
                 .load(Constant.BASE_URL2 + data.gold_img)
-                .placeholder(R.mipmap.default_img)
+                .placeholder(R.mipmap.zhanwei2)
                 .bitmapTransform(new CenterCrop(getContext()))
                 .into(iv_gold_item);
     }

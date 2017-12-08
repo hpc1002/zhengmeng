@@ -31,16 +31,18 @@
 
         <EditText
             android:id="@+id/tv_bankName"
-            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x30"
             android:layout_toRightOf="@+id/tv_bank"
-            android:background="@null"
             android:textColor="@color/course_name"
+            android:layout_toLeftOf="@+id/right_tag"
             android:textSize="16sp" />
 
         <ImageView
+            android:id="@+id/right_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -71,7 +73,7 @@
 
         <EditText
             android:id="@+id/tv_card_number"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x30"
@@ -104,7 +106,7 @@
 
         <EditText
             android:id="@+id/tv_name_input"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x30"

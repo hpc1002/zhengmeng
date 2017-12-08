@@ -152,6 +152,7 @@ public class AudioActivity extends BaseNoActivity {
                     seekBar.setMax(mediaPlayer.getDuration());
                     seekBar.setProgress(0);
                     repared = true;
+                    mediaPlayer.start();
                 }
             });
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

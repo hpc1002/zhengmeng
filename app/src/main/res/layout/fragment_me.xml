@@ -223,7 +223,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x20"
-            android:src="@mipmap/pinglun" />
+            android:src="@mipmap/bank_card" />
 
         <TextView
             android:id="@+id/tv_comment_reply"

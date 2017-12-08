@@ -51,12 +51,12 @@
         <!-- 百度定位 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="tFy99NFsOQrIhKDhEhI4Ss8GSpYfHc1c"></meta-data>
+            android:value="tFy99NFsOQrIhKDhEhI4Ss8GSpYfHc1c" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
         <!-- end -->
         <activity
             android:name=".activity.lanuch.SplashActivity"
@@ -114,7 +114,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
             android:launchMode="singleTask"
@@ -250,7 +250,43 @@
 
         <!-- end -->
 
-        <activity android:name=".KTV.PaiMaiListActivity"></activity>
+        <activity android:name=".KTV.PaiMaiListActivity" />
+        <activity android:name=".user.RechargeActivity" />
+        <activity android:name=".pay.PayActivity" />
+
+        <!-- alipay sdk begin -->
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+
+        <!-- alipay sdk end -->
+
+
+        <!-- 微信支付 -->
+        <activity
+            android:name=".weixin.WXPayCallbackActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity=".weixin.WXPayCallbackActivity" />
+
+        <!-- 微信支付 end -->
+        <activity android:name=".pay.PaySuccessActivity" />
+        <activity android:name=".pay.PayFailActivity"></activity>
     </application>
 
 </manifest>

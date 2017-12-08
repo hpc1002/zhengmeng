@@ -44,25 +44,28 @@ public class ReceiveFragment extends BaseFragment implements OnRefreshListener, 
     private String token;
     private ReceiveGiftListAdapter receiveGiftListAdapter;
     int page = 1;
+    private View view;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_received, container, false);
+
+        view = inflater.inflate(R.layout.fragment_received, container, false);
+        return view;
     }
 
     @Override
     protected void initListener() {
         token = SPUtils.getInstance("userInfo").getString("token");
-        refreshLayout.autoRefresh();
-        refreshLayout.setOnRefreshListener(this);
-        refreshLayout.setOnLoadmoreListener(this);
+
     }
 
 
     @Override
     protected void initData() {
 
-
+        refreshLayout.autoRefresh();
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnLoadmoreListener(this);
     }
 
 
@@ -94,13 +97,14 @@ public class ReceiveFragment extends BaseFragment implements OnRefreshListener, 
 
         @Override
         public void onFinish(int what) {
+            refreshLayout=view.findViewById(R.id.refreshLayout);
             refreshLayout.finishLoadmore();//解决加载更多一直显示
             refreshLayout.finishRefresh();
         }
     };
 
     private void initUi(List<GiftListBean.Data> datas) {
-
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         receiveGiftListAdapter = new ReceiveGiftListAdapter(R.layout.item_gift, datas, getActivity());
@@ -129,6 +133,7 @@ public class ReceiveFragment extends BaseFragment implements OnRefreshListener, 
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
         page = 1;
+
         DreamApi.getReceiveGiftList(0x001, getActivity(), token, page, myCallBack);
     }
 
@@ -163,7 +168,9 @@ public class ReceiveFragment extends BaseFragment implements OnRefreshListener, 
 
             @Override
             public void onFinish(int what) {
-
+                refreshLayout=view.findViewById(R.id.refreshLayout);
+                refreshLayout.finishLoadmore();
+                refreshLayout.finishRefresh();
             }
         });
     }

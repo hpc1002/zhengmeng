@@ -133,7 +133,7 @@ public class BangdanRankActivity extends BaseActivity implements OnRefreshListen
                             data = bangDanListBean.data;
                             recyclerView.setLayoutManager(new LinearLayoutManager(BangdanRankActivity.this));
                             bangDanRankAdapter = new BangDanRankAdapter(R.layout.item_rank, data, BangdanRankActivity.this);
-                            if (data.size() == 0) {
+                            if (data==null) {
                                 bangDanRankAdapter.setEmptyView(R.layout.empty, recyclerView);
                             }
                             recyclerView.setAdapter(bangDanRankAdapter);

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/gold_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="所需金币:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/gold_sum"
+            android:layout_toRightOf="@+id/gold_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="16sp"
+            android:text="100.00"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/num_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="兑换数量:"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_number"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/num_tag"
+            android:gravity="center"
+            android:background="@drawable/fragment_dynamic_rl"
+            android:inputType="number"
+            android:text="1">
+
+            <requestFocus />
+
+        </EditText>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/quick_duihuan"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/frame_button"
+        android:textColor="@color/white"
+        android:text="立即兑换" />
+
+</LinearLayout>

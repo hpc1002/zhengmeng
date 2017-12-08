@@ -76,6 +76,7 @@ public class DynamicModel implements Serializable {
         private String gift_count;
         private String share_count;
         private String comment_count;
+        private String song_name;
 
         public DataBean(int production_type) {
             this.production_type = production_type;
@@ -96,7 +97,13 @@ public class DynamicModel implements Serializable {
         public void setUser_id(String user_id) {
             this.user_id = user_id;
         }
+        public String getSong_name() {
+            return song_name;
+        }
 
+        public void setSong_name(String song_name) {
+            this.song_name = song_name;
+        }
         public String getProduction_id() {
             return production_id;
         }

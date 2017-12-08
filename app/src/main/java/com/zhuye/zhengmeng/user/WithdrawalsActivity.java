@@ -1,15 +1,23 @@
 package com.zhuye.zhengmeng.user;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.lzy.okgo.model.Response;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseActivity;
+import com.zhuye.zhengmeng.http.DreamApi;
+import com.zhuye.zhengmeng.http.MyCallBack;
+import com.zhuye.zhengmeng.utils.ToastManager;
 import com.zhuye.zhengmeng.view.MyAppTitle;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,17 +31,17 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.titleBar)
     MyAppTitle titleBar;
     @BindView(R.id.tv_bankCard)
-    TextView tvBankCard;
+    EditText tvBankCard;
     @BindView(R.id.tag01)
     ImageView tag01;
-    @BindView(R.id.zichan)
-    TextView zichan;
-    @BindView(R.id.tixian_num)
-    TextView tixianNum;
-    @BindView(R.id.whole_tixian)
-    TextView wholeTixian;
     @BindView(R.id.withdrawals)
     TextView withdrawals;
+    @BindView(R.id.tv_number)
+    EditText tiXianNumber;
+    @BindView(R.id.tv_phone_number)
+    EditText phoneNumber;
+    private String token;
+    private String type;
 
     @Override
     protected void processLogic() {
@@ -42,6 +50,8 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void setListener() {
+        type = getIntent().getStringExtra("type");
+        token = SPUtils.getInstance("userInfo").getString("token");
         setTitle();
         withdrawals.setOnClickListener(this);
     }
@@ -79,7 +89,35 @@ public class WithdrawalsActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.withdrawals:
-                startActivity(new Intent(this, BindCardActivity.class));
+                String tixianNum = tiXianNumber.getText().toString();
+                String phoneMumber = phoneNumber.getText().toString();
+                String bankNumber = tvBankCard.getText().toString();
+                DreamApi.tiXian(0x001, token, type, tixianNum, bankNumber, phoneMumber, new MyCallBack() {
+                    @Override
+                    public void onSuccess(int what, Response<String> result) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result.body());
+                            int code = jsonObject.getInt("code");
+                            if (code == 200) {
+                                String msg = jsonObject.getString("msg");
+                                ToastManager.show(msg);
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(int what, Response<String> result) {
+
+                    }
+
+                    @Override
+                    public void onFinish(int what) {
+
+                    }
+                });
                 break;
         }
     }

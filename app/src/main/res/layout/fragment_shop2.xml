@@ -10,11 +10,15 @@
         android:layout_height="65dp"
         android:background="#f75153"
         android:paddingTop="28dp" />
-
+<View
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@mipmap/shop_banner"/>
     <cn.bingoogolapple.bgabanner.BGABanner
+        android:visibility="gone"
         android:id="@+id/shop_banner"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         app:banner_indicatorGravity="center_horizontal"
         app:banner_pageChangeDuration="1000"
         app:banner_pointAutoPlayAble="true"

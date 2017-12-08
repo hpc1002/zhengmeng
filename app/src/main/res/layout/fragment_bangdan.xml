@@ -93,6 +93,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="全国榜"
+                android:textSize="16sp"
                 android:textColor="@color/black" />
 
             <LinearLayout

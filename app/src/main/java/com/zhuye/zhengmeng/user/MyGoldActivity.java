@@ -18,6 +18,7 @@ import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseActivity;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
+import com.zhuye.zhengmeng.pay.PayActivity;
 import com.zhuye.zhengmeng.user.bean.GoldListBean;
 import com.zhuye.zhengmeng.user.viewHolder.GoldListViewHolder;
 import com.zhuye.zhengmeng.utils.ToastManager;
@@ -136,6 +137,15 @@ public class MyGoldActivity extends BaseActivity implements View.OnClickListener
             }
         });
         goldListAdapter.addAll(goldLists);
+        goldListAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(MyGoldActivity.this, PayActivity.class);
+                intent.putExtra("orderId", goldListAdapter.getItem(position).gold_id);
+                intent.putExtra("buyType", "gold");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -145,15 +155,22 @@ public class MyGoldActivity extends BaseActivity implements View.OnClickListener
         ButterKnife.bind(this);
     }
 
+    Intent intent;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_tixian_my:
                 ToastManager.show("提现我的金币");
-                startActivity(new Intent(this, WithdrawalsActivity.class));
+                intent = new Intent(this, WithdrawalsActivity.class);
+                intent.putExtra("type", "1");
+                startActivity(intent);
                 break;
             case R.id.tv_tixian_bangdan:
                 ToastManager.show("提现榜单金币");
+                intent = new Intent(this, WithdrawalsActivity.class);
+                intent.putExtra("type", "0");
+                startActivity(intent);
                 break;
         }
     }

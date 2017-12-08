@@ -247,6 +247,6 @@ public class ShopFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 //        cookie = SPUtils.getInstance("userInfo").getString("cookie");
-//        DreamApi.getShopWebUrl(0x001, token, myCallBack);
+        DreamApi.getShopWebUrl(0x001, token, myCallBack);
     }
 }

@@ -11,13 +11,15 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.MaterialDialog;
+import com.flyco.dialog.widget.NormalDialog;
 import com.lzy.okgo.model.Response;
 import com.zhuye.zhengmeng.Constant;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseNoFragment;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
-import com.zhuye.zhengmeng.user.BindCardActivity;
 import com.zhuye.zhengmeng.user.LocalRecordActivity;
 import com.zhuye.zhengmeng.user.MyBankCardActivity;
 import com.zhuye.zhengmeng.user.MyCollectActivity;
@@ -27,6 +29,7 @@ import com.zhuye.zhengmeng.user.MyGiftActivity;
 import com.zhuye.zhengmeng.user.MyGoldActivity;
 import com.zhuye.zhengmeng.user.MyMessageActivity;
 import com.zhuye.zhengmeng.user.MyShareActivity;
+import com.zhuye.zhengmeng.user.RechargeActivity;
 import com.zhuye.zhengmeng.user.SettingActivity;
 import com.zhuye.zhengmeng.user.UserInfoActivity;
 import com.zhuye.zhengmeng.user.ZuoPinJiActivity;
@@ -103,7 +106,7 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
 
     private String token;
     private View view;
-
+    private String sign_type;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
 
@@ -126,15 +129,14 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
         btnSign.setOnClickListener(this);
         rlCommentReply.setOnClickListener(this);
         avatar.setOnClickListener(this);
+        tagVip.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
 
         token = SPUtils.getInstance("userInfo").getString("token");
-        if (!token.equals("")) {
-            DreamApi.getUserInfo(0x001, token, myCallBack);
-        }
+
     }
 
     @Override
@@ -194,6 +196,10 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                 //签到
                 DreamApi.sign(0x002, token, myCallBack);
                 break;
+            case R.id.tag_vip:
+                Intent intent = new Intent(getActivity(), RechargeActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -201,9 +207,17 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         nickname.setText(SPUtils.getInstance("userInfo").getString("user_nicename"));
-        Glide.with(getActivity())
-                .load(Constant.BASE_URL_PINJIE + SPUtils.getInstance("userInfo").getString("avatar"))
-                .into((ImageView) view.findViewById(R.id.avatar));
+        String avatar = SPUtils.getInstance("userInfo").getString("avatar");
+        if (avatar.contains("http")) {
+            Glide.with(getActivity())
+                    .load(avatar)
+                    .into((ImageView) view.findViewById(R.id.avatar));
+        } else {
+            Glide.with(getActivity())
+                    .load(Constant.BASE_URL_PINJIE + avatar)
+                    .into((ImageView) view.findViewById(R.id.avatar));
+        }
+
     }
 
     /**
@@ -238,7 +252,8 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                             String avatar = data.optString("avatar");
                             String fans_sum = data.optString("fans_sum");
                             String attention_sum = data.optString("attention_sum");
-                            String sign_type = data.optString("sign_type");
+
+                            sign_type = data.optString("sign_type");
                             String cookie = data.optString("cookie");
                             SPUtils.getInstance("userInfo").put("cookie", cookie);//关注数
                             SPUtils.getInstance("userInfo").put("attention_sum", attention_sum);//关注数
@@ -248,6 +263,8 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                                 //未签到
                                 btnSign.setBackground(getResources().getDrawable(R.drawable.frame_button));
                                 btnSign.setText("签到");
+
+
                             } else if (sign_type.equals("1")) {
                                 //已签到
                                 btnSign.setBackground(getResources().getDrawable(R.drawable.frame_button_gray));
@@ -257,9 +274,17 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                             tvFollow.setText("关注 " + attention_sum);
                             tvFans.setText("粉丝 " + fans_sum);
                             tvMessage.setText("消息 ");
-                            Glide.with(getActivity())
-                                    .load(Constant.BASE_URL_PINJIE + SPUtils.getInstance("userInfo").getString("avatar"))
-                                    .into((ImageView) view.findViewById(R.id.avatar));
+                            String userAvatar = SPUtils.getInstance("userInfo").getString("avatar");
+                            if (userAvatar.contains("http")) {
+                                Glide.with(getActivity())
+                                        .load(userAvatar)
+                                        .into((ImageView) view.findViewById(R.id.avatar));
+                            } else {
+                                Glide.with(getActivity())
+                                        .load(Constant.BASE_URL_PINJIE + userAvatar)
+                                        .into((ImageView) view.findViewById(R.id.avatar));
+                            }
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -272,9 +297,26 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                         if (code == 200) {
                             String msg = jsonObject.getString("msg");
                             ToastManager.show(msg);
-                            if (!token.equals("")) {
-                                DreamApi.getUserInfo(0x001, token, myCallBack);
+                            DreamApi.getUserInfo(0x001, token, myCallBack);
+                            final NormalDialog dialog = new NormalDialog(getActivity());
+                            if (!sign_type.equals("1")){
+                                dialog.content("签到成功，获得5个金币")
+                                        .btnNum(1)
+                                        .btnText("确定")
+                                        .style(NormalDialog.STYLE_TWO)
+                                        .titleTextSize(23)
+                                        .show();
+                                dialog.setOnBtnClickL(new OnBtnClickL() {
+                                    @Override
+                                    public void onBtnClick() {
+
+                                        dialog.dismiss();
+                                    }
+                                });
                             }
+
+
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -293,4 +335,10 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
 
         }
     };
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        DreamApi.getUserInfo(0x001, token, myCallBack);
+    }
 }

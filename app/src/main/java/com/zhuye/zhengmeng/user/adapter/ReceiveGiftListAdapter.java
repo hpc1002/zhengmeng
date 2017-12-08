@@ -33,7 +33,7 @@ public class ReceiveGiftListAdapter extends BaseQuickAdapter<GiftListBean.Data, 
         Glide.with(context)
                 .load(Constant.BASE_URL2 + item.gift_img)
                 .centerCrop()
-                .placeholder(R.mipmap.default_img)
+                .placeholder(R.mipmap.zhanwei1)
                 .into((ImageView) helper.getView(R.id.iv_gift));
     }
 }

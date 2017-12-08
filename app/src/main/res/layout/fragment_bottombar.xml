@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#221a1d">
 
     <LinearLayout
         android:id="@+id/button_panel"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -14,9 +14,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/tabbar_gift"
-            android:gravity="center_horizontal"
-            android:text="礼物"
+            android:drawableTop="@mipmap/gift_ktv"
+            android:gravity="bottom"
             android:textColor="#999999" />
 
         <TextView
@@ -24,9 +23,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/tabbar_commebt"
+            android:drawableTop="@mipmap/pinglun_ktv"
             android:gravity="center_horizontal"
-            android:text="评论"
             android:textColor="#999999" />
 
         <TextView
@@ -34,51 +32,37 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/sing_clothes"
+            android:drawableTop="@mipmap/clothes_ktv"
             android:gravity="center_horizontal"
-            android:text="换装"
             android:textColor="#999999" />
 
-        <TextView
-            android:id="@+id/rb_paimai"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/tabbar_sing"
-            android:gravity="center_horizontal"
-            android:text="点歌排麦"
-            android:textColor="#999999" />
 
 
     </LinearLayout>
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/button_panel"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:paddingLeft="2dp"-->
-    <!--android:paddingRight="2dp">-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="50dp"
+    android:layout_toRightOf="@+id/button_panel">
+    <TextView
+        android:id="@+id/release"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/close_0"
+        android:gravity="center_horizontal"
+        android:textColor="#999999" />
 
-    <!--<ImageView-->
-    <!--android:id="@+id/btn_input"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:src="@mipmap/tabbar_commebt"/>-->
+    <TextView
+        android:id="@+id/rb_paimai"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@mipmap/diange_ktv"
+        android:gravity="center_horizontal"
+        android:textColor="#999999" />
 
-    <!--<ImageView-->
-    <!--android:id="@+id/btn_heart"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:src="@mipmap/live_heart"/>-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/btn_gift"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginRight="10dp"-->
-    <!--android:layout_toLeftOf="@id/btn_heart"-->
-    <!--android:src="@mipmap/gift"/>-->
-    <!--</RelativeLayout>-->
+</LinearLayout>
 
     <com.zhuye.zhengmeng.widget.InputPanel
         android:id="@+id/input_panel"

@@ -25,8 +25,10 @@
             android:layout_height="@dimen/y67"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/x23"
+            android:paddingLeft="5dp"
             android:background="@drawable/edit_bg"
             android:focusable="true"
+            android:textSize="12sp"
             android:hint="来说一句吧..." />
 
         <TextView

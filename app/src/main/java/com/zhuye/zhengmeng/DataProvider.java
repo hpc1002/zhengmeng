@@ -3,6 +3,7 @@ package com.zhuye.zhengmeng;
 
 import com.zhuye.zhengmeng.KTV.bean.Fushi;
 import com.zhuye.zhengmeng.home.bean.BannerDto;
+import com.zhuye.zhengmeng.user.bean.MessageBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,17 +55,18 @@ public class DataProvider {
 //        return arr;
 //    }
 //
-//    public static List<Notification> getNotifiList() {
-//        ArrayList<Notification> arr = new ArrayList<>();
-//        arr.add(new Notification("2017.02.23 9:46", "【环球网报道 】据俄新社2月22日消息， 俄罗斯外交部发言人扎哈罗娃表示，俄外交部官网开设了一个栏目，专门用来揭露那些关于俄罗斯的不实消息。"));
-//        arr.add(new Notification("2017.02.23 9:47", "【环球网报道 】据俄新社2月22日消息， 俄罗斯外交部发言人扎哈罗娃表示，俄外交部官网开设了一个栏目，专门用来揭露那些关于俄罗斯的不实消息。"));
-//        arr.add(new Notification("2017.02.23 9:48", "【环球网报道 】据俄新社2月22日消息， 俄罗斯外交部发言人扎哈罗娃表示，俄外交部官网开设了一个栏目，专门用来揭露那些关于俄罗斯的不实消息。"));
-//        arr.add(new Notification("2017.02.23 9:50", "【环球网报道 】据俄新社2月22日消息， 俄罗斯外交部发言人扎哈罗娃表示，俄外交部官网开设了一个栏目，专门用来揭露那些关于俄罗斯的不实消息。"));
-//        arr.add(new Notification("2017.02.23 9:55", "【环球网报道 】据俄新社2月22日消息， 俄罗斯外交部发言人扎哈罗娃表示，俄外交部官网开设了一个栏目，专门用来揭露那些关于俄罗斯的不实消息。"));
-//        arr.add(new Notification("2017.02.23 9:59", "【环球网报道 】据俄新社2月22日消息， 俄罗斯外交部发言人扎哈罗娃表示，俄外交部官网开设了一个栏目，专门用来揭露那些关于俄罗斯的不实消息。"));
-//        return arr;
-//    }
-//
+    public static List<MessageBean> getMessageList() {
+        ArrayList<MessageBean> arr = new ArrayList<>();
+        arr.add(new MessageBean("2017.12.08 9:46", "好听的婚礼暖场音乐歌曲", "人都有悲伤，无助，冷漠的时候，而听一些好听的歌曲是我们抒发自己心情的最好方式"));
+        arr.add(new MessageBean("2017.02.23 9:47", "听这些音乐可以养五脏", "相传在古代，真正好的中医不用针灸或中药，用音乐。一曲终了，病退人安。中医的经典著作《黄帝内经》两千多年前就提出了“五音疗疾”的理论。"));
+        arr.add(new MessageBean("2017.02.23 9:48", "为什么音乐可以治病", "现代科学实验已经证明，音乐能够直接作用于人的脑电波、心率和呼吸频率，能直接影响人的生理和心理。"));
+        arr.add(new MessageBean("2017.02.23 9:50", "恋音と雨空 -- AAA", "“来一首欢快的，旋律让你上脑的”"));
+        arr.add(new MessageBean("2017.02.23 9:55", "暖胃音乐", "适合人群：情绪易于悲伤，欲哭不能的人，或有咽部溃疡疼痛、咳嗽、鼻塞、气喘、容易感冒、易出汗者。"));
+        arr.add(new MessageBean("2017.02.23 9:59", " ありがとう・・・ -- KOKIA", "“KOKIA的神作《ありがとう》 恐怕是国内最知名的BGM了吧”"));
+        return arr;
+    }
+
+    //
     public static List<Fushi> getFushiList() {
         ArrayList<Fushi> arr = new ArrayList<>();
         arr.add(new Fushi(R.mipmap.fushi1));
@@ -159,6 +161,22 @@ public class DataProvider {
 
         for (int i = 0; i < FushiImage.length; i++) {
             arrayList.add(FushiImage[i]);
+        }
+        return arrayList;
+    }
+
+    static final int[] BannerImage = {
+            R.mipmap.banner_0,
+            R.mipmap.banner_1,
+            R.mipmap.banner_2,
+    };
+
+    public static ArrayList<Integer> getBannerImage() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+//        if (page == 4) return arrayList;
+
+        for (int i = 0; i < BannerImage.length; i++) {
+            arrayList.add(BannerImage[i]);
         }
         return arrayList;
     }

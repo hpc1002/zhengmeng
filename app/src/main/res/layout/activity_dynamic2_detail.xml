@@ -17,10 +17,14 @@
             android:orientation="vertical">
             <SurfaceView
                 android:id="@+id/player_surface"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y422"/>
 
-
+            <cn.jzvd.JZVideoPlayerStandard
+                android:id="@+id/videoplayer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y422" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y220">
@@ -50,6 +54,7 @@
                     android:layout_below="@+id/nickname"
                     android:layout_marginLeft="@dimen/x20"
                     android:layout_marginTop="@dimen/y25"
+                    android:drawablePadding="5dp"
                     android:layout_toRightOf="@+id/avatar"
                     android:textColor="@color/white" />
 
@@ -88,7 +93,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y20">
 
                 <View
                     android:layout_width="2dp"

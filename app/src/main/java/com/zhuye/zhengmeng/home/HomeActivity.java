@@ -13,6 +13,7 @@ import com.zhuye.zhengmeng.App;
 import com.zhuye.zhengmeng.KTV.MessageEvent;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseActivity;
+import com.zhuye.zhengmeng.base.BaseNoActivity;
 import com.zhuye.zhengmeng.home.fragment.FragmentController;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.utils.ToastManager;
@@ -24,7 +25,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
-public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class HomeActivity extends BaseNoActivity implements RadioGroup.OnCheckedChangeListener {
 
 
     @BindView(R.id.frame_layout)
@@ -59,7 +60,7 @@ public class HomeActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void loadViewLayout() {
         setContentView(R.layout.activity_home);
         controller = FragmentController.getInstance(this, R.id.frame_layout);
-        controller.showFragment(1);
+        controller.showFragment(2);
         String sdkver = TXLiveBase.getSDKVersionStr();
         Log.d("liteavsdk", "liteav sdk version is : " + sdkver);
     }

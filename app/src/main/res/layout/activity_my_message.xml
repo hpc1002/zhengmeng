@@ -16,6 +16,7 @@
         android:paddingTop="15dp" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/notice"
         android:layout_width="match_parent"
         android:layout_height="80dp">
@@ -75,6 +76,7 @@
     <LinearLayout
         android:id="@+id/Invitation"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="80dp">
 
         <ImageView
@@ -128,4 +130,8 @@
                 android:background="#44999999" />
         </RelativeLayout>
     </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

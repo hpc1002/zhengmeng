@@ -26,7 +26,6 @@ import com.zhuye.zhengmeng.bangdan.recording.QAudioActivity;
 import com.zhuye.zhengmeng.bangdan.recording.QVideoActivity;
 import com.zhuye.zhengmeng.base.BaseFragment;
 import com.zhuye.zhengmeng.dynamic.DynamicDetail2Activity;
-import com.zhuye.zhengmeng.dynamic.DynamicDetailActivity;
 import com.zhuye.zhengmeng.home.fragment.adapter.MultipleDynamicAdapter;
 import com.zhuye.zhengmeng.home.fragment.model.DynamicModel;
 import com.zhuye.zhengmeng.http.DreamApi;
@@ -62,9 +61,7 @@ public class Dynamic2Fragment extends BaseFragment {
     @Override
     protected void initListener() {
         setDynamicTitle();
-        //获取数据
-        refreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
-        initRes();
+
     }
 
     @Override
@@ -103,7 +100,7 @@ public class Dynamic2Fragment extends BaseFragment {
                         optionCenterDialog.setItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                switch (position){
+                                switch (position) {
                                     case 0:
                                         Intent intent1 = new Intent(getActivity(), QAudioActivity.class);
                                         intent1.putExtra("song_id", "");
@@ -225,7 +222,14 @@ public class Dynamic2Fragment extends BaseFragment {
                                 Intent intent = new Intent(getActivity(), DynamicDetail2Activity.class);
                                 intent.putExtra("production_id", multipleDynamicAdapter.getItem(position).getProduction_id());
                                 intent.putExtra("production_path", multipleDynamicAdapter.getItem(position).getProduction_path());
-                                intent.putExtra("production_name", multipleDynamicAdapter.getItem(position).getProduction_name());
+                                String song_name = multipleDynamicAdapter.getItem(position).getSong_name();
+                                if (song_name.equals(" ")) {
+                                    intent.putExtra("production_name", "未知名称曲目");
+                                } else {
+                                    intent.putExtra("production_name", multipleDynamicAdapter.getItem(position).getSong_name());
+                                }
+                                intent.putExtra("production_img", multipleDynamicAdapter.getItem(position).getImg_url());
+                                intent.putExtra("production_content", multipleDynamicAdapter.getItem(position).getProduction_content());
                                 startActivity(intent);
                             }
                         });
@@ -265,5 +269,13 @@ public class Dynamic2Fragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         page = 1;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        //获取数据
+        refreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
+        initRes();
     }
 }

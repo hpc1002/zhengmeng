@@ -4,9 +4,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,15 +17,18 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -45,6 +50,7 @@ import com.tencent.rtmp.TXLivePlayer;
 import com.tencent.rtmp.TXLivePushConfig;
 import com.tencent.rtmp.TXLivePusher;
 import com.tencent.rtmp.ui.TXCloudVideoView;
+import com.zhuye.zhengmeng.App;
 import com.zhuye.zhengmeng.Constant;
 import com.zhuye.zhengmeng.DataProvider;
 import com.zhuye.zhengmeng.KTV.adapter.FushiAdapter;
@@ -57,13 +63,17 @@ import com.zhuye.zhengmeng.chatRoom.fragment.BottomPanelFragment;
 import com.zhuye.zhengmeng.chatRoom.message.GiftMessage;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
+import com.zhuye.zhengmeng.shop.adapter.GiftDetailPackageAdapter;
+import com.zhuye.zhengmeng.shop.adapter.GiftDetailShopAdapter;
+import com.zhuye.zhengmeng.shop.bean.GiftDetailBean;
+import com.zhuye.zhengmeng.user.MyGoldActivity;
+import com.zhuye.zhengmeng.utils.ToastManager;
 import com.zhuye.zhengmeng.utils.UIThread;
 import com.zhuye.zhengmeng.view.MyAppTitle;
 import com.zhuye.zhengmeng.widget.ChatListView;
 import com.zhuye.zhengmeng.widget.InputPanel;
 import com.zhuye.zhengmeng.widget.animation.HeartLayout;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -118,9 +128,10 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
     private TXLivePusher mLivePusher;
     private TXLivePlayConfig mPlayConfig;
     private TextView tvNextSong;
-    private ImageView release;
+    private TextView release;
     private String lyric_path;
     private String user_id;
+    private String reception_id;
     private String song_path;
     private String is_play;
     //歌词
@@ -133,7 +144,8 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
 
     private String pullUrl;
     private String pushUrl;
-    private  RelativeLayout.LayoutParams layoutParams;
+    private RelativeLayout.LayoutParams layoutParams;
+    private GiftDetailBean giftDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,6 +204,9 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
     }
 
     private void pullMedia() {
+        if (isFinishing()) {
+            return;
+        }
 
         //关键player对象与界面view
         mLivePlayer.setPlayerView(pullMedia);
@@ -199,7 +214,7 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
         mLivePlayer.setAutoPlay(true);
         String flvUrl = pullUrl;
         mLivePlayer.startPlay(flvUrl, TXLivePlayer.PLAY_TYPE_LIVE_RTMP); //推荐FLV
-        Log.i(TAG, "pullMedia: "+"拉流");
+        Log.i(TAG, "pullMedia: " + "拉流");
     }
 
     private void getNextSong() {
@@ -238,16 +253,16 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
                             song_path = nextSongBean.data.song_path;
                             is_play = nextSongBean.data.is_play;
                             avatar = nextSongBean.data.avatar;
-                            Log.i(TAG, "onSuccess: 歌词"+lyric_path);
-                            Log.i(TAG, "onSuccess: 歌词路径"+song_path);
-                            Glide.with(KtvRoomActivity.this)
-                                    .load(Constant.BASE_URL2+avatar)
-                                    .centerCrop()
-                                    .into(user_avatar);
-                            if (song_path != null) {
-                                tvNextSong.setVisibility(View.GONE);
-                                tvNextSong.setText("下首歌曲" + Constant.BASE_URL2 + song_path);
+                            if (lyric_path != null && song_path != null && avatar != null) {
+                                Glide.with(App.getInstance())
+                                        .load(Constant.BASE_URL2 + avatar)
+                                        .centerCrop()
+                                        .into(user_avatar);
+
                             }
+                            Log.i(TAG, "onSuccess: 歌词" + lyric_path);
+                            Log.i(TAG, "onSuccess: 歌词路径" + song_path);
+
 //                            if (mLivePusher == null) {
 //                                DreamApi.isSinging(0x002, token, roomId, "0", myCallBack);
 //                            }else{
@@ -258,6 +273,9 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
                                 //拉流
                                 pullMedia();
                             }
+                            Log.i(TAG, "onSuccess:isplay状态 " + is_play);
+                            Log.i(TAG, "onSuccess:user_id状态 " + user_id);
+                            Log.i(TAG, "onSuccess:userId " + userId);
                             if (user_id != null && user_id.equals(userId) && is_play.equals("0")) {
                                 //轮到自己，停止拉流，开始推流
                                 stopPlayRtmp();
@@ -302,7 +320,7 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
                         int code = jsonObject.getInt("code");
                         if (code == 200) {
                             pullUrl = jsonObject.getString("data");
-                            Log.i(TAG, "onSuccess: pullUrl"+pullUrl);
+                            Log.i(TAG, "onSuccess: pullUrl" + pullUrl);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -314,7 +332,76 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
                         int code = jsonObject.getInt("code");
                         if (code == 200) {
                             pushUrl = jsonObject.getString("data");
-                            Log.i(TAG, "onSuccess: pushUrl"+pushUrl);
+                            Log.i(TAG, "onSuccess: pushUrl" + pushUrl);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 0x009:
+                    try {
+                        JSONObject jsonObject = new JSONObject(result.body());
+                        int code = jsonObject.getInt("code");
+                        if (code == 200) {
+
+                            giftDetailBean = new Gson().fromJson(result.body(), GiftDetailBean.class);
+                            List<GiftDetailBean.Data.ShopList> shopData;
+                            List<GiftDetailBean.Data.KnapsackLlist> knapsackData;
+                            shopData = giftDetailBean.data.shop_list;
+                            knapsackData = giftDetailBean.data.knapsack_list;
+                            final GiftDetailShopAdapter giftDetailShopAdapter = new GiftDetailShopAdapter(R.layout.item_shop_detail_gift, shopData);
+                            final GiftDetailPackageAdapter giftDetailPackageAdapter = new GiftDetailPackageAdapter(R.layout.item_shop_detail_gift, knapsackData);
+                            giftRecyclerView.setAdapter(giftDetailShopAdapter);
+                            gold_number.setText("金币金额:" + giftDetailBean.data.score);
+                            giftDetailShopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    DreamApi.shopGiftSendUrl(0x010, token, reception_id, "", "1",
+                                            giftDetailShopAdapter.getItem(position).gift_id, "1", myCallBack);
+                                }
+                            });
+                            giftDetailPackageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    DreamApi.shopGiftSendUrl(0x010, token, reception_id, "", "1",
+                                            giftDetailPackageAdapter.getItem(position).gift_id, "1", myCallBack);
+                                }
+                            });
+                            all_gift.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    all_gift.setTextColor(getResources().getColor(R.color.red));
+                                    my_gift.setTextColor(getResources().getColor(R.color.white));
+                                    giftRecyclerView.setAdapter(giftDetailShopAdapter);
+                                }
+                            });
+                            my_gift.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    all_gift.setTextColor(getResources().getColor(R.color.white));
+                                    my_gift.setTextColor(getResources().getColor(R.color.red));
+                                    giftRecyclerView.setAdapter(giftDetailPackageAdapter);
+                                }
+                            });
+                            to_charge.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(KtvRoomActivity.this, MyGoldActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 0x010:
+                    try {
+                        JSONObject jsonObject = new JSONObject(result.body());
+                        int code = jsonObject.getInt("code");
+                        if (code == 200) {
+                            ToastManager.show("赠送成功");
+                            popGiftWindow.dismiss();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -349,6 +436,9 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
         title.setTextSize(22);
         title.setPadding(10, 10, 10, 10);
         title.setGravity(Gravity.CENTER);
+        if (isFinishing()) {
+            return;
+        }
         mDialog = new AlertDialog.Builder(KtvRoomActivity.this)
                 .setCustomTitle(title)
                 .setCancelable(false)
@@ -457,7 +547,10 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
                         pullMedia();
                     }
                 }).create();
-        mDialog.show();
+        if (!isFinishing()) {
+            mDialog.show();
+        }
+
         mDialog.setCanceledOnTouchOutside(false);
         mOffHandler = new Handler() {
             @Override
@@ -510,17 +603,19 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
 
     private void pushMedia() {
 
-
+        if (isFinishing()){
+            return;
+        }
 //        mLivePushConfig.setPauseImg(300, 5);
         // 只有在推流启动前设置启动纯音频推流才会生效，推流过程中设置不会生效。
         mLivePushConfig.enablePureAudioPush(true);   // true 为启动纯音频推流，而默认值是 false；
         mLivePusher.setConfig(mLivePushConfig);
-        if (pushUrl!=null){
+        if (pushUrl != null) {
             String rtmpUrl = pushUrl;
             // 重新设置 config
             mLivePusher.startCameraPreview(push_media);
             mLivePusher.startPusher(rtmpUrl);
-            Log.i(TAG, "pushMedia: "+"推流");
+            Log.i(TAG, "pushMedia: " + "推流");
         }
 
     }
@@ -566,6 +661,7 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
             @Override
             public void onSuccess(String userid) {
                 Log.d("LoginActivity", "--onSuccess" + userid);
+                reception_id = userid;
 //                final UserInfo user = FakeServer.getLoginUser(userid, "");
                 UserInfo userInfo = new UserInfo(userid, user_nicename, null);
                 LiveKit.addEventHandler(handler);
@@ -595,7 +691,7 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
 //        btnHeart = bottomPanel.getView().findViewById(R.id.btn_heart);
         heartLayout = findViewById(R.id.heart_layout);
         tvNextSong = findViewById(R.id.tv_next_song);
-        release = findViewById(R.id.release);
+        release = bottomPanel.getView().findViewById(R.id.release);
         img_show = findViewById(R.id.img_show);
         seekBar = findViewById(R.id.progress_bar);
         lrcView = findViewById(R.id.lrc_view);
@@ -612,9 +708,9 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
                 .centerCrop()
                 .into(img_show);
         layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(470,430,0,0);
-        layoutParams.width=180;
-        layoutParams.height=180;
+        layoutParams.setMargins(470, 430, 0, 0);
+        layoutParams.width = 180;
+        layoutParams.height = 180;
         user_avatar.setLayoutParams(layoutParams);
         background.setOnClickListener(this);
         btnGift.setOnClickListener(this);
@@ -690,23 +786,23 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (position==3){
-                    layoutParams.setMargins(470,410,0,0);
-                }else if (position==1){
-                    layoutParams.setMargins(460,510,0,0);
-                }else if (position==2){
-                    layoutParams.setMargins(455,440,0,0);
-                }else if (position==4){
-                    layoutParams.setMargins(465,495,0,0);
-                }else if (position==5){
-                    layoutParams.setMargins(490,450,0,0);
-                }else if (position==6){
-                    layoutParams.setMargins(500,370,0,0);
-                }else if (position==0){
-                    layoutParams.setMargins(465,560,0,0);
+                if (position == 3) {
+                    layoutParams.setMargins(470, 410, 0, 0);
+                } else if (position == 1) {
+                    layoutParams.setMargins(460, 510, 0, 0);
+                } else if (position == 2) {
+                    layoutParams.setMargins(455, 440, 0, 0);
+                } else if (position == 4) {
+                    layoutParams.setMargins(465, 495, 0, 0);
+                } else if (position == 5) {
+                    layoutParams.setMargins(490, 450, 0, 0);
+                } else if (position == 6) {
+                    layoutParams.setMargins(500, 370, 0, 0);
+                } else if (position == 0) {
+                    layoutParams.setMargins(465, 560, 0, 0);
                 }
-                layoutParams.width=180;
-                layoutParams.height=180;
+                layoutParams.width = 180;
+                layoutParams.height = 180;
                 user_avatar.setLayoutParams(layoutParams);
                 Glide.with(KtvRoomActivity.this)
                         .load(fushiAdapter.getItem(position).image)
@@ -762,6 +858,7 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
         if (v.equals(background)) {
             bottomPanel.onBackAction();
         } else if (v.equals(btnGift)) {
+            showGiftPop();
             GiftMessage msg = new GiftMessage("2", "送您一个礼物");
             LiveKit.sendMessage(msg);
         }
@@ -776,6 +873,65 @@ public class KtvRoomActivity extends FragmentActivity implements View.OnClickLis
 //            GiftMessage msg = new GiftMessage("1", "为您点赞");
 //            LiveKit.sendMessage(msg);
 //        }
+    }
+
+
+    private TextView all_gift;
+    private TextView my_gift;
+    private TextView gold_number;
+    private TextView to_charge;
+    private PopupWindow popWindow;
+    private PopupWindow popGiftWindow;
+    private RecyclerView giftRecyclerView;
+
+    private void showGiftPop() {
+        if (popGiftWindow == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = layoutInflater.inflate(R.layout.popwindow_gift, null);
+            // 创建一个PopuWidow对象
+            popGiftWindow = new PopupWindow(view, LinearLayout.LayoutParams.FILL_PARENT, 600, true);
+
+            giftRecyclerView = view.findViewById(R.id.recyclerView);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(KtvRoomActivity.this, 4);
+//            gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            giftRecyclerView.setLayoutManager(gridLayoutManager);
+            all_gift = view.findViewById(R.id.all_gift);
+            my_gift = view.findViewById(R.id.my_gift);
+            gold_number = view.findViewById(R.id.gold_number);
+            to_charge = view.findViewById(R.id.to_charge);
+            all_gift.setTextColor(getResources().getColor(R.color.red));
+            my_gift.setTextColor(getResources().getColor(R.color.white));
+            DreamApi.giftDetailListUrl(0x009, token, myCallBack);
+
+        }
+        //popupwindow弹出时的动画		popWindow.setAnimationStyle(R.style.popupWindowAnimation);
+        // 使其聚集 ，要想监听菜单里控件的事件就必须要调用此方法
+        popGiftWindow.setFocusable(true);
+        // 设置允许在外点击消失
+        popGiftWindow.setOutsideTouchable(false);
+        // 设置背景，这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+        popGiftWindow.setBackgroundDrawable(new BitmapDrawable());
+//        //软键盘不会挡着popupwindow
+        popGiftWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        //设置菜单显示的位置
+        popGiftWindow.showAtLocation(btnGift, Gravity.BOTTOM, 0, 0);
+
+
+        //监听菜单的关闭事件
+        popGiftWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+
+            }
+        });
+
+        //监听触屏事件
+        popGiftWindow.setTouchInterceptor(new View.OnTouchListener() {
+            public boolean onTouch(View view, MotionEvent event) {
+                return false;
+            }
+        });
+
     }
 
     @Override

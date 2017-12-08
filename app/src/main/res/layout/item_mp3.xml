@@ -8,7 +8,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:src="@mipmap/music_0"/>
+        android:src="@mipmap/audio_0"/>
     <TextView
         android:id="@+id/mp3_name"
         android:layout_toRightOf="@+id/img_tag"

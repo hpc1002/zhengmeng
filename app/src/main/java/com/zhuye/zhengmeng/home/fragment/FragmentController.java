@@ -42,7 +42,7 @@ public class FragmentController {
         fragments.add(new Dynamic2Fragment());//0
         fragments.add(new BangDanFragment());//1
         fragments.add(new KTVFragment());//2
-        fragments.add(new ShopFragment());//3
+        fragments.add(new Shop2Fragment());//3
         fragments.add(new MeFragment());//4
         FragmentTransaction ft = fm.beginTransaction();
         for (Fragment fragment : fragments) {

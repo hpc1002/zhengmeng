@@ -25,10 +25,19 @@ public class FansContributionAdapter extends BaseQuickAdapter<FansContributionBe
     protected void convert(BaseViewHolder helper, FansContributionBean.DataBean.GiftReceptionListBean item) {
         helper.setText(R.id.tv_fan_name, item.getUser_nicename());
         helper.setText(R.id.tv_jinbi, item.getSum_score());
-        Glide.with(mContext)
-                .load(Constant.BASE_URL2 + item.getAvatar())
-                .centerCrop()
-                .placeholder(R.mipmap.touxiang_re)
-                .into((ImageView) helper.getView(R.id.iv_fans_avatar));
+        if (item.getAvatar().contains("http")){
+            Glide.with(mContext)
+                    .load(item.getAvatar())
+                    .centerCrop()
+                    .placeholder(R.mipmap.touxiang_re)
+                    .into((ImageView) helper.getView(R.id.iv_fans_avatar));
+        }else{
+            Glide.with(mContext)
+                    .load(Constant.BASE_URL2 + item.getAvatar())
+                    .centerCrop()
+                    .placeholder(R.mipmap.touxiang_re)
+                    .into((ImageView) helper.getView(R.id.iv_fans_avatar));
+        }
+
     }
 }

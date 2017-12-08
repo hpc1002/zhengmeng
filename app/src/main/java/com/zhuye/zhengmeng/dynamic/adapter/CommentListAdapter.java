@@ -57,10 +57,19 @@ public class CommentListAdapter extends BaseQuickAdapter<CommentListBean.Data, B
             helper.addOnClickListener(R.id.iv_zan);
         }
 //        helper.addOnClickListener(R.id.production_type);
-        Glide.with(mContext)
-                .load(Constant.BASE_URL2 + item.avatar)
-                .centerCrop()
-                .placeholder(R.mipmap.default_img)
-                .into((ImageView) helper.getView(R.id.img_observer));
+        if (item.avatar.contains("http")){
+            Glide.with(mContext)
+                    .load(item.avatar)
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_img)
+                    .into((ImageView) helper.getView(R.id.img_observer));
+        }else{
+            Glide.with(mContext)
+                    .load(Constant.BASE_URL2 + item.avatar)
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_img)
+                    .into((ImageView) helper.getView(R.id.img_observer));
+        }
+
     }
 }

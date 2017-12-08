@@ -399,8 +399,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             if (rongcloudCode == 200) {
                                 //获取融云信息成功
                                 userId = RongcloudJson.optString("userId");
+                                android.util.Log.i(TAG, "onSuccess:登录userId+"+userId);
                                 rongcloudToken = RongcloudJson.optString("token");
                             }
+                            android.util.Log.i(TAG, "onSuccess:登录userId+"+userId);
                             if (!token.equals("")) {
                                 SPUtils.getInstance("userInfo").put("token", token);
                             }

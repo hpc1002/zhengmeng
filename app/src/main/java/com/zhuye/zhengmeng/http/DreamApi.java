@@ -801,7 +801,7 @@ public class DreamApi {
     }
 
     //榜单列表
-    public static void getBangDanList(final int what, String token,String city,
+    public static void getBangDanList(final int what, String token, String city,
                                       final MyCallBack myCallBack) {
         OkGo.<String>post(Constant.BANGDAN_LIST_URL)
                 .tag(App.getInstance())
@@ -1190,9 +1190,10 @@ public class DreamApi {
                     }
                 });
     }
+
     //房间是否有人在唱
     public static void isSinging(final int what, String token,
-                                       String apartment_id, String is_play, final MyCallBack myCallBack) {
+                                 String apartment_id, String is_play, final MyCallBack myCallBack) {
         OkGo.<String>post(Constant.IF_SING_URL)
                 .tag(App.getInstance())
                 .params("token", token)
@@ -1217,9 +1218,10 @@ public class DreamApi {
                     }
                 });
     }
+
     //歌曲是否有人在唱
     public static void isSongSinging(final int what,
-                                 String apartment_id, String is_sing, final MyCallBack myCallBack) {
+                                     String apartment_id, String is_sing, final MyCallBack myCallBack) {
         OkGo.<String>post(Constant.IF_SING_SONG_URL)
                 .tag(App.getInstance())
                 .params("is_sing", is_sing)
@@ -1243,9 +1245,10 @@ public class DreamApi {
                     }
                 });
     }
+
     //获取推流地址
     public static void getPushUrl(final int what,
-                                     String chatroom_id, final MyCallBack myCallBack) {
+                                  String chatroom_id, final MyCallBack myCallBack) {
         OkGo.<String>post(Constant.GET_PUSH_URL)
                 .tag(App.getInstance())
                 .params("chatroom_id", chatroom_id)
@@ -1268,6 +1271,7 @@ public class DreamApi {
                     }
                 });
     }
+
     //获取拉流地址
     public static void getPullUrl(final int what,
                                   String chatroom_id, final MyCallBack myCallBack) {
@@ -1278,14 +1282,14 @@ public class DreamApi {
                     @Override
                     public void onSuccess(Response<String> response) {
                         myCallBack.onSuccess(what, response);
-                        Log.i(TAG, "onSuccess: "+response.body());
+                        Log.i(TAG, "onSuccess: " + response.body());
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
                         myCallBack.onFail(what, response);
-                        Log.i(TAG, "onError: "+response);
+                        Log.i(TAG, "onError: " + response);
                     }
 
                     @Override
@@ -1293,6 +1297,247 @@ public class DreamApi {
                         super.onFinish();
                         myCallBack.onFinish(what);
                     }
+                });
+    }
+
+    //获取礼物列表
+    public static void getGoodListUrl(final int what,
+                                      String token, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.GET_GOOD_LIST_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+
+    //购买商品
+    public static void buyGoodUrl(final int what,
+                                  String token, String gift_id, String sum, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.BUY_GOOD_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .params("gift_id", gift_id)
+                .params("sum", sum)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+
+    //详情礼物列表
+    public static void giftDetailListUrl(final int what,
+                                         String token, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.GOOD_DETAIL_LIST_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+
+    //背包礼物赠送
+    public static void packageGiftSendUrl(final int what,
+                                          String token, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.PACKAGE_GIFT_SEND__URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+
+    //商城礼物赠送
+    public static void shopGiftSendUrl(final int what,
+                                       String token, String reception_id, String production_id, String type, String gift_id, String sum,
+                                       final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.SHOP_GIFT_SEND__URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .params("reception_id", reception_id)
+                .params("production_id", production_id)
+                .params("type", type)
+                .params("gift_id", gift_id)
+                .params("sum", sum)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+    //vip价格列表
+    public static void VipPriceListUrl(final int what,
+                                          String token, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.VIP_PRICE_LIST__URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+    //阿里支付
+    public static void AliPay(final int what,
+                                       String token, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.VIP_PRICE_LIST__URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+    //微信支付
+    public static void WeixinPay(final int what,
+                              String token,String vip_id,String gold_id, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.WEXIN_PAY_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .params("vip_id", vip_id)
+                .params("gold_id", gold_id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+
+    public static void AliPay(final int what,
+                                      String token,String vip_id,String gold_id, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.AL_PAY_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .params("vip_id", vip_id)
+                .params("gold_id", gold_id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+    //提现
+    public static void tiXian(final int what,
+                              String token,String type,String money,String bank_card_id,String  phone,final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.TIXIAN_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .params("type", type)
+                .params("money", money)
+                .params("bank_card_id", bank_card_id)
+                .params("phone", phone)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
                 });
     }
 }

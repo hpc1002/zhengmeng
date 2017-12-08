@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ import com.zhuye.zhengmeng.base.BaseNoFragment;
 import com.zhuye.zhengmeng.dynamic.DynamicDetail2Activity;
 import com.zhuye.zhengmeng.home.adapter.BGABannerAdapter;
 import com.zhuye.zhengmeng.home.bean.BangDanListBean;
-import com.zhuye.zhengmeng.home.bean.BannerDto;
 import com.zhuye.zhengmeng.home.viewHolder.BangdanAViewHolder;
 import com.zhuye.zhengmeng.home.viewHolder.BangdanBViewHolder;
 import com.zhuye.zhengmeng.home.viewHolder.BangdanCViewHolder;
@@ -125,20 +123,18 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
 
     @Override
     protected void initData() {
-        getBannerData();
-        DreamApi.getBangDanList(0x001, token, "", myCallBack);
+//        getBannerData();
+//        DreamApi.getBangDanList(0x001, token, "", myCallBack);
     }
 
     private void getBannerData() {
         homeRecommendBanner.setAdapter(new BGABannerAdapter(getActivity()));
-        ArrayList<BannerDto> pictures = DataProvider.getPictures();
-        List<String> bannerTitle = new ArrayList<String>();
-        List<String> bannerImage = new ArrayList<String>();
-        for (int i = 0; i < pictures.size(); i++) {
-            bannerTitle.add(pictures.get(i).getBannerTitle());
-            bannerImage.add(pictures.get(i).getImageUrl());
+        ArrayList<Integer> bannerImageData = DataProvider.getBannerImage();
+        List<Integer> bannerImage = new ArrayList<Integer>();
+        for (int i = 0; i < bannerImageData.size(); i++) {
+            bannerImage.add(bannerImageData.get(i));
         }
-        homeRecommendBanner.setData(bannerImage, bannerTitle);
+        homeRecommendBanner.setData(bannerImage, null);
     }
 
 
@@ -191,12 +187,12 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == 0&&data!=null) {
+        if (requestCode == 0 && resultCode == 0 && data != null) {
             //获取Bundle中的数据
             Bundle bundle = data.getExtras();
             String address = bundle.getString("address");
             //修改编辑框的内容
-           tvPosition.setText(address);
+            tvPosition.setText(address);
             DreamApi.getBangDanList(0x001, token, address, myCallBack);
         }
     }
@@ -224,11 +220,11 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
 
         @Override
         public void onFail(int what, Response<String> result) {
-            switch (what){
+            switch (what) {
                 case 0x001:
                     String body = result.body();
-                    if (body==null){
-                      ToastManager.show("暂无数据");
+                    if (body == null) {
+                        ToastManager.show("暂无数据");
                     }
                     break;
             }
@@ -300,6 +296,7 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        getBannerData();
         DreamApi.getBangDanList(0x001, token, "", myCallBack);
     }
 

@@ -4,10 +4,64 @@
     android:layout_height="match_parent"
     android:background="#312829">
 
-    <WebView
-        android:id="@+id/webView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:id="@+id/ll_tag">
 
+        <TextView
+            android:id="@+id/all_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="全部礼物" />
+
+        <TextView
+            android:id="@+id/my_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/all_gift"
+            android:textColor="@color/white"
+            android:text="我的礼物" />
+
+        <TextView
+            android:layout_toRightOf="@+id/my_gift"
+            android:id="@+id/gold_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/white"
+            android:text="金币金额:" />
+
+        <TextView
+            android:id="@+id/to_charge"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_marginRight="10dp"
+            android:text="去充值"
+            android:textColor="@color/red" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/ll_tag"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/gift_send"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@color/red"
+        android:text="送出礼物" />
 </RelativeLayout>
 

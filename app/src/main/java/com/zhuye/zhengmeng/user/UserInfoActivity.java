@@ -391,7 +391,12 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                                             JSONObject data = jsonObject1.getJSONObject("data");
                                             String avatar = data.optString("avatar");
                                             SPUtils.getInstance("userInfo").put("avatar", avatar);//头像url
-                                            Glide.with(UserInfoActivity.this).load(Constant.BASE_URL_PINJIE + avatar).into(userAvatar);
+                                            if (avatar.contains("http")){
+                                                Glide.with(UserInfoActivity.this).load(avatar).into(userAvatar);
+                                            }else{
+                                                Glide.with(UserInfoActivity.this).load(Constant.BASE_URL_PINJIE + avatar).into(userAvatar);
+                                            }
+
                                         }
 
                                     } catch (JSONException e) {

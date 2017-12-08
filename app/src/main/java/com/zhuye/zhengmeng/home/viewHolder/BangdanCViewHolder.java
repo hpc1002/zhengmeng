@@ -29,11 +29,11 @@ public class BangdanCViewHolder extends BaseViewHolder<BangDanListBean.Data> {
     @Override
     public void setData(BangDanListBean.Data data) {
         super.setData(data);
-        tv_bangdan_name_c.setText(data.production_name + "名字666");
+//        tv_bangdan_name_c.setText(data.production_name);
 
         Glide.with(getContext())
                 .load(data.img_url)
-                .placeholder(R.mipmap.default_img)
+                .placeholder(R.mipmap.audio_0)
                 .bitmapTransform(new CenterCrop(getContext()))
                 .into(iv_bangdan_c);
     }

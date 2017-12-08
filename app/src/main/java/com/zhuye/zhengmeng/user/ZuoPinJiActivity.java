@@ -83,10 +83,12 @@ public class ZuoPinJiActivity extends BaseNoActivity implements View.OnClickList
         String attention_sum = SPUtils.getInstance("userInfo").getString("attention_sum");//关注数
         String fans_sum = SPUtils.getInstance("userInfo").getString("fans_sum");//粉丝数
         //加载信息
-        Glide.with(this).
-                load(Constant.BASE_URL_PINJIE + user_avatar)
-//        load(Constant.BASE_URL_PINJIE + avatar)
-                .into(userAvatar);
+        if (user_avatar.contains("http")){
+            Glide.with(this).load(user_avatar).into(userAvatar);
+        }else{
+            Glide.with(this).load(Constant.BASE_URL_PINJIE + user_avatar).into(userAvatar);
+        }
+
         userName.setText(user_nicename);
         tvFollow.setText("关注 " + attention_sum);
         tvFans.setText("粉丝 " + fans_sum);

@@ -13,17 +13,19 @@ public class GetLocalMp3Utils {
         ArrayList<String> Mp3File = new ArrayList<String>();
         File file = new File(fileAbsolutePath);
         File[] subFile = file.listFiles();
-
-        for (int iFileLength = 0; iFileLength < subFile.length; iFileLength++) {
-            // 判断是否为文件夹
-            if (!subFile[iFileLength].isDirectory()) {
-                String filename = subFile[iFileLength].getName();
-                // 判断是否为MP4结尾
-                if (filename.trim().toLowerCase().endsWith(".mp3")) {
-                    Mp3File.add(filename);
+        if (subFile!=null){
+            for (int iFileLength = 0; iFileLength < subFile.length; iFileLength++) {
+                // 判断是否为文件夹
+                if (!subFile[iFileLength].isDirectory()) {
+                    String filename = subFile[iFileLength].getName();
+                    // 判断是否为MP4结尾
+                    if (filename.trim().toLowerCase().endsWith(".mp3")) {
+                        Mp3File.add(filename);
+                    }
                 }
             }
         }
+
         return Mp3File;
     }
 

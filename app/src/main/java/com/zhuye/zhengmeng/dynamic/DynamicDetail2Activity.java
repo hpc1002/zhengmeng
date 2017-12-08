@@ -9,7 +9,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,8 +23,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -64,6 +64,10 @@ import com.zhuye.zhengmeng.dynamic.bean.CommentListBean;
 import com.zhuye.zhengmeng.dynamic.bean.FansContributionBean;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
+import com.zhuye.zhengmeng.shop.adapter.GiftDetailPackageAdapter;
+import com.zhuye.zhengmeng.shop.adapter.GiftDetailShopAdapter;
+import com.zhuye.zhengmeng.shop.bean.GiftDetailBean;
+import com.zhuye.zhengmeng.user.MyGoldActivity;
 import com.zhuye.zhengmeng.user.adapter.FansContributionAdapter;
 import com.zhuye.zhengmeng.utils.ToastManager;
 import com.zhuye.zhengmeng.widget.RoundedCornerImageView;
@@ -78,12 +82,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.jzvd.JZVideoPlayerStandard;
 
 import static com.zhuye.zhengmeng.R.id.song_name;
 
 public class DynamicDetail2Activity extends BaseActivity implements OnRefreshListener, OnLoadmoreListener, View.OnClickListener {
 
-
+    @BindView(R.id.videoplayer)
+    JZVideoPlayerStandard videoplayer;
     @BindView(R.id.avatar)
     RoundedCornerImageView avatar;
     @BindView(R.id.nickname)
@@ -119,7 +125,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
     private String token;
     private PopupWindow popWindow;
     private PopupWindow popGiftWindow;
-    private WebView webView;
+    private RecyclerView giftRecyclerView;
     FansContributionAdapter fansContributionAdapter;
     int page = 1;
     private KSYMediaPlayer ksyMediaPlayer;
@@ -127,7 +133,11 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
 
     private UMShareListener mShareListener;
     private ShareAction mShareAction;
-
+    private GiftDetailBean giftDetailBean;
+    private  String production_path;
+    private  String production_name;
+    private  String production_content;
+    private  String production_img;
     private IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer mp) {
@@ -170,8 +180,11 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
         ksyMediaPlayer.setBufferTimeMax(5);
         ksyMediaPlayer.setTimeout(20, 100);
         production_id = getIntent().getStringExtra("production_id");
-        String production_path = getIntent().getStringExtra("production_path");
-        String production_name = getIntent().getStringExtra("production_name");
+
+        production_path = getIntent().getStringExtra("production_path");
+        production_name = getIntent().getStringExtra("production_name");
+        production_img = getIntent().getStringExtra("production_img");
+        production_content = getIntent().getStringExtra("production_content");
 
         token = SPUtils.getInstance("userInfo").getString("token");
 
@@ -182,20 +195,20 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
         DreamApi.getFansNumber(0x005, token, production_id, myCallBack);
         DreamApi.getFansContribution(0x006, token, "638", myCallBack);
         String url = Constant.BASE_URL2 + production_path;
-        playShow(url);
-//        videoplayer.setUp(Constant.BASE_URL2 + production_path
-//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, production_name);
-//        videoplayer.startVideo();
+//        playShow(url);
+        videoplayer.setUp(Constant.BASE_URL2 + production_path
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, production_name);
+        videoplayer.startVideo();
         rbGift.setOnClickListener(this);
         rbComment.setOnClickListener(this);
         rbZhuanfa.setOnClickListener(this);
         rbPerform.setOnClickListener(this);
 
         mShareListener = new CustomShareListener(this);
-        UMWeb web = new UMWeb(Defaultcontent.url);
-        web.setTitle("这是标题");//标题
-        web.setThumb(new UMImage(DynamicDetail2Activity.this, Defaultcontent.imageurl));  //缩略图
-        web.setDescription("征梦科技");//描述
+        UMWeb web = new UMWeb(Constant.BASE_URL2+production_path);
+        web.setTitle(production_name);//标题
+        web.setThumb(new UMImage(DynamicDetail2Activity.this, production_img));  //缩略图
+//        web.setDescription(Defaultcontent.text);//描述
         /*无自定按钮的分享面板*/
         mShareAction = new ShareAction(DynamicDetail2Activity.this).setDisplayList(
                 SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE,
@@ -295,20 +308,25 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
         return this;
     }
 
+
+    @Override
+    protected void onDestroy() {
+        ksyMediaPlayer.stop();
+        super.onDestroy();
+    }
+
     @Override
     public void onBackPressed() {
+        if (videoplayer.backPress()) {
+            return;
+        }
         super.onBackPressed();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        ksyMediaPlayer.stop();
-        super.onDestroy();
+        videoplayer.releaseAllVideos();
     }
 
     private MyCallBack myCallBack = new MyCallBack() {
@@ -366,12 +384,20 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                                     DreamApi.followOrNot(0x004, token, user_id, myCallBack);
                                 }
                             });
+                            if (user_avatar.contains("http")&&!isFinishing()) {
+                                Glide.with(DynamicDetail2Activity.this)
+                                        .load(user_avatar)
+                                        .centerCrop()
+                                        .placeholder(R.mipmap.touxiang_re)
+                                        .into(avatar);
+                            } else if (!isFinishing()){
+                                Glide.with(DynamicDetail2Activity.this)
+                                        .load(Constant.BASE_URL2 + user_avatar)
+                                        .centerCrop()
+                                        .placeholder(R.mipmap.touxiang_re)
+                                        .into(avatar);
+                            }
 
-                            Glide.with(DynamicDetail2Activity.this)
-                                    .load(Constant.BASE_URL2 + user_avatar)
-                                    .centerCrop()
-                                    .placeholder(R.mipmap.touxiang_re)
-                                    .into(avatar);
 
                         }
                     } catch (JSONException e) {
@@ -468,20 +494,91 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                         JSONObject jsonObject = new JSONObject(result.body());
                         int code = jsonObject.getInt("code");
                         if (code == 200) {
-                            String url = jsonObject.getString("data");
-                            WebSettings webSettings = webView.getSettings();
-                            //设置WebView属性，能够执行Javascript脚本
-                            webSettings.setJavaScriptEnabled(true);
-                            webSettings.setLoadsImagesAutomatically(true);
-                            webView.setVerticalScrollBarEnabled(false);
-                            //运行webview通过URI获取安卓文件
-                            webSettings.setAllowFileAccess(true);
-                            webSettings.setAllowFileAccessFromFileURLs(true);
-                            webSettings.setAllowUniversalAccessFromFileURLs(true);
-                            String cookie = SPUtils.getInstance("userInfo").getString("cookie");
-                            synchronousWebCookies(DynamicDetail2Activity.this, url, cookie);
-                            webView.loadUrl(url);
-                            popupInputMethodWindow();
+
+
+//                            String url = jsonObject.getString("data");
+//                            WebSettings webSettings = webView.getSettings();
+//                            //设置WebView属性，能够执行Javascript脚本
+//                            webSettings.setJavaScriptEnabled(true);
+//                            webSettings.setLoadsImagesAutomatically(true);
+//                            webView.setVerticalScrollBarEnabled(false);
+//                            //运行webview通过URI获取安卓文件
+//                            webSettings.setAllowFileAccess(true);
+//                            webSettings.setAllowFileAccessFromFileURLs(true);
+//                            webSettings.setAllowUniversalAccessFromFileURLs(true);
+//                            String cookie = SPUtils.getInstance("userInfo").getString("cookie");
+//                            synchronousWebCookies(DynamicDetail2Activity.this, url, cookie);
+//                            webView.loadUrl(url);
+//                            popupInputMethodWindow();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 0x009:
+                    try {
+                        JSONObject jsonObject = new JSONObject(result.body());
+                        int code = jsonObject.getInt("code");
+                        if (code == 200) {
+
+                            giftDetailBean = new Gson().fromJson(result.body(), GiftDetailBean.class);
+                            List<GiftDetailBean.Data.ShopList> shopData;
+                            List<GiftDetailBean.Data.KnapsackLlist> knapsackData;
+                            shopData = giftDetailBean.data.shop_list;
+                            knapsackData = giftDetailBean.data.knapsack_list;
+                            final GiftDetailShopAdapter giftDetailShopAdapter = new GiftDetailShopAdapter(R.layout.item_shop_detail_gift, shopData);
+                            final GiftDetailPackageAdapter giftDetailPackageAdapter = new GiftDetailPackageAdapter(R.layout.item_shop_detail_gift, knapsackData);
+                            giftRecyclerView.setAdapter(giftDetailShopAdapter);
+                            gold_number.setText("金币金额:" + giftDetailBean.data.score);
+                            giftDetailShopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    DreamApi.shopGiftSendUrl(0x010, token, "0", production_id, "1",
+                                            giftDetailShopAdapter.getItem(position).gift_id, "1", myCallBack);
+                                }
+                            });
+                            giftDetailPackageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    DreamApi.shopGiftSendUrl(0x010, token, "0", production_id, "1",
+                                            giftDetailPackageAdapter.getItem(position).gift_id, "1", myCallBack);
+                                }
+                            });
+                            all_gift.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    all_gift.setTextColor(getResources().getColor(R.color.red));
+                                    my_gift.setTextColor(getResources().getColor(R.color.white));
+                                    giftRecyclerView.setAdapter(giftDetailShopAdapter);
+                                }
+                            });
+                            my_gift.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    all_gift.setTextColor(getResources().getColor(R.color.white));
+                                    my_gift.setTextColor(getResources().getColor(R.color.red));
+                                    giftRecyclerView.setAdapter(giftDetailPackageAdapter);
+                                }
+                            });
+                            to_charge.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(DynamicDetail2Activity.this, MyGoldActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 0x010:
+                    try {
+                        JSONObject jsonObject = new JSONObject(result.body());
+                        int code = jsonObject.getInt("code");
+                        if (code == 200) {
+                            ToastManager.show("赠送成功");
+                            popGiftWindow.dismiss();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -729,8 +826,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
         switch (view.getId()) {
             case R.id.rb_gift:
                 //送礼物
-                ToastManager.show("送礼物");
-                DreamApi.sendGift(0x008, token, production_id, myCallBack);
+//                DreamApi.sendGift(0x008, token, production_id, myCallBack);
                 showGiftPop();
                 break;
             case R.id.rb_comment:
@@ -751,14 +847,29 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
         }
     }
 
+    private TextView all_gift;
+    private TextView my_gift;
+    private TextView gold_number;
+    private TextView to_charge;
+
     private void showGiftPop() {
         if (popGiftWindow == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = layoutInflater.inflate(R.layout.popwindow_gift, null);
             // 创建一个PopuWidow对象
-            popGiftWindow = new PopupWindow(view, LinearLayout.LayoutParams.FILL_PARENT, 140, true);
+            popGiftWindow = new PopupWindow(view, LinearLayout.LayoutParams.FILL_PARENT, 600, true);
 
-            webView = view.findViewById(R.id.webView);
+            giftRecyclerView = view.findViewById(R.id.recyclerView);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(DynamicDetail2Activity.this, 4);
+//            gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            giftRecyclerView.setLayoutManager(gridLayoutManager);
+            all_gift = view.findViewById(R.id.all_gift);
+            my_gift = view.findViewById(R.id.my_gift);
+            gold_number = view.findViewById(R.id.gold_number);
+            to_charge = view.findViewById(R.id.to_charge);
+            all_gift.setTextColor(getResources().getColor(R.color.red));
+            my_gift.setTextColor(getResources().getColor(R.color.white));
+            DreamApi.giftDetailListUrl(0x009, token, myCallBack);
 
         }
         //popupwindow弹出时的动画		popWindow.setAnimationStyle(R.style.popupWindowAnimation);

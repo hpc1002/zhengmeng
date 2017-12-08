@@ -34,8 +34,8 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:focusable="false"
+            android:layout_marginRight="15dp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/ic_launcher_round"
             android:visibility="visible" />
 
         <TextView
@@ -46,7 +46,6 @@
             android:focusable="false"
             android:layout_centerInParent="true"
             android:layout_marginRight="15dp"
-            android:text="完成"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:visibility="visible" />
@@ -60,7 +59,6 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:singleLine="true"
-        android:text="标题"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 

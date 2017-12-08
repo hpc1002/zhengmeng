@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:layout_marginLeft="@dimen/x23"
     android:layout_marginRight="@dimen/x23"
     android:layout_marginTop="@dimen/y23"
@@ -9,8 +10,9 @@
 
     <ImageView
         android:id="@+id/iv_bangdan_a"
+        android:scaleType="fitXY"
         android:layout_width="@dimen/x704"
-        android:layout_height="@dimen/y425" />
+        android:layout_height="@dimen/y405" />
 
     <TextView
         android:id="@+id/tv_rank_a"
@@ -26,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_bangdan_a"
-        android:text="名字"
         android:textColor="#666666"
+        android:visibility="gone"
         android:textSize="16sp" />
 
 </RelativeLayout>

@@ -39,13 +39,18 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicModel.DataBean, Base
         //头像
         String img_AvatarUrl = item.getAvatar();
         ImageView img_avatar = helper.getView(R.id.userImg);
-        Glide.with(mContext).load(Constant.BASE_URL_PINJIE + img_AvatarUrl).into(img_avatar);
+        if (img_AvatarUrl.contains("http")){
+            Glide.with(mContext).load(img_AvatarUrl).into(img_avatar);
+        }else{
+            Glide.with(mContext).load(Constant.BASE_URL_PINJIE + img_AvatarUrl).into(img_avatar);
+        }
+
         //作品封面图
         String img_ProductionUrl = item.getImg_url();
         ImageView img_production = helper.getView(R.id.img_url);
         Glide.with(mContext)
                 .load(img_ProductionUrl)
-                .placeholder(R.mipmap.home_banner)
+                .placeholder(R.mipmap.video_0)
                 .into(img_production);
         //用户名
         helper.setText(R.id.userName, item.getUser_nicename().equals(" ") ? "无名氏" : item.getUser_nicename());
@@ -76,12 +81,12 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicModel.DataBean, Base
                 mCallBack.OnItemClickListener(item.getProduction_id(), item.getProduction_path(), item.getProduction_name());
             }
         });
-        helper.getView(R.id.play).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCallBack.OnItemClickListener(item.getProduction_id(), item.getProduction_path(), item.getProduction_name());
-            }
-        });
+//        helper.getView(R.id.play).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mCallBack.OnItemClickListener(item.getProduction_id(), item.getProduction_path(), item.getProduction_name());
+//            }
+//        });
 
     }
 

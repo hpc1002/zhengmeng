@@ -45,23 +45,27 @@ public class SendFragment extends BaseFragment implements OnRefreshListener, OnL
     private String token;
     private SendGiftListAdapter sendGiftListAdapter;
     int page = 1;
+    private View view;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_send, container, false);
+
+        view = inflater.inflate(R.layout.fragment_send, container, false);
+        return view;
     }
 
     @Override
     protected void initListener() {
         token = SPUtils.getInstance("userInfo").getString("token");
-        refreshLayout.autoRefresh();
-        refreshLayout.setOnRefreshListener(this);
-        refreshLayout.setOnLoadmoreListener(this);
+
     }
 
 
     @Override
     protected void initData() {
+        refreshLayout.autoRefresh();
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnLoadmoreListener(this);
     }
 
     @Override
@@ -106,14 +110,15 @@ public class SendFragment extends BaseFragment implements OnRefreshListener, OnL
 
         @Override
         public void onFinish(int what) {
+            refreshLayout=view.findViewById(R.id.refreshLayout);
             refreshLayout.finishLoadmore();
             refreshLayout.finishRefresh();
         }
     };
 
     private void initUi(List<GiftListBean.Data> datas) {
+        recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         sendGiftListAdapter = new SendGiftListAdapter(R.layout.item_gift, datas, getActivity());
         recyclerView.setAdapter(sendGiftListAdapter);
         if (datas == null) {
@@ -121,10 +126,12 @@ public class SendFragment extends BaseFragment implements OnRefreshListener, OnL
         }
         sendGiftListAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         sendGiftListAdapter.isFirstOnly(false);
+
     }
 
     @Override
     public void onRefresh(RefreshLayout refreshlayout) {
+
         page = 1;
         DreamApi.getSendGiftList(0x001, token, page, myCallBack);
     }
@@ -169,6 +176,6 @@ public class SendFragment extends BaseFragment implements OnRefreshListener, OnL
     @Override
     public void onDestroy() {
         super.onDestroy();
-        page=1;
+        page = 1;
     }
 }
