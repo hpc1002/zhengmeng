@@ -21,7 +21,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat">
 
-        <RelativeLayout style="@style/ActivityTitle">
+        <RelativeLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            style="@style/ActivityTitle">
 
             <EditText
                 android:id="@+id/search_content"
@@ -39,7 +42,7 @@
                 android:paddingLeft="@dimen/x95"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textColorHint="#666666"
+                android:textColorHint="@color/gray"
                 android:textSize="14sp" />
 
             <ImageView

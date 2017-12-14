@@ -19,6 +19,7 @@
         android:layout_marginTop="30dp"
         android:layout_toRightOf="@+id/img_song"
         android:singleLine="true"
+        android:textSize="16sp"
         android:text="歌曲名字" />
 
     <TextView
@@ -27,13 +28,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/name_song"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
+        android:text="点击量"
         android:layout_toRightOf="@+id/img_song"
-        android:singleLine="true"
-        android:text="歌曲大小" />
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/btn_yanchang"
-        android:layout_width="60dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"

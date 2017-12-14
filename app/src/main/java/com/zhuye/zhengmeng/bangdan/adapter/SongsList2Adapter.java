@@ -14,7 +14,6 @@ import com.zhuye.zhengmeng.Constant;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
-import com.zhuye.zhengmeng.utils.ToastManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +47,7 @@ public class SongsList2Adapter extends BaseQuickAdapter<SonglistBean.DataBean, B
     @Override
     protected void convert(final BaseViewHolder helper, final SonglistBean.DataBean item) {
         helper.setText(R.id.name_song, item.getSong_name());
-        helper.setText(R.id.song_size, item.getSong_name());
+        helper.setText(R.id.song_size, "共演唱" + item.getSong_click() + "次");
         helper.addOnClickListener(R.id.btn_yanchang);
 
         helper.getView(R.id.btn_yanchang).setOnClickListener(new View.OnClickListener() {
@@ -94,6 +93,7 @@ public class SongsList2Adapter extends BaseQuickAdapter<SonglistBean.DataBean, B
                 .placeholder(R.mipmap.default_img)
                 .into((ImageView) helper.getView(R.id.img_song));
     }
+
     private allCheck mCallBack;
 
     public void setCallBack(allCheck callBack) {

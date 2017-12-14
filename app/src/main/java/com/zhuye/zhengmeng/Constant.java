@@ -98,6 +98,10 @@ public class Constant {
     public static final String FANS_CONTRIBUTION_RANK_URL = BASE_URL + "users/production_details_fans_list";
     //添加评论
     public static final String ADD_COMMENT_URL = BASE_URL + "users/comment_add";
+    //添加收藏
+    public static final String ADD_COLLECT_URL = BASE_URL + "users/add_collect";
+    //取消收藏
+    public static final String CANCEL_COLLECT_URL = BASE_URL + "users/abolish_collect";
     //加入聊天室
     public static final String ENTER_CHATROOM_URL = BASE_URL + "rongcloud/join";
     //送礼物web
@@ -139,6 +143,14 @@ public class Constant {
     public static final String AL_PAY_URL = BASE_URL + "payment/alipay_payment";
     //提现
     public static final String TIXIAN_URL = BASE_URL + "users/withdraw_deposit";
+    //用户更新是否在线
+    public static final String IFONLINE_URL = BASE_URL + "ktv/modify_chatroom_time";
+    //加入房间
+    public static final String JOIN_ROOM_URL = BASE_URL + "ktv/add_chatroom";
+    //反馈
+    public static final String FEEDBACK_URL = BASE_URL+"gift/fankui";
+    //分享房间号链接
+    public static final String SHARE_ROOM_URL = BASE_URL + "gift/fengxiang_url";
 //    //注册
 //    public static final String REGISTER_URL = BASE_URL + "changba/api/users/register";
 //    //登录

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -43,6 +44,8 @@ public class CompetitionActivity extends BaseActivity implements OnRefreshListen
 //    TextView viewEmpty;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.toNext)
+    TextView toNext;
     int page = 1;
     private String token;
     private CompetitionListAdapter competitionListAdapter;
@@ -60,6 +63,13 @@ public class CompetitionActivity extends BaseActivity implements OnRefreshListen
         refreshLayout.autoRefresh();
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnLoadmoreListener(this);
+        toNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CompetitionActivity.this, CompetitionDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setTitle() {

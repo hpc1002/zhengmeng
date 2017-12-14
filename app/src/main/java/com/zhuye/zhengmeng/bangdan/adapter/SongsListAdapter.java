@@ -48,7 +48,7 @@ public class SongsListAdapter extends BaseQuickAdapter<SonglistBean.DataBean, Ba
     @Override
     protected void convert(final BaseViewHolder helper, final SonglistBean.DataBean item) {
         helper.setText(R.id.name_song, item.getSong_name());
-        helper.setText(R.id.song_size, item.getSong_name());
+        helper.setText(R.id.song_size, "共演唱" + item.getSong_click() + "次");
         helper.addOnClickListener(R.id.btn_yanchang);
         Glide.with(mContext)
                 .load(Constant.BASE_URL2 + item.getSong_img())

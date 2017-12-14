@@ -24,6 +24,7 @@ import com.zhuye.zhengmeng.user.LocalRecordActivity;
 import com.zhuye.zhengmeng.user.MyBankCardActivity;
 import com.zhuye.zhengmeng.user.MyCollectActivity;
 import com.zhuye.zhengmeng.user.MyFansActivity;
+import com.zhuye.zhengmeng.user.MyFeedbackActivity;
 import com.zhuye.zhengmeng.user.MyFollowActivity;
 import com.zhuye.zhengmeng.user.MyGiftActivity;
 import com.zhuye.zhengmeng.user.MyGoldActivity;
@@ -98,6 +99,12 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
     TextView tvMyShare;
     @BindView(R.id.rl_my_share)
     RelativeLayout rlMyShare;
+    @BindView(R.id.iv_my_feedback)
+    ImageView ivMyFeedback;
+    @BindView(R.id.tv_my_feedback)
+    TextView tvMyFeedback;
+    @BindView(R.id.rl_my_feedback)
+    RelativeLayout rlMyFeedback;
     Unbinder unbinder;
     @BindView(R.id.iv_set)
     ImageView ivSet;
@@ -124,6 +131,7 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
         tvFans.setOnClickListener(this);
         tvMessage.setOnClickListener(this);
         tvFollow.setOnClickListener(this);
+        rlMyFeedback.setOnClickListener(this);
         zuopinji.setOnClickListener(this);
         ivSet.setOnClickListener(this);
         btnSign.setOnClickListener(this);
@@ -170,6 +178,9 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                 break;
             case R.id.rl_my_share:
                 startActivity(new Intent(getActivity(), MyShareActivity.class));
+                break;
+                case R.id.rl_my_feedback:
+                startActivity(new Intent(getActivity(), MyFeedbackActivity.class));
                 break;
             case R.id.rl_comment_reply:
                 startActivity(new Intent(getActivity(), MyBankCardActivity.class));

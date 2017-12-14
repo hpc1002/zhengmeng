@@ -29,13 +29,13 @@ public class FansContributionAdapter extends BaseQuickAdapter<FansContributionBe
             Glide.with(mContext)
                     .load(item.getAvatar())
                     .centerCrop()
-                    .placeholder(R.mipmap.touxiang_re)
+                    .placeholder(R.mipmap.default_img)
                     .into((ImageView) helper.getView(R.id.iv_fans_avatar));
         }else{
             Glide.with(mContext)
                     .load(Constant.BASE_URL2 + item.getAvatar())
                     .centerCrop()
-                    .placeholder(R.mipmap.touxiang_re)
+                    .placeholder(R.mipmap.default_img)
                     .into((ImageView) helper.getView(R.id.iv_fans_avatar));
         }
 

@@ -101,7 +101,7 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
     @Override
     protected void initListener() {
         token = SPUtils.getInstance("userInfo").getString("token");
-        tvQuanguobang.setTextColor(getResources().getColor(R.color.red));
+        tvQuanguobang.setTextColor(getResources().getColor(R.color.colorPrimary));
         tvPosition.setTextColor(getResources().getColor(R.color.black));
         platformSongs.setOnClickListener(this);
         platformCompetition.setOnClickListener(this);
@@ -169,7 +169,8 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
                 tvQuanguobang.setTextColor(getResources().getColor(R.color.black));
                 if (status_area == 1 && status_world == 0) {
                     Intent intent1 = new Intent(getActivity(), ChooseAddressActivity.class);
-//                    intent1.putExtra("now", tvPosition.getText().toString().trim());
+//                    intent1.putExtra("now", tvPosition.getText().toString());
+                    intent1.putExtra("now", tvPosition.getText().toString().trim());
                     startActivityForResult(intent1, 0);
                 }
                 break;
@@ -254,6 +255,8 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
                 intent.putExtra("production_id", adapterA.getItem(position).production_id);
                 intent.putExtra("production_path", adapterA.getItem(position).production_path);
                 intent.putExtra("production_name", adapterA.getItem(position).production_name);
+                intent.putExtra("production_img", adapterA.getItem(position).img_url);
+                intent.putExtra("production_content", adapterA.getItem(position).production_content);
                 startActivity(intent);
             }
         });
@@ -271,6 +274,8 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
                 intent.putExtra("production_id", adapterB.getItem(position).production_id);
                 intent.putExtra("production_path", adapterB.getItem(position).production_path);
                 intent.putExtra("production_name", adapterB.getItem(position).production_name);
+                intent.putExtra("production_img", adapterB.getItem(position).img_url);
+                intent.putExtra("production_content", adapterB.getItem(position).production_content);
                 startActivity(intent);
             }
         });
@@ -288,6 +293,8 @@ public class BangDanFragment extends BaseNoFragment implements View.OnClickListe
                 intent.putExtra("production_id", adapterC.getItem(position).production_id);
                 intent.putExtra("production_path", adapterC.getItem(position).production_path);
                 intent.putExtra("production_name", adapterC.getItem(position).production_name);
+                intent.putExtra("production_img", adapterC.getItem(position).img_url);
+                intent.putExtra("production_content", adapterC.getItem(position).production_content);
                 startActivity(intent);
             }
         });

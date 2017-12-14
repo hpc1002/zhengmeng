@@ -126,6 +126,8 @@ public class ForgetActivity2 extends BaseActivity implements View.OnClickListene
                             SPUtils.getInstance("userInfo").put("user_pwd", new_pwd.getText().toString());
                             startActivity(new Intent(ForgetActivity2.this, RegisterActivity.class));
                             finish();
+                        }else if (code.equals("105")){
+                            ToastUtils.showShort(jsonObject.optString("msg"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

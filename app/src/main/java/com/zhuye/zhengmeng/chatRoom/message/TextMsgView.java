@@ -28,6 +28,6 @@ public class TextMsgView extends BaseMsgView {
         TextMessage msg = (TextMessage) msgContent;
         username.setText(msg.getUserInfo().getName() + ": ");
         msgText.setText(EmojiManager.parse(msg.getContent(), msgText.getTextSize()));
-        msgText.setTextColor(getResources().getColor(R.color.red));
+//        msgText.setTextColor(getResources().getColor(R.color.colorPrimary));
     }
 }

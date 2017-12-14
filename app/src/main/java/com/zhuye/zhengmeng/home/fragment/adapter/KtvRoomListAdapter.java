@@ -33,6 +33,7 @@ public class KtvRoomListAdapter extends BaseQuickAdapter<KTVListBean.Data, BaseV
         helper.setText(R.id.tv_time, item.chatroom_time);
         helper.setText(R.id.room_name, item.chatroom_name);
         helper.setText(R.id.tv_time, item.chatroom_time);
+        helper.setText(R.id.room_id, "房间号:" + item.chatroom_id);
         Glide.with(mContext)
                 .load(Constant.BASE_URL2 + item.avatar)
                 .centerCrop()

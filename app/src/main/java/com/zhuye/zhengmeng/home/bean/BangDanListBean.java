@@ -15,6 +15,7 @@ public class BangDanListBean {
         public String production_id;
         public String production_path;
         public String production_type;
+        public String production_content;
         public String img_url;
         public String sum;
     }

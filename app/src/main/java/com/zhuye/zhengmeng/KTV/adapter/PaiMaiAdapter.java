@@ -26,6 +26,7 @@ public class PaiMaiAdapter extends BaseQuickAdapter<PaiMaiBean.Data, BaseViewHol
     @Override
     protected void convert(BaseViewHolder helper, PaiMaiBean.Data item) {
         helper.setText(R.id.name_song, item.song_name);
+        helper.setText(R.id.userName, item.user_nicename);
 
     }
 }

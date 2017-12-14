@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginRight="@dimen/x22">
+    android:layout_marginRight="@dimen/x22"
+    android:layout_marginLeft="@dimen/x22"
+    android:layout_marginBottom="10dp">
 
     <com.zhuye.zhengmeng.widget.RoundedCornerImageView
         android:id="@+id/img_observer"
-        android:layout_width="@dimen/x95"
-        android:layout_height="@dimen/y95"
+        android:layout_width="@dimen/x80"
+        android:layout_height="@dimen/y80"
         android:layout_margin="@dimen/y23"
         android:src="@mipmap/touxiang_re" />
 
@@ -63,4 +65,10 @@
         android:layout_toRightOf="@+id/pinlun_time"
         android:text="14条回复"
         android:textColor="@color/white" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/reply_count"
+        android:layout_marginTop="5dp"
+        android:background="#444444" />
 </RelativeLayout>

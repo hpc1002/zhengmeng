@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+<ImageView
+    android:id="@+id/paimai_img"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:src="@mipmap/cd"/>
     <TextView
+        android:layout_toRightOf="@+id/paimai_img"
         android:id="@+id/name_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_toRightOf="@+id/img_song"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
         android:singleLine="true"
-        android:textColor="@color/red"
         android:text="歌曲名字" />
-
+    <TextView
+        android:layout_alignParentRight="true"
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:singleLine="true"
+        android:text="用户昵称" />
 </RelativeLayout>

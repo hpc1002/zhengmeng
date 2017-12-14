@@ -63,9 +63,10 @@
             android:theme="@style/ThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
         <!-- 引导页 -->
         <activity
@@ -193,7 +194,18 @@
         <activity android:name=".bangdan.BangdanRankActivity" />
         <activity android:name=".bangdan.recording.QVideoActivity" />
         <activity android:name=".user.RankRecordActivity" />
-        <activity android:name=".KTV.KtvRoomActivity" />
+        <activity android:name=".KTV.KtvRoomActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="zhengmeng"
+                    />
+            </intent-filter>
+        </activity>
 
         <!-- imlib config begin  android:value="k51hidwqknr6b" -->
         <meta-data
@@ -261,13 +273,13 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- alipay sdk end -->
 
@@ -286,7 +298,9 @@
 
         <!-- 微信支付 end -->
         <activity android:name=".pay.PaySuccessActivity" />
-        <activity android:name=".pay.PayFailActivity"></activity>
+        <activity android:name=".pay.PayFailActivity" />
+        <activity android:name=".bangdan.CompetitionDetailActivity" />
+        <activity android:name=".user.MyFeedbackActivity"></activity>
     </application>
 
 </manifest>

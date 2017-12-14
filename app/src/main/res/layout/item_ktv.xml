@@ -45,7 +45,7 @@
             android:textSize="14sp" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y164"
         android:layout_marginLeft="@dimen/x45">
@@ -57,5 +57,16 @@
             android:layout_marginTop="@dimen/y54"
             android:textColor="#999999"
             android:textSize="14sp" />
-    </LinearLayout>
+        <TextView
+            android:id="@+id/room_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x37"
+            android:layout_marginTop="@dimen/y54"
+            android:textSize="18sp"
+            android:textColor="#999999"
+            android:text="房间号:197"/>
+    </RelativeLayout>
+
 </LinearLayout>

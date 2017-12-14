@@ -3,10 +3,12 @@ package com.zhuye.zhengmeng.bangdan.recording;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,6 +38,8 @@ import com.zhuye.zhengmeng.utils.DateUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -73,9 +77,9 @@ public class AudioActivity extends BaseNoActivity {
     @BindView(R.id.bottom_rl)
     RelativeLayout bottomRl;
 
-    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private MediaPlayer mediaPlayer=new MediaPlayer();
     private Handler handler = new Handler();
-
+    private NormalDialog dialog;
     String filePath;//录音路径
     MP3Recorder mRecorder;
     AudioPlayer audioPlayer;
@@ -94,6 +98,7 @@ public class AudioActivity extends BaseNoActivity {
     private String activity_id;//活动Id
 
     private boolean repared = false;//判断mediaPlayer是否初始化完成
+    private static final String TAG = "AudioActivity";
 
     @Override
     protected void loadViewLayout() {
@@ -138,26 +143,36 @@ public class AudioActivity extends BaseNoActivity {
         song_type = getIntent().getStringExtra("song_type");// 0动态 1 比赛
         song_id = getIntent().getStringExtra("song_id");//歌曲Id
         song_path = getIntent().getStringExtra("song_path");//歌曲路径
+        Log.i(TAG, "setListener: " + "gequlujing" + song_path);
         song_name = getIntent().getStringExtra("song_name");//歌曲名称
         lyric_path = getIntent().getStringExtra("lyric_path");//歌曲名称
         activity_id = getIntent().getStringExtra("activity_id");//活动Id
         songName.setText(song_name);
         try {
+
+            mediaPlayer = new MediaPlayer();
             mediaPlayer.reset();
-            mediaPlayer.setDataSource(Constant.BASE_URL_PINJIE + song_path);
+            Log.i(TAG, "setListener: " + "reset后");
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            String replace = song_path.replace(" ", "20%");
+            Log.i(TAG, "setListener: "+replace);
+            mediaPlayer.setDataSource(Constant.BASE_URL_PINJIE + song_path.replace(" ","%20"));
+//            mediaPlayer.setDataSource("http://changba.zyeo.net/Upload/song/2017-11-30/fangdatong%20-%20sanrenyou.mp3");
+            Log.i(TAG, "setListener: " + "准备前");
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
+                    Log.i(TAG, "onPrepared: " + "准备完毕");
                     seekBar.setMax(mediaPlayer.getDuration());
                     seekBar.setProgress(0);
                     repared = true;
-                    mediaPlayer.start();
                 }
             });
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
+                    Log.i(TAG, "onCompletion: " + "播放完成");
                     lrcView.updateTime(0);
                     seekBar.setProgress(0);
                     //音乐播放完毕的时候，结束录音，上传
@@ -165,6 +180,14 @@ public class AudioActivity extends BaseNoActivity {
                         resolveStopRecord();
                         completeRecord();
                     }
+                }
+            });
+            mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+                    mediaPlayer.start();
+                    Log.i(TAG, "onError: " + "错误信息" + i);
+                    return false;
                 }
             });
         } catch (IOException e) {
@@ -282,8 +305,10 @@ public class AudioActivity extends BaseNoActivity {
         }
     }
 
+
     private void completeRecord() {
-        final NormalDialog dialog = new NormalDialog(mContext);
+        dialog = new NormalDialog(mContext);
+
         dialog.isTitleShow(false)
                 .bgColor(Color.parseColor("#ffffff"))
                 .cornerRadius(5)
@@ -323,7 +348,7 @@ public class AudioActivity extends BaseNoActivity {
     }
 
     private void ResetCustomAttr() {
-        final NormalDialog dialog = new NormalDialog(mContext);
+        dialog = new NormalDialog(mContext);
         dialog.isTitleShow(false)
                 .bgColor(Color.parseColor("#ffffff"))
                 .cornerRadius(5)
@@ -358,7 +383,7 @@ public class AudioActivity extends BaseNoActivity {
     }
 
     private void DialogCustomAttr() {
-        final NormalDialog dialog = new NormalDialog(mContext);
+        dialog = new NormalDialog(mContext);
         dialog.isTitleShow(false)
                 .bgColor(Color.parseColor("#ffffff"))
                 .cornerRadius(5)
@@ -399,7 +424,7 @@ public class AudioActivity extends BaseNoActivity {
     }
 
     private void NormalDialogCustomAttr() {
-        final NormalDialog dialog = new NormalDialog(mContext);
+        dialog = new NormalDialog(mContext);
         dialog.isTitleShow(false)
                 .bgColor(Color.parseColor("#ffffff"))
                 .cornerRadius(5)
@@ -470,8 +495,10 @@ public class AudioActivity extends BaseNoActivity {
             return;
         }
         mIsRecord = true;
+        Log.i(TAG, "onPrepared: " + "让我播放吧222");
         //**************播放背景音乐***************//
         if (!mediaPlayer.isPlaying()) {
+            Log.i(TAG, "onPrepared: " + "让我播放111");
             mediaPlayer.start();
             handler.post(runnable);
         } else {
@@ -576,6 +603,7 @@ public class AudioActivity extends BaseNoActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(runnable);
+        dialog.dismiss();
         mediaPlayer.reset();
         mediaPlayer.release();
         mediaPlayer = null;

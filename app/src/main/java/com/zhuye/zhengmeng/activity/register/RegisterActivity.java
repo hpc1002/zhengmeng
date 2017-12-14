@@ -28,6 +28,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.utils.Log;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseActivity;
+import com.zhuye.zhengmeng.base.BaseNoActivity;
 import com.zhuye.zhengmeng.home.HomeActivity;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
@@ -40,7 +41,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseNoActivity implements View.OnClickListener {
 
     @BindView(R.id.tv_register)
     TextView tv_register;//选择注册按钮

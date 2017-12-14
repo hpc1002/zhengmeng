@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zhuye.zhengmeng.user.MyFeedbackActivity">
+    <com.zhuye.zhengmeng.view.MyAppTitle
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="#f75153"
+        android:paddingTop="15dp" />
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/titleBar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="39dp"
+        android:background="@drawable/register_login_button_shape"
+        android:gravity="top"
+        android:hint="请填写您要反馈的信息，我们将会尽快处理" />
+    <Button
+        android:id="@+id/submit"
+        android:visibility="visible"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="33dp"
+        android:background="@drawable/upload_button_shape"
+        android:text="提交"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+</LinearLayout>

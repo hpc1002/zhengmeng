@@ -133,7 +133,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
         songName.setText(song_name);
         try {
             mediaPlayer.reset();
-            mediaPlayer.setDataSource(Constant.BASE_URL_PINJIE + song_path);
+            mediaPlayer.setDataSource(Constant.BASE_URL_PINJIE + song_path.replace(" ","%20"));
             mediaPlayer.prepareAsync();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
@@ -385,7 +385,8 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
             //设置文件的输出格式
             mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);//aac_adif， aac_adts， output_format_rtp_avp， output_format_mpeg2ts ，webm
             //设置audio的编码格式
-            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+//            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
             //设置video的编码格式
             mRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
             //设置录制的视频编码比特率
@@ -398,6 +399,7 @@ public class VideoActivity extends Activity implements SurfaceHolder.Callback {
             //设置记录会话的最大持续时间（毫秒）
             mRecorder.setMaxDuration(60 * 1000);
             mRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());
+            mRecorder.setOrientationHint(270);//录像回放的正确的方向
             String path = getExternalCacheDir().getPath();
             if (path != null) {
                 filePath = FileUtils.getAppPath() + song_name + DateUtil.nowTime() + ".mp4";

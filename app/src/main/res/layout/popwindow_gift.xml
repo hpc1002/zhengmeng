@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
            android:layout_marginRight="10dp"
             android:text="去充值"
-            android:textColor="@color/red" />
+            android:textColor="@color/colorPrimary" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -61,7 +61,7 @@
         android:textColor="@color/white"
         android:padding="10dp"
         android:layout_margin="10dp"
-        android:background="@color/red"
+        android:background="@color/colorPrimary"
         android:text="送出礼物" />
 </RelativeLayout>
 

@@ -2,11 +2,15 @@ package com.zhuye.zhengmeng.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Gravity;
 import android.view.View;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.lzy.okgo.model.Response;
@@ -106,33 +110,61 @@ public class MyBankCardActivity extends BaseActivity implements OnRefreshListene
                         bankCardListAdapter = new BankCardListAdapter(R.layout.item_bank_card, data);
                         bankCardListAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
                             @Override
-                            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                                int bank_card_id = bankCardListAdapter.getItem(position).bank_card_id;
-                                DreamApi.deleteBankCard(0x002, token, bank_card_id, new MyCallBack() {
-                                    @Override
-                                    public void onSuccess(int what, Response<String> result) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(result.body());
-                                            int code = jsonObject.getInt("code");
-                                            if (code == 200) {
-                                                ToastManager.show(jsonObject.getString("msg"));
-                                                refreshlayout.autoRefresh();
+                            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
+                                final NormalDialog dialog = new NormalDialog(mContext);
+                                dialog.isTitleShow(false)
+                                        .bgColor(Color.parseColor("#ffffff"))
+                                        .cornerRadius(5)
+                                        .content("确定要解绑该银行卡吗")
+                                        .contentGravity(Gravity.CENTER)
+                                        .contentTextColor(Color.parseColor("#99000000"))
+                                        .dividerColor(Color.parseColor("#55000000"))
+                                        .btnTextSize(15.5f, 15.5f)//
+                                        .btnTextColor(Color.parseColor("#99000000"), Color.parseColor("#CCEA4F05"))
+                                        .widthScale(0.85f)
+                                        .show();
+                                dialog.setOnBtnClickL(
+                                        new OnBtnClickL() {
+                                            @Override
+                                            public void onBtnClick() {
+                                                dialog.dismiss();
                                             }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
+                                        },
+                                        new OnBtnClickL() {
+                                            @Override
+                                            public void onBtnClick() {
+                                                dialog.dismiss();
 
-                                    @Override
-                                    public void onFail(int what, Response<String> result) {
+                                                int bank_card_id = bankCardListAdapter.getItem(position).bank_card_id;
+                                                DreamApi.deleteBankCard(0x002, token, bank_card_id, new MyCallBack() {
+                                                    @Override
+                                                    public void onSuccess(int what, Response<String> result) {
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(result.body());
+                                                            int code = jsonObject.getInt("code");
+                                                            if (code == 200) {
+//                                                                ToastManager.show(jsonObject.getString("msg"));
+                                                                ToastManager.show("解绑成功");
+                                                                refreshlayout.autoRefresh();
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
 
-                                    }
+                                                    @Override
+                                                    public void onFail(int what, Response<String> result) {
 
-                                    @Override
-                                    public void onFinish(int what) {
+                                                    }
 
-                                    }
-                                });
+                                                    @Override
+                                                    public void onFinish(int what) {
+
+                                                    }
+                                                });
+                                            }
+                                        });
+
                                 return false;
                             }
                         });

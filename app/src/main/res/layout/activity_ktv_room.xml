@@ -94,7 +94,12 @@
             android:listSelector="@android:color/transparent"
             android:scrollbars="none"
             android:transcriptMode="alwaysScroll" />
-
+        <android.support.v7.widget.RecyclerView
+            android:layout_above="@+id/bottom_bar"
+            android:id="@+id/numberRecyclerView"
+            android:layout_alignParentRight="true"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"/>
         <fragment
             android:id="@+id/bottom_bar"
             android:name="com.zhuye.zhengmeng.chatRoom.fragment.BottomPanelFragment"

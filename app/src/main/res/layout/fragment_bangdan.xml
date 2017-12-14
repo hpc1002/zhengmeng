@@ -2,7 +2,8 @@
 <com.zhuye.zhengmeng.widget.MyScrollview xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <!--<com.zhuye.zhengmeng.widget.MyScrollview-->
     <!--android:layout_width="match_parent"-->
@@ -54,7 +55,7 @@
             <View
                 android:layout_width="15dp"
                 android:layout_height="60dp"
-                android:background="@color/back_color">
+                android:background="@color/white">
 
             </View>
 
@@ -112,16 +113,16 @@
                     android:layout_gravity="center"
                     android:focusable="true"
                     android:focusableInTouchMode="false"
-                    android:text="郑州榜"
+                    android:text="郑州市"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/iv_arrow_down"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/arrow_down" />
+                    android:src="@mipmap/arrow_down" />
             </LinearLayout>
 
 

@@ -35,8 +35,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="定位" />
+        android:drawableLeft="@mipmap/location"
+        android:layout_marginLeft="20dp" />
     <TextView
         android:id="@+id/location_address"
         android:layout_below="@+id/editText"

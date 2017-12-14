@@ -56,7 +56,7 @@ public class BangdanRankActivity extends BaseActivity implements OnRefreshListen
 
     private void setTitle() {
         titleBar.initViewsVisible(true, true, false, false);
-        titleBar.setAppTitle("歌曲列表");
+        titleBar.setAppTitle("比赛榜单");
         titleBar.setTitleSize(20);
         titleBar.setOnLeftButtonClickListener(new MyAppTitle.OnLeftButtonClickListener() {
             @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -33,8 +34,10 @@ import android.widget.Toast;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
+import com.flyco.dialog.widget.NormalDialog;
 import com.google.gson.Gson;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.ksyun.media.player.IMediaPlayer;
@@ -53,7 +56,7 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.utils.Log;
 import com.zhuye.zhengmeng.Constant;
-import com.zhuye.zhengmeng.Defaultcontent;
+import com.zhuye.zhengmeng.KTV.KtvRoomActivity;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.bangdan.SongsListActivity;
 import com.zhuye.zhengmeng.bangdan.recording.QAudioActivity;
@@ -98,6 +101,8 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
     TextView tvFansNumber;
     @BindView(R.id.follow_state)
     TextView followState;
+    @BindView(R.id.tv_collect)
+    TextView tvCollect;
     @BindView(R.id.sign_name)
     TextView signName;
     @BindView(R.id.recyclerView)
@@ -134,10 +139,11 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
     private UMShareListener mShareListener;
     private ShareAction mShareAction;
     private GiftDetailBean giftDetailBean;
-    private  String production_path;
-    private  String production_name;
-    private  String production_content;
-    private  String production_img;
+    private String production_path;
+    private String production_name;
+    private String production_content;
+    private String production_img;
+    private NormalDialog dialog;
     private IMediaPlayer.OnPreparedListener onPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer mp) {
@@ -205,8 +211,9 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
         rbPerform.setOnClickListener(this);
 
         mShareListener = new CustomShareListener(this);
-        UMWeb web = new UMWeb(Constant.BASE_URL2+production_path);
+        UMWeb web = new UMWeb(Constant.BASE_URL2 + production_path);
         web.setTitle(production_name);//标题
+
         web.setThumb(new UMImage(DynamicDetail2Activity.this, production_img));  //缩略图
 //        web.setDescription(Defaultcontent.text);//描述
         /*无自定按钮的分享面板*/
@@ -216,7 +223,14 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
 //                .withText(Defaultcontent.text + "来自友盟自定义分享面板")
                 .withMedia(web)
                 .setCallback(mShareListener);
-
+        //收藏
+//        tvCollect.setBackground(getResources().getDrawable(R.mipmap.collect));
+        tvCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DreamApi.addCollectList(0x011, token, production_id, myCallBack);
+            }
+        });
     }
 
     private static class CustomShareListener implements UMShareListener {
@@ -355,6 +369,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                             JSONArray data = jsonObject.getJSONArray("data");
                             JSONObject jsonObject1 = new JSONObject(data.get(0).toString());
                             String isatt = jsonObject1.getString("isatt");
+                            int shouCang = jsonObject1.getInt("shoucang");
                             final String user_id = jsonObject1.getString("user_id");
                             String user_nicename = jsonObject1.getString("user_nicename");
                             String user_avatar = jsonObject1.getString("avatar");
@@ -384,13 +399,20 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                                     DreamApi.followOrNot(0x004, token, user_id, myCallBack);
                                 }
                             });
-                            if (user_avatar.contains("http")&&!isFinishing()) {
+                            if (shouCang == 1) {
+                                //已收藏
+                                tvCollect.setBackground(getResources().getDrawable(R.mipmap.anim_heart));
+                            } else if (shouCang == 0) {
+                                //未收藏
+                                tvCollect.setBackground(getResources().getDrawable(R.mipmap.collect));
+                            }
+                            if (user_avatar.contains("http") && !isFinishing()) {
                                 Glide.with(DynamicDetail2Activity.this)
                                         .load(user_avatar)
                                         .centerCrop()
                                         .placeholder(R.mipmap.touxiang_re)
                                         .into(avatar);
-                            } else if (!isFinishing()){
+                            } else if (!isFinishing()) {
                                 Glide.with(DynamicDetail2Activity.this)
                                         .load(Constant.BASE_URL2 + user_avatar)
                                         .centerCrop()
@@ -532,22 +554,78 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                             gold_number.setText("金币金额:" + giftDetailBean.data.score);
                             giftDetailShopAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
-                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                    DreamApi.shopGiftSendUrl(0x010, token, "0", production_id, "1",
-                                            giftDetailShopAdapter.getItem(position).gift_id, "1", myCallBack);
+                                public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
+                                    dialog = new NormalDialog(DynamicDetail2Activity.this);
+                                    dialog.isTitleShow(false)
+                                            .bgColor(Color.parseColor("#ffffff"))
+                                            .cornerRadius(5)
+                                            .content("确定要赠送吗")
+                                            .contentGravity(Gravity.CENTER)
+                                            .contentTextColor(Color.parseColor("#99000000"))
+                                            .dividerColor(Color.parseColor("#55000000"))
+                                            .btnTextSize(15.5f, 15.5f)//
+                                            .btnTextColor(Color.parseColor("#99000000"), Color.parseColor("#CCEA4F05"))
+                                            .widthScale(0.85f)
+                                            .show();
+
+                                    dialog.setOnBtnClickL(
+                                            new OnBtnClickL() {
+                                                @Override
+                                                public void onBtnClick() {
+                                                    dialog.dismiss();
+                                                }
+                                            },
+                                            new OnBtnClickL() {
+                                                @Override
+                                                public void onBtnClick() {
+                                                    dialog.dismiss();
+                                                    //确定送出
+                                                    DreamApi.shopGiftSendUrl(0x010, token, "0", production_id, "1",
+                                                            giftDetailShopAdapter.getItem(position).gift_id, "1", myCallBack);
+                                                }
+                                            });
+
                                 }
                             });
                             giftDetailPackageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                                 @Override
-                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                    DreamApi.shopGiftSendUrl(0x010, token, "0", production_id, "1",
-                                            giftDetailPackageAdapter.getItem(position).gift_id, "1", myCallBack);
+                                public void onItemClick(BaseQuickAdapter adapter, View view, final int position) {
+                                    dialog = new NormalDialog(DynamicDetail2Activity.this);
+                                    dialog.isTitleShow(false)
+                                            .bgColor(Color.parseColor("#ffffff"))
+                                            .cornerRadius(5)
+                                            .content("确定要赠送吗")
+                                            .contentGravity(Gravity.CENTER)
+                                            .contentTextColor(Color.parseColor("#99000000"))
+                                            .dividerColor(Color.parseColor("#55000000"))
+                                            .btnTextSize(15.5f, 15.5f)//
+                                            .btnTextColor(Color.parseColor("#99000000"), Color.parseColor("#CCEA4F05"))
+                                            .widthScale(0.85f)
+                                            .show();
+
+                                    dialog.setOnBtnClickL(
+                                            new OnBtnClickL() {
+                                                @Override
+                                                public void onBtnClick() {
+                                                    dialog.dismiss();
+                                                }
+                                            },
+                                            new OnBtnClickL() {
+                                                @Override
+                                                public void onBtnClick() {
+                                                    dialog.dismiss();
+                                                    //确定送出
+                                                    DreamApi.shopGiftSendUrl(0x010, token, "0", production_id, "1",
+                                                            giftDetailPackageAdapter.getItem(position).gift_id, "1", myCallBack);
+                                                }
+                                            });
+
                                 }
                             });
                             all_gift.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    all_gift.setTextColor(getResources().getColor(R.color.red));
+                                    all_gift.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     my_gift.setTextColor(getResources().getColor(R.color.white));
                                     giftRecyclerView.setAdapter(giftDetailShopAdapter);
                                 }
@@ -556,7 +634,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                                 @Override
                                 public void onClick(View view) {
                                     all_gift.setTextColor(getResources().getColor(R.color.white));
-                                    my_gift.setTextColor(getResources().getColor(R.color.red));
+                                    my_gift.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     giftRecyclerView.setAdapter(giftDetailPackageAdapter);
                                 }
                             });
@@ -579,6 +657,20 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                         if (code == 200) {
                             ToastManager.show("赠送成功");
                             popGiftWindow.dismiss();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 0x011:
+                    try {
+                        JSONObject jsonObject = new JSONObject(result.body());
+                        int code = jsonObject.getInt("code");
+                        if (code == 200) {
+//                            tvCollect.setBackground(getResources().getDrawable(R.mipmap.anim_heart));
+                            DreamApi.getDynamicDetail(0x002, token, production_id, myCallBack);
+                            String msg = jsonObject.getString("msg");
+                            ToastManager.show(msg);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -644,11 +736,11 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                         DreamApi.dianZan(0x003, token, commentListAdapter.getItem(position).comment_id, myCallBack);
                         break;
                     case R.id.reply_count:
-                        String sen_user_id = commentListAdapter.getItem(position).sen_user_id;
-                        Intent intent = new Intent(DynamicDetail2Activity.this, ErjiCommentActivity.class);
-                        intent.putExtra("sen_user_id", sen_user_id);
-                        intent.putExtra("production_id", production_id);
-                        startActivity(intent);
+//                        String sen_user_id = commentListAdapter.getItem(position).sen_user_id;
+//                        Intent intent = new Intent(DynamicDetail2Activity.this, ErjiCommentActivity.class);
+//                        intent.putExtra("sen_user_id", sen_user_id);
+//                        intent.putExtra("production_id", production_id);
+//                        startActivity(intent);
                         break;
                 }
             }
@@ -867,7 +959,7 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
             my_gift = view.findViewById(R.id.my_gift);
             gold_number = view.findViewById(R.id.gold_number);
             to_charge = view.findViewById(R.id.to_charge);
-            all_gift.setTextColor(getResources().getColor(R.color.red));
+            all_gift.setTextColor(getResources().getColor(R.color.colorPrimary));
             my_gift.setTextColor(getResources().getColor(R.color.white));
             DreamApi.giftDetailListUrl(0x009, token, myCallBack);
 
