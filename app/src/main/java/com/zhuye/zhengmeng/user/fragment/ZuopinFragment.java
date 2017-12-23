@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseFragment;
+import com.zhuye.zhengmeng.dynamic.DynamicDetail2Activity;
 import com.zhuye.zhengmeng.dynamic.DynamicDetailActivity;
 import com.zhuye.zhengmeng.home.fragment.adapter.DynamicAdapter;
 import com.zhuye.zhengmeng.home.fragment.model.DynamicModel;
@@ -138,16 +139,24 @@ public class ZuopinFragment extends BaseFragment {
                     rvList.setAdapter(dynamicAdapter);
                     dynamicAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
                     dynamicAdapter.isFirstOnly(false);
-                    dynamicAdapter.setCallBack(new DynamicAdapter.allCheck() {
+                    dynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                         @Override
-                        public void OnItemClickListener(String id, String urlPath, String name) {
-                            Intent intent = new Intent(getActivity(), DynamicDetailActivity.class);
-                            intent.putExtra("production_id", id);
-                            intent.putExtra("production_path", urlPath);
-                            intent.putExtra("production_name", name);
+                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            Intent intent = new Intent(getActivity(), DynamicDetail2Activity.class);
+                            intent.putExtra("production_id", dynamicAdapter.getItem(position).getProduction_id());
+                            intent.putExtra("production_path", dynamicAdapter.getItem(position).getProduction_path());
+                            String song_name = dynamicAdapter.getItem(position).getSong_name();
+                            if (song_name.equals(" ")) {
+                                intent.putExtra("production_name", "未知名称曲目");
+                            } else {
+                                intent.putExtra("production_name", dynamicAdapter.getItem(position).getSong_name());
+                            }
+                            intent.putExtra("production_img", dynamicAdapter.getItem(position).getImg_url());
+                            intent.putExtra("production_content", dynamicAdapter.getItem(position).getProduction_content());
                             startActivity(intent);
                         }
                     });
+
                     break;
             }
         }

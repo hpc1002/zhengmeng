@@ -13,6 +13,7 @@ public class BangDanListBean {
 
     public class Data {
         public String num;
+        public String paiming;
         public String production_id;
         public String user_nicename;
         public String avatar;

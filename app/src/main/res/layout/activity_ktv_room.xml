@@ -5,8 +5,8 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#372b2f"
     android:keepScreenOn="true"
-    android:background="#221a1d"
     android:orientation="vertical">
 
     <com.zhuye.zhengmeng.view.MyAppTitle
@@ -19,14 +19,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/img_shanguang"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:visibility="visible" />
         <!--<ImageView-->
-            <!--android:id="@+id/release"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@mipmap/close_0" />-->
+        <!--android:id="@+id/release"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/close_0" />-->
 
 
         <ImageView
@@ -37,12 +42,70 @@
             android:src="@mipmap/fake_members"
             android:visibility="gone" />
 
+        <LinearLayout
+            android:id="@+id/ll_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginTop="100dp"
+            android:orientation="vertical">
+
+            <!--<TextView-->
+                <!--android:id="@+id/btn_dengguang"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:drawableTop="@mipmap/dengguang"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:textColor="#999999" />-->
+            <TextView
+                android:id="@+id/btn_warm"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:drawableTop="@mipmap/warm"
+                android:gravity="center_horizontal"
+                android:textColor="#999999" />
+            <TextView
+                android:id="@+id/btn_soft"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:drawableTop="@mipmap/soft"
+                android:gravity="center_horizontal"
+                android:textColor="#999999" />
+            <TextView
+                android:id="@+id/btn_dynamic"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:drawableTop="@mipmap/dynamic"
+                android:gravity="center_horizontal"
+                android:textColor="#999999" />
+            <TextView
+                android:id="@+id/btn_romantic"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:drawableTop="@mipmap/romantic"
+                android:gravity="center_horizontal"
+                android:textColor="#999999" />
+        </LinearLayout>
+
         <me.wcy.lrcview.LrcView
             android:id="@+id/lrc_view"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_above="@+id/bottom_rl"
-            android:layout_alignParentTop="true"
+            android:visibility="invisible"
             app:lrcAnimationDuration="1000"
             app:lrcCurrentTextColor="#F86A6B"
             app:lrcDividerHeight="24dp"
@@ -50,7 +113,6 @@
             app:lrcNormalTextColor="#BDBDBD"
             app:lrcPadding="40dp"
             app:lrcTextSize="16sp"
-            android:visibility="invisible"
             app:lrcTimeTextColor="#BDBDBD"
             app:lrcTimelineColor="#80BDBDBD"
             app:lrcTimelineTextColor="#9FA8DA" />
@@ -75,16 +137,34 @@
             android:layout_below="@+id/pull_media"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/img_show"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:layout_below="@+id/lrc_view"
-            android:layout_centerInParent="true" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lrc_view">
+
+
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/img_guzhang"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="180dp"
+                android:layout_marginTop="60dp"
+                android:visibility="invisible" />
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/img_show"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginLeft="40dp"/>
+        </FrameLayout>
+
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_avatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <com.zhuye.zhengmeng.widget.ChatListView
             android:id="@+id/chat_listview"
             android:layout_width="230dp"
@@ -94,12 +174,31 @@
             android:listSelector="@android:color/transparent"
             android:scrollbars="none"
             android:transcriptMode="alwaysScroll" />
-        <android.support.v7.widget.RecyclerView
-            android:layout_above="@+id/bottom_bar"
-            android:id="@+id/numberRecyclerView"
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_guzhang"
             android:layout_alignParentRight="true"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"/>
+            android:src="@mipmap/shafa"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/numberRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="320dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp" />
+        <TextView
+            android:layout_above="@+id/bottom_bar"
+            android:id="@+id/btn_guzhang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:drawableTop="@mipmap/guzhang"
+            android:gravity="bottom"
+            android:textColor="#999999" />
         <fragment
             android:id="@+id/bottom_bar"
             android:name="com.zhuye.zhengmeng.chatRoom.fragment.BottomPanelFragment"
@@ -115,8 +214,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/lrc_view"
             android:layout_marginRight="10dp"
-            android:visibility="gone"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone" />
 
         <!--<fragment-->
         <!--android:id="@+id/paimai_list"-->

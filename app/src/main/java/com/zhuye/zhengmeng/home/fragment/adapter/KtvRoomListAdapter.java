@@ -34,11 +34,20 @@ public class KtvRoomListAdapter extends BaseQuickAdapter<KTVListBean.Data, BaseV
         helper.setText(R.id.room_name, item.chatroom_name);
         helper.setText(R.id.tv_time, item.chatroom_time);
         helper.setText(R.id.room_id, "房间号:" + item.chatroom_id);
-        Glide.with(mContext)
-                .load(Constant.BASE_URL2 + item.avatar)
-                .centerCrop()
-                .placeholder(R.mipmap.default_img)
-                .into((ImageView) helper.getView(R.id.user_avatar));
+        if (item.avatar.contains("http://")) {
+            Glide.with(mContext)
+                    .load(item.avatar)
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_img)
+                    .into((ImageView) helper.getView(R.id.user_avatar));
+        } else {
+            Glide.with(mContext)
+                    .load(Constant.BASE_URL2 + item.avatar)
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_img)
+                    .into((ImageView) helper.getView(R.id.user_avatar));
+        }
+
 
         Random rand = new Random();
         int i = rand.nextInt(3);

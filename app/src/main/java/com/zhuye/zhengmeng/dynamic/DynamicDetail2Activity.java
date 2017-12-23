@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +58,6 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.utils.Log;
 import com.zhuye.zhengmeng.Constant;
-import com.zhuye.zhengmeng.KTV.KtvRoomActivity;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.bangdan.SongsListActivity;
 import com.zhuye.zhengmeng.bangdan.recording.QAudioActivity;
@@ -71,6 +72,7 @@ import com.zhuye.zhengmeng.shop.adapter.GiftDetailPackageAdapter;
 import com.zhuye.zhengmeng.shop.adapter.GiftDetailShopAdapter;
 import com.zhuye.zhengmeng.shop.bean.GiftDetailBean;
 import com.zhuye.zhengmeng.user.MyGoldActivity;
+import com.zhuye.zhengmeng.user.ZuoPinJiActivity;
 import com.zhuye.zhengmeng.user.adapter.FansContributionAdapter;
 import com.zhuye.zhengmeng.utils.ToastManager;
 import com.zhuye.zhengmeng.widget.RoundedCornerImageView;
@@ -85,6 +87,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.jzvd.JZVideoPlayerStandard;
 
 import static com.zhuye.zhengmeng.R.id.song_name;
@@ -125,6 +128,8 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
     TextView tvGiftCount;
     @BindView(R.id.player_surface)
     SurfaceView playerSurface;
+    @BindView(R.id.user_detail)
+    RelativeLayout userDetail;
     private String production_id;
     private CommentListAdapter commentListAdapter;
     private String token;
@@ -231,6 +236,13 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                 DreamApi.addCollectList(0x011, token, production_id, myCallBack);
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
     private static class CustomShareListener implements UMShareListener {
@@ -371,9 +383,17 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                             String isatt = jsonObject1.getString("isatt");
                             int shouCang = jsonObject1.getInt("shoucang");
                             final String user_id = jsonObject1.getString("user_id");
+//                            SPUtils.getInstance("userInfo").put("user_id", user_id);
                             String user_nicename = jsonObject1.getString("user_nicename");
                             String user_avatar = jsonObject1.getString("avatar");
                             String production_content = jsonObject1.getString("production_content");
+//                            userDetail.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    Intent intent = new Intent(DynamicDetail2Activity.this, ZuoPinJiActivity.class);
+//                                    startActivity(intent);
+//                                }
+//                            });
                             nickname.setText(user_nicename);
                             signName.setText(production_content);
                             if (isatt.equals("0")) {
@@ -441,12 +461,14 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                     try {
                         JSONObject jsonObject = new JSONObject(result.body());
                         int code = jsonObject.getInt("code");
+                        String msg = jsonObject.getString("msg");
                         if (code == 200) {
-                            String msg = jsonObject.getString("msg");
                             ToastManager.show(msg);
                             DreamApi.getDynamicDetail(0x002, token, production_id, myCallBack);
                             DreamApi.getFansNumber(0x005, token, production_id, myCallBack);
                             return;
+                        } else if (code == 250) {
+                            ToastManager.show(msg);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -580,8 +602,18 @@ public class DynamicDetail2Activity extends BaseActivity implements OnRefreshLis
                                                 public void onBtnClick() {
                                                     dialog.dismiss();
                                                     //确定送出
-                                                    DreamApi.shopGiftSendUrl(0x010, token, "0", production_id, "1",
-                                                            giftDetailShopAdapter.getItem(position).gift_id, "1", myCallBack);
+                                                    String score = giftDetailBean.data.score;
+                                                    String gift_price = giftDetailShopAdapter.getItem(position).gift_price;
+                                                    Double obj1 = new Double(gift_price);
+                                                    Double obj2 = new Double(score);
+                                                    int retval = obj1.compareTo(obj2);
+                                                    if (retval < 0) {
+                                                        DreamApi.shopGiftSendUrl(0x010, token, "0", production_id, "1",
+                                                                giftDetailShopAdapter.getItem(position).gift_id, "1", myCallBack);
+                                                    } else {
+                                                        ToastManager.show("金币不足，请充值");
+                                                    }
+
                                                 }
                                             });
 

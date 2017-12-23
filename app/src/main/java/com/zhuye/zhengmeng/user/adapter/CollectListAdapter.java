@@ -27,7 +27,8 @@ public class CollectListAdapter extends BaseQuickAdapter<CollectListBean.Data, B
 
     @Override
     protected void convert(BaseViewHolder helper, CollectListBean.Data item) {
-        helper.setText(R.id.tv_nickname, item.production_name);
+        helper.setText(R.id.tv_nickname, item.user_nicename);
+        helper.setText(R.id.tv_gift_name, item.production_name);
         helper.addOnClickListener(R.id.tv_delete);
         Glide.with(context)
                 .load(Constant.BASE_URL2 + item.img_url)

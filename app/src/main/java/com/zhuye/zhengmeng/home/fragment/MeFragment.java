@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.SPUtils;
 import com.bumptech.glide.Glide;
 import com.flyco.dialog.listener.OnBtnClickL;
-import com.flyco.dialog.widget.MaterialDialog;
 import com.flyco.dialog.widget.NormalDialog;
 import com.lzy.okgo.model.Response;
 import com.zhuye.zhengmeng.Constant;
@@ -114,6 +113,7 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
     private String token;
     private View view;
     private String sign_type;
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
 
@@ -179,7 +179,7 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
             case R.id.rl_my_share:
                 startActivity(new Intent(getActivity(), MyShareActivity.class));
                 break;
-                case R.id.rl_my_feedback:
+            case R.id.rl_my_feedback:
                 startActivity(new Intent(getActivity(), MyFeedbackActivity.class));
                 break;
             case R.id.rl_comment_reply:
@@ -263,7 +263,16 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                             String avatar = data.optString("avatar");
                             String fans_sum = data.optString("fans_sum");
                             String attention_sum = data.optString("attention_sum");
-
+                            String is_vip = data.optString("is_vip");
+                            if (is_vip.equals("0")) {
+                                Glide.with(getActivity())
+                                        .load(R.mipmap.vip_tag)
+                                        .into(tagVip);
+                            } else if (is_vip.equals("1")) {
+                                Glide.with(getActivity())
+                                        .load(R.mipmap.vip_on)
+                                        .into(tagVip);
+                            }
                             sign_type = data.optString("sign_type");
                             String cookie = data.optString("cookie");
                             SPUtils.getInstance("userInfo").put("cookie", cookie);//关注数
@@ -310,7 +319,7 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                             ToastManager.show(msg);
                             DreamApi.getUserInfo(0x001, token, myCallBack);
                             final NormalDialog dialog = new NormalDialog(getActivity());
-                            if (!sign_type.equals("1")){
+                            if (!sign_type.equals("1")) {
                                 dialog.content("签到成功，获得5个金币")
                                         .btnNum(1)
                                         .btnText("确定")
@@ -325,7 +334,6 @@ public class MeFragment extends BaseNoFragment implements View.OnClickListener {
                                     }
                                 });
                             }
-
 
 
                         }

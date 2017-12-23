@@ -45,7 +45,7 @@ public class GiftShopFragment extends BaseNoFragment {
     Unbinder unbinder;
     private String token;
     private static final String TAG = "GiftShopFragment";
-
+    private  String score;
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_gift_shop, container, false);
@@ -66,6 +66,7 @@ public class GiftShopFragment extends BaseNoFragment {
                         JSONObject jsonObject = new JSONObject(result.body());
                         int code = jsonObject.getInt("code");
                         if (code == 200) {
+                             score = jsonObject.getString("msg");
                             GiftShopBean giftShopBean = new Gson().fromJson(result.body(), GiftShopBean.class);
                             List<GiftShopBean.Data> data;
                             Log.i(TAG, "onSuccess: " + giftShopBean.data);
@@ -110,7 +111,7 @@ public class GiftShopFragment extends BaseNoFragment {
         }
     };
 
-    private void showDialog(final String giftId, String price) {
+    private void showDialog(final String giftId, final String price) {
         LayoutInflater li = LayoutInflater.from(getActivity());
         View promptsView = li.inflate(R.layout.buy_dialog, null);
 
@@ -131,8 +132,23 @@ public class GiftShopFragment extends BaseNoFragment {
             @Override
             public void onClick(View view) {
                 String num = userInput.getText().toString();
-//                                DreamApi.createChatRoom(0x002, getActivity(), token, userInput.getText().toString(), myCallBack);
-                DreamApi.buyGoodUrl(0x002, token, giftId, num, myCallBack);
+
+                Double integer = new Double(price);
+
+
+                int b = Integer.parseInt(num);
+
+
+                Double obj1 = new Double(integer * b);
+                Double obj2 = new Double(score);
+                int retval = obj1.compareTo(obj2);
+                if (retval > 0) {
+                    ToastManager.show("金币不足，请充值");
+
+                } else {
+                    DreamApi.buyGoodUrl(0x002, token, giftId, num,"1", myCallBack);
+                }
+
                 alertDialog.dismiss();
             }
         });

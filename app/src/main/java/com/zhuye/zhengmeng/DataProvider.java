@@ -135,7 +135,20 @@ public class DataProvider {
             R.mipmap.bank_back_3,
             R.mipmap.bank_back_4,
     };
+    public static ArrayList<Integer> getShafaImage() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+//        if (page == 4) return arrayList;
 
+        for (int i = 0; i < ShaFaImage.length; i++) {
+            arrayList.add(ShaFaImage[i]);
+        }
+        return arrayList;
+    }
+
+    static final int[] ShaFaImage = {
+            R.mipmap.boy_1,
+            R.mipmap.girl_1,
+    };
     public static ArrayList<Integer> getBankBackImage() {
         ArrayList<Integer> arrayList = new ArrayList<>();
 //        if (page == 4) return arrayList;

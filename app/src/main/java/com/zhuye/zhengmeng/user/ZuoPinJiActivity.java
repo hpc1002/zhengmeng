@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -45,6 +46,8 @@ public class ZuoPinJiActivity extends BaseNoActivity implements View.OnClickList
     RoundedCornerImageView userAvatar;
     @BindView(R.id.userName)
     TextView userName;
+    @BindView(R.id.back)
+    ImageView back;
 
     @Override
     protected void processLogic() {
@@ -65,6 +68,7 @@ public class ZuoPinJiActivity extends BaseNoActivity implements View.OnClickList
         tvFollow.setOnClickListener(this);
         tvFans.setOnClickListener(this);
         tvShangbang.setOnClickListener(this);
+        back.setOnClickListener(this);
         initUserInfo();
     }
 
@@ -115,6 +119,9 @@ public class ZuoPinJiActivity extends BaseNoActivity implements View.OnClickList
                 break;
             case R.id.tv_shangbang:
                 startActivity(new Intent(this, RankRecordActivity.class));
+                break;
+                case R.id.back:
+                finish();
                 break;
         }
     }

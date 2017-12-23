@@ -1340,15 +1340,59 @@ public class DreamApi {
 
                 });
     }
+    //获取服装列表
+    public static void getClothListUrl(final int what,
+                                      String token, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.GET_CLOTH_LIST_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
 
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+    //获取我的服装
+    public static void getMyClothUrl(final int what,
+                                       String token, final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.GET_MY_CLOTH_URL)
+                .tag(App.getInstance())
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
     //购买商品
     public static void buyGoodUrl(final int what,
-                                  String token, String gift_id, String sum, final MyCallBack myCallBack) {
+                                  String token, String gift_id, String sum,String type, final MyCallBack myCallBack) {
         OkGo.<String>post(Constant.BUY_GOOD_URL)
                 .tag(App.getInstance())
                 .params("token", token)
                 .params("gift_id", gift_id)
                 .params("sum", sum)
+                .params("type", type)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -1630,6 +1674,27 @@ public class DreamApi {
                 .tag(App.getInstance())
                 .params("token", token)
                 .params("content", content)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        myCallBack.onSuccess(what, response);
+                        Log.i(TAG, "onSuccess: " + response.body());
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        myCallBack.onFail(what, response);
+                        Log.i(TAG, "onError: " + response);
+                    }
+
+                });
+    }
+    //比赛详情
+    public static void competitionDetail(final int what, String token,final MyCallBack myCallBack) {
+        OkGo.<String>post(Constant.COMPETITION_DETAIL_URL)
+                .tag(App.getInstance())
+                .params("token", token)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

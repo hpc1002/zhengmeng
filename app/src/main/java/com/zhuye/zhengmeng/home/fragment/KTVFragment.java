@@ -3,9 +3,8 @@ package com.zhuye.zhengmeng.home.fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +39,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.Unbinder;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 /**
  * Created by hpc on 2017/10/26.
@@ -70,6 +67,7 @@ public class KTVFragment extends BaseFragment implements OnRefreshListener, OnLo
     private String userId;
     String chatroom_id;
     String chatroom_name;
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_ktv, container, false);
@@ -79,7 +77,8 @@ public class KTVFragment extends BaseFragment implements OnRefreshListener, OnLo
     protected void initListener() {
         rongcloudToken = SPUtils.getInstance("userInfo").getString("rongcloudToken");
         userId = SPUtils.getInstance("userInfo").getString("userId");
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         token = SPUtils.getInstance("userInfo").getString("token");
         refreshLayout.autoRefresh();
         refreshLayout.setOnRefreshListener(this);
@@ -169,14 +168,12 @@ public class KTVFragment extends BaseFragment implements OnRefreshListener, OnLo
                 chatroom_id = ktvListAdapter.getItem(position).chatroom_id;
                 chatroom_name = ktvListAdapter.getItem(position).chatroom_name;
                 Intent intent = new Intent(getActivity(), KtvRoomActivity.class);
-                intent.putExtra("roomId",chatroom_id);
-                intent.putExtra("chatroom_name",chatroom_name);
+                intent.putExtra("roomId", chatroom_id);
+                intent.putExtra("chatroom_name", chatroom_name);
                 startActivity(intent);
             }
         });
     }
-
-
 
 
     @Override

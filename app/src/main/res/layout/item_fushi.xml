@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal">
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/fushi_image"
         android:layout_width="80dp"
         android:layout_height="80dp"

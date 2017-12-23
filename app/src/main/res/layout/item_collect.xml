@@ -7,13 +7,16 @@
         android:id="@+id/iv_user"
         android:layout_width="@dimen/x100"
         android:layout_height="@dimen/y100"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/x35" />
 
     <TextView
         android:id="@+id/tv_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/x30"
+        android:layout_below="@+id/tv_gift_name"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_user"
         android:text="用户名"
         android:textColor="#666666"
@@ -23,8 +26,8 @@
         android:id="@+id/tv_gift_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_nickname"
-        android:layout_marginRight="@dimen/x30"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_user"
         android:text="彩虹玫瑰:"
         android:textColor="#666666"
@@ -32,14 +35,20 @@
 
     <TextView
         android:id="@+id/tv_delete"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv_nickname"
         android:layout_marginRight="@dimen/x35"
-        android:text="删除"
         android:background="@drawable/frame_button_1"
+        android:text="删除"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+       android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:textColor="@color/red"
+        android:visibility="gone"
         android:textSize="14sp" />
 
     <View

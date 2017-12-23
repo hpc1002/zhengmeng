@@ -16,27 +16,29 @@
 package com.zhuye.zhengmeng.http.callback;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.view.Window;
 
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.base.Request;
+import com.zhuye.zhengmeng.widget.CustomProgressDialog;
 
 /**
  * ================================================
- *  加载弹框
+ * 加载弹框
  * ================================================
  */
 public abstract class StringDialogCallback extends StringCallback {
 
-    private ProgressDialog dialog;
+    private CustomProgressDialog dialog;
 
-    public StringDialogCallback(Activity activity,String content) {
-        dialog = new ProgressDialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    public StringDialogCallback(Activity activity, String content) {
+//        dialog = new ProgressDialog(activity);
+        dialog = new CustomProgressDialog(activity, content);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.layout_progress);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage(content);
+//        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        dialog.setMessage(content);
     }
 
     @Override

@@ -141,9 +141,9 @@ public class QAudioActivity extends BaseNoActivity {
                             Intent intent = new Intent(QAudioActivity.this, UploadActivity.class);
                             intent.putExtra("filePath", filePath);
                             intent.putExtra("song_id", "");
-                            intent.putExtra("type", "2");
-                            intent.putExtra("song_type", "0");
-                            intent.putExtra("activity_id", "");
+                            intent.putExtra("type", type);
+                            intent.putExtra("song_type", song_type);
+                            intent.putExtra("activity_id", activity_id);
                             startActivity(intent);
                             finish();
                         }

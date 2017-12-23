@@ -21,6 +21,7 @@ import com.lzy.okgo.model.Response;
 import com.zhuye.zhengmeng.Constant;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.base.BaseActivity;
+import com.zhuye.zhengmeng.home.HomeActivity;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
 import com.zhuye.zhengmeng.utils.ToastManager;
@@ -259,14 +260,15 @@ public class PayActivity extends BaseActivity {
             @Override
             public void onSuccess() {
                 Toast.makeText(getApplication(), "支付成功", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(PayActivity.this, PaySuccessActivity.class);
-                intent.putExtra("total_amount", nFactPrice + "");
-                intent.putExtra("out_trade_no", strOrdernum);
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                String date = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
-                intent.putExtra("timestamp", date);
-                intent.putExtra("tag", "wechat");
+                Intent intent = new Intent(PayActivity.this, HomeActivity.class);
+//                intent.putExtra("total_amount", nFactPrice + "");
+//                intent.putExtra("out_trade_no", strOrdernum);
+//                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+//                String date = df.format(new Date());// new Date()为获取当前系统时间，也可使用当前时间戳
+//                intent.putExtra("timestamp", date);
+//                intent.putExtra("tag", "wechat");
                 startActivity(intent);
+                finish();
             }
 
             @Override

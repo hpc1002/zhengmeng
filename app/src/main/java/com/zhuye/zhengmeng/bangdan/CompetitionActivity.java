@@ -3,6 +3,7 @@ package com.zhuye.zhengmeng.bangdan;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +20,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhuye.zhengmeng.R;
 import com.zhuye.zhengmeng.bangdan.adapter.CompetitionListAdapter;
 import com.zhuye.zhengmeng.base.BaseActivity;
+import com.zhuye.zhengmeng.dynamic.DynamicDetail2Activity;
 import com.zhuye.zhengmeng.dynamic.DynamicDetailActivity;
+import com.zhuye.zhengmeng.home.fragment.adapter.MultipleDynamicAdapter;
 import com.zhuye.zhengmeng.home.fragment.model.DynamicModel;
 import com.zhuye.zhengmeng.http.DreamApi;
 import com.zhuye.zhengmeng.http.MyCallBack;
@@ -49,6 +52,7 @@ public class CompetitionActivity extends BaseActivity implements OnRefreshListen
     int page = 1;
     private String token;
     private CompetitionListAdapter competitionListAdapter;
+    private MultipleDynamicAdapter multipleDynamicAdapter;
 
     @Override
     protected void processLogic() {
@@ -113,9 +117,43 @@ public class CompetitionActivity extends BaseActivity implements OnRefreshListen
                             DynamicModel dynamicModel = new Gson().fromJson(result.body(), DynamicModel.class);
                             List<DynamicModel.DataBean> data;
                             data = dynamicModel.getData();
-                            recyclerView.setLayoutManager(new LinearLayoutManager(CompetitionActivity.this));
 
-                            competitionListAdapter = new CompetitionListAdapter(R.layout.fragment_dynamic_item1, data, CompetitionActivity.this);
+                            //创建布局管理
+//                            final LinearLayoutManager layoutManager = new LinearLayoutManager(CompetitionActivity.this);
+//                            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//                            recyclerView.setLayoutManager(layoutManager);
+//                            //创建适配器
+//
+//
+//                            multipleDynamicAdapter = new MultipleDynamicAdapter(data, CompetitionActivity.this);
+//
+//                            if (data.size()==0) {
+//                                multipleDynamicAdapter.setEmptyView(R.layout.empty, recyclerView);
+//                            }
+//                            //给RecyclerView设置适配器
+//                            recyclerView.setAdapter(multipleDynamicAdapter);
+//                            multipleDynamicAdapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//                            multipleDynamicAdapter.isFirstOnly(false);
+//                            multipleDynamicAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//                                @Override
+//                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                                    Intent intent = new Intent(CompetitionActivity.this, DynamicDetail2Activity.class);
+//                                    intent.putExtra("production_id", multipleDynamicAdapter.getItem(position).getProduction_id());
+//                                    intent.putExtra("production_path", multipleDynamicAdapter.getItem(position).getProduction_path());
+//                                    String song_name = multipleDynamicAdapter.getItem(position).getSong_name();
+//                                    if (song_name.equals(" ")) {
+//                                        intent.putExtra("production_name", "未知名称曲目");
+//                                    } else {
+//                                        intent.putExtra("production_name", multipleDynamicAdapter.getItem(position).getSong_name());
+//                                    }
+//                                    intent.putExtra("production_img", multipleDynamicAdapter.getItem(position).getImg_url());
+//                                    intent.putExtra("production_content", multipleDynamicAdapter.getItem(position).getProduction_content());
+//                                    startActivity(intent);
+//                                }
+//                            });
+                            recyclerView.setLayoutManager(new GridLayoutManager(CompetitionActivity.this,2));
+
+                            competitionListAdapter = new CompetitionListAdapter(R.layout.fragment_dynamic_item3, data, CompetitionActivity.this);
                             if (data.size() == 0) {
                                 competitionListAdapter.setEmptyView(R.layout.empty, recyclerView);
                             }
@@ -126,7 +164,14 @@ public class CompetitionActivity extends BaseActivity implements OnRefreshListen
                                     Intent intent = new Intent(CompetitionActivity.this, DynamicDetailActivity.class);
                                     intent.putExtra("production_id", competitionListAdapter.getItem(position).getProduction_id());
                                     intent.putExtra("production_path", competitionListAdapter.getItem(position).getProduction_path());
-                                    intent.putExtra("production_name", competitionListAdapter.getItem(position).getProduction_name());
+                                    String song_name = competitionListAdapter.getItem(position).getSong_name();
+                                    if (song_name.equals(" ")) {
+                                        intent.putExtra("production_name", "未知名称曲目");
+                                    } else {
+                                        intent.putExtra("production_name", competitionListAdapter.getItem(position).getSong_name());
+                                    }
+                                    intent.putExtra("production_img", competitionListAdapter.getItem(position).getImg_url());
+                                    intent.putExtra("production_content", competitionListAdapter.getItem(position).getProduction_content());
                                     startActivity(intent);
                                 }
                             });

@@ -40,9 +40,15 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicModel.DataBean, Base
         String img_AvatarUrl = item.getAvatar();
         ImageView img_avatar = helper.getView(R.id.userImg);
         if (img_AvatarUrl.contains("http")){
-            Glide.with(mContext).load(img_AvatarUrl).into(img_avatar);
+            Glide.with(mContext)
+                    .load(img_AvatarUrl)
+                    .placeholder(R.mipmap.default_img)
+                    .into(img_avatar);
         }else{
-            Glide.with(mContext).load(Constant.BASE_URL_PINJIE + img_AvatarUrl).into(img_avatar);
+            Glide.with(mContext)
+                    .load(Constant.BASE_URL_PINJIE + img_AvatarUrl)
+                    .placeholder(R.mipmap.default_img)
+                    .into(img_avatar);
         }
 
         //作品封面图
@@ -50,7 +56,7 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicModel.DataBean, Base
         ImageView img_production = helper.getView(R.id.img_url);
         Glide.with(mContext)
                 .load(img_ProductionUrl)
-                .placeholder(R.mipmap.video_0)
+                .placeholder(R.mipmap.background)
                 .into(img_production);
         //用户名
         helper.setText(R.id.userName, item.getUser_nicename().equals(" ") ? "无名氏" : item.getUser_nicename());
@@ -61,26 +67,26 @@ public class DynamicAdapter extends BaseQuickAdapter<DynamicModel.DataBean, Base
         helper.setText(R.id.comment_count, item.getComment_count());//评论的次数
 
 
-        helper.setText(R.id.production_name, item.getProduction_name().equals(" ") ? "未知曲艺名" : item.getProduction_name());//作品名称
+        helper.setText(R.id.production_name, item.getSong_name().equals(" ") ? "未知曲艺名" : item.getSong_name());//作品名称
         helper.setText(R.id.production_content, item.getProduction_content());//作品内容
 
 
         int production_type = item.getProduction_type();//播放类型MP3|MP4
         String production_path = item.getProduction_path();//歌曲播放路径
 
-        helper.getView(R.id.userImg).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ToastUtils.showShort("调到用户界面");
-
-            }
-        });
-        helper.getView(R.id.production_type).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCallBack.OnItemClickListener(item.getProduction_id(), item.getProduction_path(), item.getProduction_name());
-            }
-        });
+//        helper.getView(R.id.userImg).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ToastUtils.showShort("调到用户界面");
+//
+//            }
+//        });
+//        helper.getView(R.id.production_type).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mCallBack.OnItemClickListener(item.getProduction_id(), item.getProduction_path(), item.getProduction_name());
+//            }
+//        });
 //        helper.getView(R.id.play).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

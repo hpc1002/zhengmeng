@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#221a1d">
+    android:background="#372b2f">
 
     <LinearLayout
         android:id="@+id/button_panel"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
@@ -36,41 +36,44 @@
             android:gravity="center_horizontal"
             android:textColor="#999999" />
 
+        <TextView
+            android:id="@+id/ktv_share"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ktv_share"
+            android:gravity="center_horizontal"
+            android:textColor="#999999" />
 
+        <TextView
+            android:id="@+id/release"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/close_0"
+            android:gravity="center_horizontal"
+            android:textColor="#999999" />
+
+        <TextView
+            android:id="@+id/rb_paimai"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/diange_ktv"
+            android:gravity="center_horizontal"
+            android:textColor="#999999" />
 
     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_toRightOf="@+id/button_panel">
-    <TextView
-        android:id="@+id/ktv_share"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawableTop="@mipmap/ktv_share"
-        android:gravity="center_horizontal"
-        android:textColor="#999999" />
-    <TextView
-        android:id="@+id/release"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawableTop="@mipmap/close_0"
-        android:gravity="center_horizontal"
-        android:textColor="#999999" />
 
-    <TextView
-        android:id="@+id/rb_paimai"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawableTop="@mipmap/diange_ktv"
-        android:gravity="center_horizontal"
-        android:textColor="#999999" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/rl_tag"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_toRightOf="@+id/button_panel">-->
 
-</LinearLayout>
+
+    <!--</LinearLayout>-->
 
     <com.zhuye.zhengmeng.widget.InputPanel
         android:id="@+id/input_panel"

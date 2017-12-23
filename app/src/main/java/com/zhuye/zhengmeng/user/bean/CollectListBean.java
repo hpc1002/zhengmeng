@@ -17,6 +17,8 @@ public class CollectListBean {
         public String production_name;
         public String img_url;
         public String collect_id;
+        public String user_nicename;
+        public String url;
 
     }
 }

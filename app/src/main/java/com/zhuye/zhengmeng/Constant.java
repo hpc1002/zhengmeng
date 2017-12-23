@@ -127,8 +127,12 @@ public class Constant {
 
     //获取商品列表
     public static final String GET_GOOD_LIST_URL = BASE_URL + "gift/android_gift_list";
+    //获取服装列表
+    public static final String GET_CLOTH_LIST_URL = BASE_URL + "gift/android_clothing_list";
+    //获取我的服装
+    public static final String GET_MY_CLOTH_URL = BASE_URL + "gift/my_fuzhuang";
     //购买商品
-    public static final String BUY_GOOD_URL = BASE_URL + "gift/android_buy_gift";
+    public static final String BUY_GOOD_URL = BASE_URL + "gift/buy_shop";
     //详情礼物列表
     public static final String GOOD_DETAIL_LIST_URL = BASE_URL + "gift/android_p_gift_list";
     //背包礼物赠送
@@ -151,6 +155,10 @@ public class Constant {
     public static final String FEEDBACK_URL = BASE_URL+"gift/fankui";
     //分享房间号链接
     public static final String SHARE_ROOM_URL = BASE_URL + "gift/fengxiang_url";
+    //参加活动
+    public static final String ADD_ACTIVITY_URL = BASE_URL + "Monthlyfocus/add_activity";
+    //比赛详情
+    public static final String COMPETITION_DETAIL_URL = BASE_URL + "monthlyfocus/monthly_focus_detail";
 //    //注册
 //    public static final String REGISTER_URL = BASE_URL + "changba/api/users/register";
 //    //登录

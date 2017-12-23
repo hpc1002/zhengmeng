@@ -63,8 +63,8 @@ public class Shop2Fragment extends BaseFragment {
         SmartTabLayout viewPagerTab = (SmartTabLayout) view.findViewById(R.id.viewpagertab);
         FragmentPagerItems pages = new FragmentPagerItems(getActivity());
         pages.add(FragmentPagerItem.of("礼物", GiftShopFragment.class));
-//        pages.add(FragmentPagerItem.of("服装", ClothShopFragment.class));
-        pages.add(FragmentPagerItem.of("服装", GiftShopFragment.class));
+        pages.add(FragmentPagerItem.of("服装", ClothShopFragment.class));
+//        pages.add(FragmentPagerItem.of("服装", GiftShopFragment.class));
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewpager.setAdapter(adapter);
         viewPagerTab.setViewPager(viewpager);

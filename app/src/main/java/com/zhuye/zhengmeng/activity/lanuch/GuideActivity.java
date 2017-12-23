@@ -59,7 +59,7 @@ public class GuideActivity extends AppCompatActivity {
             //做出页面
             ImageView imageView = new ImageView(GuideActivity.this);
             imageView.setImageResource(imagesArray[i]);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             mImageList.add(imageView);
         }
 //        initMagicIndicator3();  //指示器样式

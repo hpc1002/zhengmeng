@@ -25,6 +25,7 @@ public class GiftShopAdapter extends BaseQuickAdapter<GiftShopBean.Data, BaseVie
     protected void convert(BaseViewHolder helper, GiftShopBean.Data item) {
         helper.setText(R.id.tv_goods_name, item.gift_name);
         helper.setText(R.id.tv_gold_count, item.gift_price);
+
         Glide.with(mContext)
                 .load(Constant.BASE_URL2 + item.gift_img)
                 .placeholder(R.mipmap.zhanwei1)

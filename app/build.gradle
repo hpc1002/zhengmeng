@@ -114,6 +114,8 @@ dependencies {
     implementation files('libs/umeng_social_shareboard.jar')
     implementation files('libs/umeng_social_shareview.jar')
     implementation files('libs/alipaySdk-20170922.jar')
-//    compile 'com.henryblue.minimusicview:library:1.0.1'
+    //    compile 'com.henryblue.minimusicview:library:1.0.1'
+    implementation files('libs/mina-core-2.0.16.jar')
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.9'
 }
 

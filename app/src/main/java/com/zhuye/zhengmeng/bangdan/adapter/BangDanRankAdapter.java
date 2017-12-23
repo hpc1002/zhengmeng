@@ -27,7 +27,7 @@ public class BangDanRankAdapter extends BaseQuickAdapter<BangDanListBean.Data, B
 
     @Override
     protected void convert(BaseViewHolder helper, BangDanListBean.Data item) {
-        helper.setText(R.id.tv_rank, item.num);
+        helper.setText(R.id.tv_rank, item.paiming);
         helper.setText(R.id.tv_nickname, item.user_nicename);
         helper.setText(R.id.tv_song_name, item.song_name);
         Glide.with(mContext)
